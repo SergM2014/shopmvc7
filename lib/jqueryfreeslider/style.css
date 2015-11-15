@@ -1,0 +1,6 @@
+#slider {position:relative; height: 100%;  width:100%}
+
+#slider .thumb{position:absolute; width: 100%; height: 100%;}
+#slider a{color:#FF9;}
+#slider a:hover{color:#cc151e;}
+#slider .thumb .bottom{position:absolute; bottom:10px; right: 10px; padding:15px; max-height:10px; min-height:10px; /*width:350px; background: url(s_bottom.png) repeat-x bottom;*/}

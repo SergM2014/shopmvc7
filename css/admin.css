@@ -1,0 +1,42 @@
+/*General*/
+*{
+	margin:0;
+	padding:0;
+	box-sizing:border-box;
+}
+html{
+	height:100%;
+}
+
+
+.container{
+	margin:0 auto;
+	max-width:1360px;
+	background-color:#FFFFFF;
+	padding:20px;
+	height:100%;
+}
+
+.clearfix:before,
+.clearfix:after{
+	content:" ";
+	display:table;
+}
+
+.clearfix:after{
+	clear:both;
+}
+.left{
+	float:left;
+}
+
+
+
+
+
+
+
+@media (max-width:768px){
+
+
+}

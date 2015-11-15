@@ -1,0 +1,15 @@
+Options -Indexes
+RewriteEngine on
+RewriteBase /
+RewriteCond %{REQUEST_URI} ^/admin(.+)$
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteCond %{REQUEST_FILENAME} !-l
+RewriteRule ^(.+)$ admin/index.php?url=$1 [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteCond %{REQUEST_FILENAME} !-l
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+AddDefaultCharset UTF-8
+php_flag magic_quotes_gpc Off
+php_value display_errors on
