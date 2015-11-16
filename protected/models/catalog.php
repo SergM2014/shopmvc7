@@ -2,9 +2,10 @@
 class Protected_Models_Catalog extends Core_DateBase
 {
 
-    function getCatalog(){
+    function getCatalog( ){
 
         $page= (isset($_GET['p']))? $_GET['p']: 1;
+
         $page= ($page-1)*AMOUNTONPAGE;
         $order='';
         $category='';
@@ -82,12 +83,12 @@ class Protected_Models_Catalog extends Core_DateBase
     }
 
 
-    function getleftCatalogMenu($url, $categories, $parent = 0){
+    function getleftCatalogMenu( $categories, $parent = 0){
         if(!isset($print)){$print='';}
         foreach($categories as $category){
             if($category['parent_id'] ==$parent ){
 
-                $print.='<li ><a href="'.URL.$url.'category='. $category['translit_title'] .'">'.$category['cat_title'].'</a>' ;
+                $print.='<li ><a href="'.URL.'catalog?category='. $category['translit_title'] .'">'.$category['cat_title'].'</a>' ;
                 foreach($categories as $sub_cat){
                     if($sub_cat['parent_id']==$category['category_id']){
                         $flag = TRUE; break;
@@ -96,7 +97,7 @@ class Protected_Models_Catalog extends Core_DateBase
 
                 if(isset($flag)){
                     $print.= "<ul>";
-                    $print.= $this->getleftCatalogMenu($url, $categories, $category['category_id']);
+                    $print.= $this->getleftCatalogMenu( $categories, $category['category_id']);
                     $print.= "</ul>";
                     $print.= "</li>";
                 } else{

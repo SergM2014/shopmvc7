@@ -92,13 +92,20 @@ class AppUser {
         $url= trim($url, '/');
         $url= explode('?', $url);
         $url= $url[0];
+        //$variables= $url[1];
 
         $i=0;
         foreach ($_GET as $key=> $value){
             if($key == $item or $value =='catalog' or $key=='url') continue;
+            if($key=='p') {$p=$value; continue;}
             if($i == 0){$url.='?'.$key.'='.$value; } else {$url.='&'.$key.'='.$value; }
             $i++;
-        }
+
+       }
+
+
+
+
 
         $question_mark= strpos($url, '?');
         if($question_mark){$url = $url.'&';} else {$url = $url.'?';}
