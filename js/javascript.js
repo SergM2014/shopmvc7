@@ -191,7 +191,7 @@ if(document.getElementById('add_item')) {
 
 
         xhr = new XMLHttpRequest();
-        xhr.open('POST', '/protected/ajax/addintobusket', true);
+        xhr.open('POST', '/addintobusket', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send('id=' + id + '&the_price=' + the_price);
         xhr.onreadystatechange = function () {

@@ -28,7 +28,7 @@ class Protected_Controllers_Catalog  extends Core_BaseController
 
 
 
-        return ['view'=>'catalog/index.php', 'manufacturers'=>$manufacturers, 'menu'=> $menu, 'pages'=>$pages, 'catalog'=> $catalog, 'nop'=>$nop, 'nomanufacturer'=>$nomanufacturer];
+        return ['view'=>'catalog.php', 'manufacturers'=>$manufacturers, 'menu'=> $menu, 'pages'=>$pages, 'catalog'=> $catalog, 'nop'=>$nop, 'nomanufacturer'=>$nomanufacturer];
     }
 
 

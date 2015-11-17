@@ -8,7 +8,7 @@ class Protected_Controllers_Product  extends Core_BaseController
         //get informatiom for left vertical menu
         $product = $model->getProduct();
 
-        $this->product = $product;
+      return ['view'=>'product.php', 'product'=>$product];
     }
 
 }

@@ -9,7 +9,7 @@
 
     <h3>Рубрики</h3>
 
-<ul id="leftmenu"><?php echo $menu; ?></ul>
+    <ul id="leftmenu"><?php echo $menu; ?></ul>
 
 </section>
 
@@ -23,7 +23,7 @@
     <?php $num=1; if(!empty($sliders)): ?>
         <div id="slider">
             <?php foreach($sliders as $image): ?>
-              <div class="thumb" style="display:none; background: url(<?php echo '/uploads/slider/'.$image['image']; ?>) no-repeat center top;" id="<?php echo $num;?>">
+                <div class="thumb" style="display:none; background: url(<?php echo '/uploads/slider/'.$image['image']; ?>) no-repeat center top;" id="<?php echo $num;?>">
 
                     <div class="bottom">
                         <a href="/<?php echo $image['url']; ?>">
@@ -35,7 +35,7 @@
                 <?php $num++; endforeach; ?>
         </div>
     <?php endif; ?>
-<!-- end of realization of slider-->
+    <!-- end of realization of slider-->
 
 
     <script src="/lib/jqueryfreeslider/script.js"></script>
@@ -54,7 +54,7 @@
         <?php
         foreach($carousel as $image){
             ?> <a href="<?php echo $image['url']; ?>"><img src="<?php echo URL.'uploads/carousel/'.$image['image']; ?>"></a>
-    <?php    } ?>
+        <?php    } ?>
 
     </div>
 </div>
