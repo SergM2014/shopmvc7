@@ -2,7 +2,7 @@
 
 class Protected_Models_Busket extends Core_DateBase
 {
-    function getBigBusket(){
+    public function getBigBusket(){
 
         $goods =[];
 
@@ -27,6 +27,20 @@ class Protected_Models_Busket extends Core_DateBase
         }
 
         return $goods;
+    }
+
+    //нажатие на клавишу купить  на странице товара
+    public function addintobusket(){
+
+        $price= $_POST['price'];
+        $id= $_POST['id'];
+
+
+        $_SESSION['totalsum']= (isset($_SESSION['totalsum']))? $_SESSION['totalsum']+$price : $price;
+
+        $_SESSION['totalamount']= (isset($_SESSION['totalamount']))? $_SESSION['totalamount']+1 : 1;
+
+        $_SESSION['busket'][$id]= (isset($_SESSION['busket'][$id]))? $_SESSION['busket'][$id]+1: 1;
     }
 
 }

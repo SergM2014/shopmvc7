@@ -193,7 +193,7 @@ if(document.getElementById('add_item')) {
         xhr = new XMLHttpRequest();
         xhr.open('POST', '/addintobusket', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send('id=' + id + '&the_price=' + the_price);
+        xhr.send('id=' + id + '&price=' + the_price);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 if (xhr.status == 200) {
