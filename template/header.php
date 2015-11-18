@@ -37,8 +37,8 @@
                      <li class="left"><a href="<?php echo URL; ?>">Главная</a></li>
                      <li class="left"><a href="<?php echo URL.'catalog'; ?>">Каталог</a></li>
                      <li class="left"><a href="<?php echo URL.'about'; ?>">О нас</a></li>
-                     <li class="left"><a href="<?php echo URL; ?>">Скачать прайс</a></li>
-                     <li class="left"><a href="<?php echo URL; ?>">Контакты</a></li>
+                     <li class="left"><a href="<?php echo URL.'downloads'; ?>">Скачать прайс</a></li>
+                     <li class="left"><a href="<?php echo URL.'contacts'; ?>">Контакты</a></li>
                      <li class="left"><a href="<?php echo URL.'admin'; ?>"><?php if(isset($_SESSION['login'])){echo "Админзона";}else {echo "Войти";};  ?></a></li>
 
 

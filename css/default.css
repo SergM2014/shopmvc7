@@ -252,7 +252,20 @@ nav.pagination{
 .the_content{
     border:1px solid #010715;
     border-radius: 10px;
-    height:80%;
+    /*height:80%;*/
+    min-height:600px;
+}
+
+.wide_content{
+    padding:20px 10px;
+    text-align:center;
+}
+
+#writeUs{
+    width:150px;
+    height:40px;
+    color:red;
+    margin-bottom:20px;
 }
 
 .in_details{

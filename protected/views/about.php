@@ -5,5 +5,7 @@
 </nav>
 
 <div class="the_content clearfix">
-    <h2>About</h2>
+    <section class="wide_content">
+        <?php echo $about;?>
+    </section>
 </div>

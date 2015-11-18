@@ -2,21 +2,21 @@
 
  class Protected_Models_Index extends Core_DateBase
   {	  
-    function getSlider(){
+    public function getSlider(){
      $sql ="SELECT `image`, `url` FROM `slider`";
      $result = $this->conn->query($sql);
      $result = $result->fetchAll(PDO::FETCH_ASSOC);
      return $result;
     }
 
-     function getCategories(){
+     public function getCategories(){
          $sql ="SELECT `category_id`, `cat_title`, `translit_title`, `parent_id` FROM `categories`";
          $result = $this->conn->query($sql);
          $result = $result->fetchAll(PDO::FETCH_ASSOC);
          return $result;
      }
 
-     function getleftMenu($categories, $parent = 0){
+     public function getleftMenu($categories, $parent = 0){
          if(!isset($print)){$print='';}
          foreach($categories as $category){
              if($category['parent_id'] ==$parent ){
@@ -41,11 +41,18 @@
          return $print;
      }
 
-     function getCarousel(){
+     public function getCarousel(){
          $sql = "SELECT `id`, `image`, `url` FROM `carousel`";
          $result = $this->conn->query($sql);
          $result = $result->fetchAll(PDO::FETCH_ASSOC);
          return $result;
+     }
+
+     public function getAboutInformation(){
+         $sql="SELECT `about` FROM  `background`";
+         $result= $this->conn->query($sql);
+         $result = $result ->fetch(PDO::FETCH_ASSOC);
+         return htmlspecialchars_decode($result['about']);
      }
 
 	

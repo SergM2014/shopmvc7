@@ -6,12 +6,12 @@ class Protected_Controllers_About  extends Core_BaseController
     {
 
 
-      //  $model = new Protected_Models_Index();
-        //get informatiom for left vertical menu
+        $model = new Protected_Models_Index();
+        $about = $model->getAboutInformation();
 
 
 
-        return ['view'=>'about.php'];
+        return ['view'=>'about.php', 'about'=>$about];
     }
 
 
