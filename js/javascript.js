@@ -158,7 +158,7 @@ if(leftmenu) {
             }
         }
 
-  var recount = find_closest_heighest_id(e.target, 'recount_busket')
+  var recount = find_closest_heighest_id(e.target, 'recount_busket');
 if(recount){ console.log(111);}
     };
 
@@ -253,3 +253,22 @@ if(document.querySelector('#recount_busket')) {
         }
     });
 */
+
+if(document.getElementById('writeUs')){
+    document.getElementById('writeUs').addEventListener('click', function(){
+       //console.log(111);
+        document.getElementsByClassName('map')[0].classList.add('narrow');
+        setTimeout( function(){document.getElementsByClassName('map')[0].classList.add('invisible');
+            document.getElementsByClassName('writeUsBlock')[0].classList.remove('invisible');
+            document.getElementsByClassName('writeUsBlock')[0].classList.add('narrow');
+
+        },2000);
+
+        setTimeout(function(){
+            document.getElementsByClassName('writeUsBlock')[0].classList.add('heigh');
+        }, 2100)
+
+
+
+    })
+}

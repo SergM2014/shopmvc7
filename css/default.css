@@ -277,8 +277,6 @@ nav.pagination{
 
 .anotherleftmenu{
     width:20%;
-
-
     min-height: 600px;
 }
 
@@ -308,7 +306,25 @@ nav.pagination{
 
 }
 
+.map{
+    height:600px;
+    transition:2s;
+    overflow:hidden;
+}
 
+.narrow{
+    height:0;
+}
+
+.heigh{
+    height:600px;
+    transition:2s;
+}
+
+.writeUsBlock{
+    overflow:hidden;
+
+}
 
 
 
