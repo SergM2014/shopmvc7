@@ -261,6 +261,10 @@ nav.pagination{
     text-align:center;
 }
 
+.contacts{
+    padding:20px 10px;
+}
+
 #writeUs{
     width:150px;
     height:40px;
@@ -322,11 +326,15 @@ nav.pagination{
 }
 
 .writeUsBlock{
+    max-width:400px;
+    margin:20px auto;
     overflow:hidden;
 
 }
 
-
+.error{
+    border-bottom:2px dotted red;
+}
 
 
 
