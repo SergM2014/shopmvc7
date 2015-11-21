@@ -158,6 +158,27 @@ if(leftmenu) {
             }
         }
 
+
+
+    var kcaptcha = find_closest_heighest_id(e.target, 'kcaptcha');
+    if(kcaptcha){
+        //console.log(111);
+      //  xhr = new XMLHttpRequest();
+       /* 'http://'+location.hostname+'/lib/kcaptcha/index.php?PHPSESSID=' + Math.random())
+        xhr.open('POST', '/lib/kcaptcha/index.php?PHPSESSID=' + Math.random(), true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send();
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4){
+                if(xhr.status == 200 ){
+                    kcaptcha.setAttribute('src', location.hostname+'/lib/kcaptcha/index.php?PHPSESSID=' + Math.random());
+                }
+            }
+        }*/
+
+        kcaptcha.setAttribute('src', 'http://'+location.hostname+'/lib/kcaptcha/index.php?PHPSESSID=' + Math.random() );
+    }
+
   var recount = find_closest_heighest_id(e.target, 'recount_busket');
 if(recount){ console.log(111);}
     };
@@ -272,3 +293,4 @@ if(document.getElementById('writeUs')){
 
     })
 }
+
