@@ -26,7 +26,13 @@ class Protected_Controllers_Contacts extends Core_BaseController
 
             unset($_SESSION['captcha_keystring']);
 
-            if(!empty($error)){ return ['view'=>'contacts.php', 'error'=>$error]; }
+            if(!empty($error)){
+                return ['view'=>'contacts.php', 'error'=>$error];
+            } else {
+                //тут робым видправку листа
+                Mail::mail($_POST['message'], $_POST['email']);
+
+                return ['view'=>'contacts.php', 'success'=> true];}
         }
 
         return ['view'=>'contacts.php'];

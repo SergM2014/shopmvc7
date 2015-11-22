@@ -12,6 +12,7 @@
 	define('VALID_FORMATS','jpg,imj,png,jpeg');
 	define('UPLOAD_FILE','/uploads/');
 	define('LINKCOUNT',5);
+	define('ADMINEMAIL', 'weisse@ukr.net');
 	
 	date_default_timezone_set('Europe/Kiev');
 	

@@ -104,9 +104,6 @@ class AppUser {
        }
 
 
-
-
-
         $question_mark= strpos($url, '?');
         if($question_mark){$url = $url.'&';} else {$url = $url.'?';}
 
@@ -118,7 +115,18 @@ class AppUser {
  
 	}
 
+ class Mail{
 
+     public static function mail( $message, $from){
+         $to= ADMINEMAIL;
+         $title= "Повидомлення з сайту";
+         $message= $message;
+         $from = $from;
+//Возвращает TRUE, если письмо было принято для передачи, иначе FALSE.
+         mail($to, $title, $message, 'From '.$from);
+     }
+
+ }
 
 
 

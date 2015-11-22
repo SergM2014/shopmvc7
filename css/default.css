@@ -263,6 +263,7 @@ nav.pagination{
 
 .contacts{
     padding:20px 10px;
+
 }
 
 #writeUs{
@@ -311,6 +312,8 @@ nav.pagination{
 }
 
 .map{
+    max-width:600px;
+    margin: 0 auto;
     height:600px;
     transition:2s;
     overflow:hidden;

@@ -7,12 +7,16 @@
 <div class="the_content clearfix">
     <section class="contacts">
 
-        <div class="map invisible">
+        <?php if(isset($success)): ?>
+        <h2> You letter is dispatch</h2>
+        <?php else: ?>
+
+        <div class="map <?php if (isset($_POST['send'])) echo 'invisible'; ?>">
             <button id="writeUs">Напиши нам письмецо</button>
             <div id="map"><iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d164524.0836798843!2d31.088186765820314!3d49.88587031330192!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1suk!2sua!4v1447865358584" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe></div>
         </div>
 
-        <div class="writeUsBlock ">
+        <div class="writeUsBlock <?php if (!isset($_POST['send'])) echo 'invisible'; ?>">
             <form method="post">
                 <p>Поля обозначеные <span class="red">*</span> есть обязательными</p>
                 <br>
@@ -43,6 +47,8 @@
                 <p><input type="submit" value="Отправить"></p>
             </form>
         </div>
+
+        <?php endif; ?>
 
     </section>
 </div>
