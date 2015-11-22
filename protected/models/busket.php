@@ -8,8 +8,7 @@ class Protected_Models_Busket extends Core_DateBase
 
         if(!isset($_SESSION['busket'])) return false;
 
-        $sql="SELECT `p`.`product_id`, `p`.`author`, `p`.`title`,  `p`.`price`,
-                `c`.`cat_title`,  `m`.`manf_title` FROM `products` `p` LEFT JOIN `categories` `c` ON
+        $sql="SELECT `p`.`product_id`, `p`.`author`, `p`.`title`,  `p`.`price` FROM `products` `p` LEFT JOIN `categories` `c` ON
                 `p`.`cat_id` = `c`.`category_id` LEFT JOIN `manufacturer` `m` ON `p`.`manf_id` = `m`.`manufacturer_id`
                   WHERE `p`.`product_id` = ? ";
 

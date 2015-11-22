@@ -85,6 +85,19 @@ html, body{
     margin-left:10px;
 }
 
+#busket_close{
+    cursor:pointer;
+}
+
+.modalwindow table{
+    width:600px;
+    margin:0 auto;
+}
+
+.modalwindow td{
+    text-align:center;
+    width:150px;
+}
 
 
 

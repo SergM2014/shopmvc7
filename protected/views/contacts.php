@@ -34,8 +34,8 @@
                           value="<?php if(isset($_POST['email'])) echo $_POST['email']; ?>" required ></p>
 
                 <label for="message">Ваше Сообщение<span class="red">*</span></label>   <small class="red"><?php if(isset($error['message'])) echo $error['message']; ?></small>
-                <p><textarea name="message" id="message" placeholder="Введите Ваше сообщение" cols="40" rows="8"<?php if(isset($error['message'])) echo 'class="error"'; ?> required >
-                        <?php if(isset($_POST['message'])) echo $_POST['message']; ?></textarea></p>
+                <p><textarea name="message" id="message" placeholder="Введите Ваше сообщение" cols="40" rows="8"
+                        <?php if(isset($error['message'])) echo 'class="error"'; ?> required ><?php if(isset($_POST['message'])) echo $_POST['message']; ?></textarea></p>
 
                 <small>Кликните по рисунку чтобы обновить капчу</small>
                 <p><img src="<?php echo URL ?>lib/kcaptcha/index.php?<?php echo session_name()?>=<?php echo session_id()?>" id="kcaptcha"></p>

@@ -228,7 +228,7 @@ if(document.getElementById('add_item')) {
 //кликаем по маленькой корзинке вверху чтобы получить большую корзину
 document.getElementById('busket').addEventListener('click', function(){
     xhr = new XMLHttpRequest();
-    xhr.open('POST', '/protected/ajax/bigbusket', true);
+    xhr.open('POST', '/bigbusket', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send('ajax='+true+'&launch_big_busket='+true);
     xhr.onreadystatechange = function(){
@@ -247,8 +247,15 @@ document.getElementById('busket').addEventListener('click', function(){
                     darkLayer.parentNode.removeChild(darkLayer); // удаляем затемнение
                     modalwindow.parentNode.removeChild(modalwindow);
 
-                    return false;
+                    //return false;
                 };
+
+                document.getElementById('busket_close').onclick= function(){
+                    darkLayer.parentNode.removeChild(darkLayer); // удаляем затемнение
+                    modalwindow.parentNode.removeChild(modalwindow);
+
+                }
+
             }
         }
     }

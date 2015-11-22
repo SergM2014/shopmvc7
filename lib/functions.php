@@ -117,7 +117,7 @@ class AppUser {
 
  class Mail{
 
-     public static function mail( $message, $from){
+     public static function tomail( $message, $from){
          $to= ADMINEMAIL;
          $title= "Повидомлення з сайту";
          $message= $message;
