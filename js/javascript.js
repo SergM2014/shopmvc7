@@ -113,18 +113,18 @@ if(leftmenu) {
 //вешаем на боди разную фигню
     document.onclick = function (e) {
 
-        if (document.body.clientWidth < 750 ) {
+        if (document.body.clientWidth < 750) {
 //скрытие левого меню при клике по ним
-            if(leftmenu){
-                    var target = e.target;
-                    while (!target.classList.contains('leftmenu')) {
-                        target = target.parentNode;
-                        if (target.tagName.toLowerCase() == 'html') {
-                            if (leftmenu.classList.contains('active-menu'))leftmenu.classList.remove('active-menu');
-                            document.getElementById('leftmenu').style.display = 'none';
-                            break;
-                        }
+            if (leftmenu) {
+                var target = e.target;
+                while (!target.classList.contains('leftmenu')) {
+                    target = target.parentNode;
+                    if (target.tagName.toLowerCase() == 'html') {
+                        if (leftmenu.classList.contains('active-menu'))leftmenu.classList.remove('active-menu');
+                        document.getElementById('leftmenu').style.display = 'none';
+                        break;
                     }
+                }
             }
 
 
@@ -145,7 +145,6 @@ if(leftmenu) {
         }
 
 
-
 //скрытие предварительных результатов при клике поза дивом
         target = e.target;
         if (prior_result.classList.contains('founded')) {
@@ -159,30 +158,43 @@ if(leftmenu) {
         }
 
 
+        var kcaptcha = find_closest_heighest_id(e.target, 'kcaptcha');
+        if (kcaptcha) {
+            kcaptcha.setAttribute('src', 'http://' + location.hostname + '/lib/kcaptcha/index.php?PHPSESSID=' + Math.random());
+        }
 
-    var kcaptcha = find_closest_heighest_id(e.target, 'kcaptcha');
-    if(kcaptcha){
-        //console.log(111);
-      //  xhr = new XMLHttpRequest();
-       /* 'http://'+location.hostname+'/lib/kcaptcha/index.php?PHPSESSID=' + Math.random())
-        xhr.open('POST', '/lib/kcaptcha/index.php?PHPSESSID=' + Math.random(), true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send();
-        xhr.onreadystatechange = function(){
-            if(xhr.readyState == 4){
-                if(xhr.status == 200 ){
-                    kcaptcha.setAttribute('src', location.hostname+'/lib/kcaptcha/index.php?PHPSESSID=' + Math.random());
+//нажимаем клавишу перерахунок корзини
+        var recount = find_closest_heighest_id(e.target, 'recount_busket');
+        if (recount) {
+
+            var numbers = document.getElementsByClassName('modalwindow')[0].querySelectorAll('input');
+
+           var o ={};
+
+            for(var i=0; i<numbers.length; i++){
+               //console.log(numbers[i]);
+                var id = numbers[i].id;
+                var val = numbers[i].value;
+                o[id]=val;
+            }
+console.log(o);
+            //console.log(items);
+            xhr = new XMLHttpRequest();
+            xhr.open('POST', '/bigbusket/recount', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send('items=' + JSON.stringify(o));
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        //вставляемо в велику корзину
+                        document.getElementsByClassName('modalwindow')[0].innerHTML = xhr.responseText;
+                    }
                 }
             }
-        }*/
 
-        kcaptcha.setAttribute('src', 'http://'+location.hostname+'/lib/kcaptcha/index.php?PHPSESSID=' + Math.random() );
-    }
+        }
 
-  var recount = find_closest_heighest_id(e.target, 'recount_busket');
-if(recount){ console.log(111);}
     };
-
 
 
 //click over touchbutton show/hide menu
@@ -263,24 +275,9 @@ document.getElementById('busket').addEventListener('click', function(){
 });
 
 
-if(document.querySelector('#recount_busket')) {
-    document.querySelector('#recount_busket').onclick(console.log(111));
-}
-/*
-    document.getElementById('recount_busket').addEventListener('click', function(){
-        xhr = new XMLHttpRequest();
-        xhr.open('POST', '/protected/ajax/bigbusket', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send('ajax='+true+'&launch_big_busket='+true);
-        xhr.onreadystatechange = function(){
-            if(xhr.readyState == 4){
-                if(xhr.status == 200 ){
-                    document.getElementsByClassName('big_busket').innerHTML = "111";
-                }
-            }
-        }
-    });
-*/
+
+
+
 
 if(document.getElementById('writeUs')){
     document.getElementById('writeUs').addEventListener('click', function(){

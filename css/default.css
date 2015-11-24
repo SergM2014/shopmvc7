@@ -99,7 +99,9 @@ html, body{
     width:150px;
 }
 
-
+#recount_busket{
+    margin:0 10px;
+}
 
 /*end of Modal settings */
 

@@ -42,4 +42,8 @@ class Protected_Models_Busket extends Core_DateBase
         $_SESSION['busket'][$id]= (isset($_SESSION['busket'][$id]))? $_SESSION['busket'][$id]+1: 1;
     }
 
+    public function updateBusket(){
+
+    }
+
 }
