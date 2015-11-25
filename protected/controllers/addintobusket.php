@@ -7,6 +7,6 @@ class Protected_Controllers_Addintobusket extends Core_BaseController
         $model= new Protected_Models_Busket();
         $model->addintobusket();
 
-        return ['view'=>'addintobusket.php','ajax'=> true ];
+        return ['view'=>'smallbusket.php','ajax'=> true ];
     }
 }

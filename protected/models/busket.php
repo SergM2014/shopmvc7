@@ -44,6 +44,23 @@ class Protected_Models_Busket extends Core_DateBase
 
     public function updateBusket(){
 
+        $items= json_decode($_POST['items']);
+        $array=(array)$items;
+
+        unset ($_SESSION['busket']);
+        unset($_SESSION['totalamount']);
+        unset($_SESSION['totalsum']);
+
+        foreach ($array as $key=>$value){
+            if(!empty($value) && $value>0 && is_numeric($key)){
+                $value = (int)$value;
+                $_SESSION['busket'][$key]= $value;
+                $_SESSION['totalamount']= (isset($_SESSION['totalamount']))? $_SESSION['totalamount']+$value : $value;
+                $_SESSION['totalsum']= (isset($_SESSION['totalsum']))? $_SESSION['totalsum']+($array[$key.'_price']*$value) : $array[$key.'_price']*$value;
+            }
+        }
+
+
     }
 
 }

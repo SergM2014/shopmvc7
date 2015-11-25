@@ -18,14 +18,19 @@ class Protected_Controllers_BigBusket  extends Core_BaseController
 
     function recount(){
 
-        $items= json_decode($_POST['items']);
-        print_r($items);
+        $model = new Protected_Models_Busket();
+        $model->updateBusket();
 
-        echo '<br>';
-        $array=(array)$items;
 
-        print_r($array);
-        exit();
+        $items=$model->getBigBusket();
+
+
+
+        return ['view'=>'bigbusket.php', 'ajax'=> true , 'items'=>$items ];
+    }
+
+    public function updateSmallBusket(){
+        return ['view'=>'smallbusket.php', 'ajax'=> true];
     }
 
 
