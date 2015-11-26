@@ -15,9 +15,12 @@ function find_closest_heighest_class(el, cl){
 
 function find_closest_heighest_id(el, id){
     var elem = el;
-    while(elem.id != id){
+
+    while( elem.id != id){
+
         if(elem.tagName.toLowerCase() == 'html') return false;
         elem = elem.parentNode;
+        if(!elem) return false;
     }
     return elem;
 }
@@ -110,6 +113,9 @@ if(leftmenu) {
 
 }
 
+
+
+
 //вешаем на боди разную фигню
     document.onclick = function (e) {
 
@@ -172,7 +178,7 @@ if(leftmenu) {
            var o ={};
 
             for(var i=0; i<numbers.length; i++){
-               console.log(numbers[i]);
+
                 var id = numbers[i].id;
                 var val = numbers[i].value;
                 o[id]=val;
@@ -201,15 +207,29 @@ if(leftmenu) {
                 if (xhr2.readyState == 4) {
                     if (xhr2.status == 200) {
                         //поновленнч малоъ корзини
-                        document.getElementById('busket_content').innerHTML = xhr.responseText;
+                        document.getElementById('busket_content').innerHTML = xhr2.responseText;
                     }
                 }
             }
+        }
 
+
+        //кликаем по хрестику закрыть корзину
+        var busket_close = find_closest_heighest_id(e.target, 'busket_close');
+        if(busket_close){
+            var modalshadow= document.getElementsByClassName('modalshadow')[0];
+            var modalwindow = document.getElementsByClassName('modalwindow')[0];
+            modalshadow.parentNode.removeChild(modalshadow); // удаляем затемнение
+           modalwindow.parentNode.removeChild(modalwindow);//удаляем корзину
 
         }
 
     };
+//кфнець вішання на боді разной фігні
+//************************************************888
+
+
+
 
 
 //click over touchbutton show/hide menu
@@ -277,11 +297,7 @@ document.getElementById('busket').addEventListener('click', function(){
                     //return false;
                 };
 
-                document.getElementById('busket_close').onclick= function(){
-                    darkLayer.parentNode.removeChild(darkLayer); // удаляем затемнение
-                    modalwindow.parentNode.removeChild(modalwindow);
 
-                }
 
             }
         }

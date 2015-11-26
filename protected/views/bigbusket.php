@@ -1,4 +1,6 @@
 <span class="red right" id="busket_close">X</span>
+
+<?php if($items): ?>
 <h2>Big Busket</h2>
 
 <table>
@@ -13,3 +15,6 @@
 </table>
 <button id="recount_busket" class="right">Пересчитать</button>
 <strong class="red right">Загальна сумма: <?php echo $_SESSION['totalsum'] ?> грн.</strong>
+<?php else: ?>
+    <h2>Ваша корзина по прежнему пуста!</h2>
+<?php endif; ?>
