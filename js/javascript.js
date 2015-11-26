@@ -184,7 +184,7 @@ if(leftmenu) {
                 o[id]=val;
                 o[id+'_price']= numbers[i].getAttribute('data-price');
             }
-//console.log(o);
+
 
             xhr = new XMLHttpRequest();
             xhr.open('POST', '/bigbusket/recount', true);

@@ -520,7 +520,7 @@ article.good{
     }
 }
 
-@media screen and (max-width: 720px){
+@media screen and (max-width: 750px){
     .leftmenu{
         position:absolute;
         width:200px;
@@ -621,6 +621,18 @@ article.good{
 
     .in_details{
         margin-top:90px;
+    }
+
+    .modalwindow{
+        width:100%;
+        padding-left:0;
+    }
+    .modalwindow table{
+        width:100%;
+        padding-left:0;
+    }
+    .modalwindow td{
+        width:70px;
     }
 
 
