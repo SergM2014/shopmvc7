@@ -72,6 +72,43 @@ html, body{
     top:0;
 }
 
+.orderform{
+    position:fixed;
+    width:80%;
+    padding:30px 10px;
+    min-height:600px;
+    margin:0 auto;
+    top:20%;
+    right:0;
+    left:-3000px;
+    background-color: #62b2cc;
+    border-radius:10px;
+    z-index:102;
+    transition:2s;
+}
+
+.showform{
+   left:0;
+}
+
+#orderform{
+    max-width:400px;
+    margin:0 auto;
+
+}
+
+.order_close{
+    margin:10px;
+    cursor:pointer;
+    font-size:18px;
+    font-weight:bold;
+}
+
+
+
+
+
+
 .big_busket table{
     margin:10px auto;
     text-align:center;
@@ -91,7 +128,7 @@ html, body{
 
 .modalwindow table{
     width:600px;
-    margin:0 auto;
+    margin:15px auto;
 }
 
 .modalwindow td{
@@ -102,6 +139,21 @@ html, body{
 #recount_busket{
     margin:0 10px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*end of Modal settings */
 

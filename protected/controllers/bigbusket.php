@@ -33,6 +33,8 @@ class Protected_Controllers_BigBusket  extends Core_BaseController
         return ['view'=>'smallbusket.php', 'ajax'=> true];
     }
 
-
+    public function order(){
+        return ['view'=> 'orderform.php', 'ajax'=>1];
+    }
 
 }

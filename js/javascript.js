@@ -224,6 +224,32 @@ if(leftmenu) {
 
         }
 
+
+        var make_order = find_closest_heighest_id(e.target, 'make_order');
+        if(make_order){
+           // console.log(111);
+            var orderform = document.createElement('div'); // слой затемнения
+            orderform.className = 'orderform';
+            document.body.appendChild(orderform);
+
+            xhr= new XMLHttpRequest();
+            xhr.open('POST', '/bigbusket/order', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send();
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState == 4){
+                    if(xhr.status == 200){
+                        document.getElementsByClassName('orderform')[0].innerHTML = xhr.responseText;
+                            }
+                        }
+                    };
+
+
+
+
+            setTimeout(function(){orderform.classList.add('showform')},100);
+        }
+
     };
 //кфнець вішання на боді разной фігні
 //************************************************888
@@ -291,9 +317,10 @@ document.getElementById('busket').addEventListener('click', function(){
                 modalwindow.innerHTML = xhr.responseText;
 
                 darkLayer.onclick = function () {  // при клике на слой затемнения все исчезнет
-                    darkLayer.parentNode.removeChild(darkLayer); // удаляем затемнение
-                    modalwindow.parentNode.removeChild(modalwindow);
-
+                    if(!document.getElementsByClassName('orderform')[0]) {
+                        darkLayer.parentNode.removeChild(darkLayer); // удаляем затемнение
+                        modalwindow.parentNode.removeChild(modalwindow);
+                    }
                     //return false;
                 };
 
