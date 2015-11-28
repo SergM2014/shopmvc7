@@ -9,6 +9,7 @@ function find_closest_heighest_class(el, cl){
     while (!elem.classList.contains( cl )){
         if(elem.tagName.toLowerCase() == 'html') return false;
         elem = elem.parentNode;
+        if(!elem) return false;
     }
     return elem;
 }
@@ -248,6 +249,44 @@ if(leftmenu) {
 
 
             setTimeout(function(){orderform.classList.add('showform')},100);
+        }
+
+        var order_close = find_closest_heighest_class(e.target, 'order_close');
+        if(order_close){
+           // console.log(1111);
+            document.getElementsByClassName('orderform')[0].classList.add('hideform');
+            setTimeout(function(){document.getElementsByClassName('orderform')[0].parentNode.removeChild(document.getElementsByClassName('orderform')[0])}, 2000)
+        }
+
+        var send_order = find_closest_heighest_id(e.target, 'send_order');
+        if(send_order){
+                e.preventDefault();
+           var inputs = document.getElementById('orderform').querySelectorAll('.input');
+            console.log(inputs);
+            var obj={};
+            for( var i=0; i<inputs.length; i++){
+              //console.log(inputs[i]);
+                obj[inputs[i].id]= inputs[i].value;
+            }
+            //console.log(obj);
+
+            xhr= new XMLHttpRequest();
+            xhr.open('POST', '/bigbusket/order', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send('inputs='+JSON.stringify(obj));
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState == 4){
+                    if(xhr.status == 200){
+                        document.getElementsByClassName('orderform')[0].innerHTML = xhr.responseText;
+                    }
+                }
+            };
+
+
+
+
+
+
         }
 
     };

@@ -91,6 +91,12 @@ html, body{
    left:0;
 }
 
+.hideform{
+    left:3000px;
+    transition-timing-function: ease-in;
+}
+
+
 #orderform{
     max-width:400px;
     margin:0 auto;
