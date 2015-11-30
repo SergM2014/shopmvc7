@@ -39,14 +39,18 @@ class Protected_Controllers_BigBusket  extends Core_BaseController
 
 
 
-            if(!empty($error)){
-                return ['view'=>'orderform.php', 'error'=>$error, 'inputs'=>$inputs, 'ajax'=>1];
-            } else {
-                //тут робым видправку листа и занесення в бд
-               // Mail::tomail($_POST['message'], $_POST['email']);
+            if( isset($inputs['send']))
+                { if( !empty($error)){
+                    return ['view'=>'orderform.php', 'error'=>$error, 'inputs'=>$inputs, 'ajax'=>1];
+                } else {
 
-                return ['view'=>'orderform.php', 'success'=> true, 'ajax'=>1];}
-
+                    //тут робым видправку листа и занесення в бд
+                   // Mail::tomail($_POST['message'], $_POST['email']);
+                    unset($_SESSION['totalamount']);
+                    unset($_SESSION['totalsum']);
+                    return ['view'=>'orderform.php', 'success'=> true, 'ajax'=>1];
+                  }
+                }
 
 
 

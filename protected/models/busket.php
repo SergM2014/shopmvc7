@@ -67,7 +67,7 @@ class Protected_Models_Busket extends Core_DateBase
     public function makeOrder(){
 
        $inputs= $this->decodePost();
-
+//die(var_dump($inputs));
         if(isset($inputs['send'])) {
             $error = array();
 
@@ -92,11 +92,12 @@ class Protected_Models_Busket extends Core_DateBase
 
 
             unset($_SESSION['captcha_keystring']);
-
-            if (empty($error)){ unset($_SESSION['busket']);}
+//die(var_dump($error));
+            if (empty($error)){ unset($_SESSION['busket']); return false; }
 
             return $error;
         }
+        return false;
     }
 
     public function decodePost(){

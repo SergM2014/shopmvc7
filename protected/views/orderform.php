@@ -1,7 +1,11 @@
 <span  class="order_close red right">X</span>
 
 <?php if(isset($success)): ?>
-    <h2> You letter is dispatch</h2>
+    <h2> You letter is dispatched</h2>
+    <script>
+        var modalwindow = document.getElementsByClassName('modalwindow')[0];
+        modalwindow.parentNode.removeChild(modalwindow);//удаляем корзину
+    </script>
 <?php else: ?>
 
 <div id="orderform">

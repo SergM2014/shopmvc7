@@ -262,7 +262,7 @@ if(leftmenu) {
         if(send_order){
                 e.preventDefault();
            var inputs = document.getElementById('orderform').querySelectorAll('.input');
-            console.log(inputs);
+            //console.log(inputs);
             var obj={};
             for( var i=0; i<inputs.length; i++){
               //console.log(inputs[i]);
@@ -282,7 +282,18 @@ if(leftmenu) {
                 }
             };
 
-
+            xhr2 = new XMLHttpRequest();
+            xhr2.open('POST', '/bigbusket/updatesmallbusket', true);
+            xhr2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr2.send();
+            xhr2.onreadystatechange = function () {
+                if (xhr2.readyState == 4) {
+                    if (xhr2.status == 200) {
+                        //поновленнч малоъ корзини
+                        document.getElementById('busket_content').innerHTML = xhr2.responseText;
+                    }
+                }
+            }
 
 
 
