@@ -63,4 +63,49 @@ class Protected_Models_Busket extends Core_DateBase
 
     }
 
+
+    public function makeOrder(){
+
+       $inputs= $this->decodePost();
+
+        if(isset($inputs['send'])) {
+            $error = array();
+
+            if (strlen($inputs['name']) < 3) {
+                $error['name'] = 'Имя должно состоять больше чем из 3 букв';
+            }
+
+            $pattern = '/^\\+?(38)?(\\-|\\s)?(\\([0-9]{3}\\)|[0-9]{3})?[0-9\\-\\s]{6,10}$/';
+            if (!preg_match($pattern, $inputs['phone'])) {
+                $error['phone'] = 'Введите правильный телефон';
+            };
+            if (strlen($inputs['phone']) < 8) {
+                $error['phone'] = 'телефон должен иметь не меньще чем 8 цифр';
+            }
+
+            if ($_SESSION['captcha_keystring'] != $inputs['keystring']) {
+                $error['keystring'] = 'неверная капча';
+            }
+            if (empty($inputs['keystring'])) {
+                $error['keystring'] = 'Пустое поле';
+            }
+
+
+            unset($_SESSION['captcha_keystring']);
+
+            if (empty($error)){ unset($_SESSION['busket']);}
+
+            return $error;
+        }
+    }
+
+    public function decodePost(){
+        if(isset($_POST['inputs'])) {
+            $inputs = json_decode($_POST['inputs']);
+            $inputs = (array)$inputs;
+            return $inputs;
+        }
+        return false;
+    }
+
 }
