@@ -45,6 +45,9 @@ class Protected_Controllers_BigBusket  extends Core_BaseController
                 } else {
 
                     //тут робым видправку листа и занесення в бд
+
+                    $model->saveOrder($inputs['send']);
+
                    // Mail::tomail($_POST['message'], $_POST['email']);
                     unset($_SESSION['totalamount']);
                     unset($_SESSION['totalsum']);

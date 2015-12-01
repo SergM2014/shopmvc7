@@ -67,7 +67,7 @@ class Protected_Models_Busket extends Core_DateBase
     public function makeOrder(){
 
        $inputs= $this->decodePost();
-//die(var_dump($inputs));
+
         if(isset($inputs['send'])) {
             $error = array();
 
@@ -107,6 +107,10 @@ class Protected_Models_Busket extends Core_DateBase
             return $inputs;
         }
         return false;
+    }
+
+    public function saveOrder($inputs){
+
     }
 
 }

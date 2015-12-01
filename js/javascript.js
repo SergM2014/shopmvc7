@@ -251,12 +251,29 @@ if(leftmenu) {
             setTimeout(function(){orderform.classList.add('showform')},100);
         }
 
+
+        //закрыаем форму заказа
         var order_close = find_closest_heighest_class(e.target, 'order_close');
         if(order_close){
-           // console.log(1111);
+
+
+            var success=document.getElementsByClassName('orderform')[0].querySelector('.success');
+
+            if(success){
+                var modalshadow= document.getElementsByClassName('modalshadow')[0];
+                var modalwindow = document.getElementsByClassName('modalwindow')[0];
+
+                modalwindow.parentNode.removeChild(modalwindow);//удаляем модальне викно
+                setTimeout(function(){ modalshadow.parentNode.removeChild(modalshadow);}, 2000 );//удаляем затенненя
+            }
+
+
             document.getElementsByClassName('orderform')[0].classList.add('hideform');
             setTimeout(function(){document.getElementsByClassName('orderform')[0].parentNode.removeChild(document.getElementsByClassName('orderform')[0])}, 2000)
         }
+        //конец формы заказа
+
+
 
         var send_order = find_closest_heighest_id(e.target, 'send_order');
         if(send_order){

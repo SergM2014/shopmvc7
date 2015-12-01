@@ -1,11 +1,8 @@
 <span  class="order_close red right">X</span>
 
 <?php if(isset($success)): ?>
-    <h2> You letter is dispatched</h2>
-    <script>
-        var modalwindow = document.getElementsByClassName('modalwindow')[0];
-        modalwindow.parentNode.removeChild(modalwindow);//удаляем корзину
-    </script>
+    <h2 class="success"> Ваш заказ прийнято мы свяжемось з вами самим найближчим часом</h2>
+
 <?php else: ?>
 
 <div id="orderform">
