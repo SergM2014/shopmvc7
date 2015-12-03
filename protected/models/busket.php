@@ -93,12 +93,15 @@ class Protected_Models_Busket extends Core_DateBase
 
             unset($_SESSION['captcha_keystring']);
 //die(var_dump($error));
-            if (empty($error)){ unset($_SESSION['busket']); return false; }
+          //  if (empty($error)){ unset($_SESSION['busket']); return false; }
 
             return $error;
         }
         return false;
     }
+
+
+
 
     public function decodePost(){
         if(isset($_POST['inputs'])) {
@@ -110,7 +113,45 @@ class Protected_Models_Busket extends Core_DateBase
     }
 
     public function saveOrder($inputs){
+        $cleaned = AppUser::cleanInput($inputs);
 
+        $busket= $_SESSION['busket'];
+        $items = $this->getProductName($busket);
+        $items_str = serialize($items);
+
+        $sql="INSERT INTO `orders`(`name`, `email`, `phone`, `message`, `products`) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1, $cleaned['name'], PDO::PARAM_STR);
+        $stmt->bindParam(2, $cleaned['email'], PDO::PARAM_STR);
+        $stmt->bindParam(3, $cleaned['phone'], PDO::PARAM_STR);
+        $stmt->bindParam(4, $cleaned['message'], PDO::PARAM_STR);
+        $stmt->bindParam(5, $items_str, PDO::PARAM_STR);
+        $stmt->execute();
+        return true;
+    }
+
+    private function getProductName($busket){
+        $order=[];
+
+        $counter=0;
+        $sql= "SELECT `author`, `title` FROM `products` WHERE `product_id`=?";
+
+        foreach($busket as $key=>$value){
+
+            $result= $this->conn->prepare($sql);
+            $result->bindParam(1, $key, PDO::PARAM_INT);
+            $result->execute();
+            $res= $result->fetch(PDO::FETCH_ASSOC);
+
+            if(!$res) return false;
+
+            $orderItem[$counter]['id'] = $key;
+            $orderItem[$counter]['author']=$res['author'];
+            $orderItem[$counter]['title'] = $res['title'];
+            $orderItem[$counter]['number'] = $value;
+            $counter++;
+        }
+        return $orderItem;
     }
 
 }

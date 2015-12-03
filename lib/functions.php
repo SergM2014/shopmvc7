@@ -68,10 +68,10 @@
 
 class AppUser {
     //makeinput klean
-	public static function cleanInput($arr, $esc){
+	public static function cleanInput($arr, $esc=null){
 	   
 	  foreach($arr as $key=>$value){ 
-	      if ($esc!= $key){$arr[$key]=htmlspecialchars($value);}	  
+	      if ($esc!= $key){$arr[$key]=htmlspecialchars($value, ENT_QUOTES);}
 	      else{$arr[$key]=$value;}
 	     }
 		return $arr; 
