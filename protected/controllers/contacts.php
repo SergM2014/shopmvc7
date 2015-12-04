@@ -20,8 +20,7 @@ class Protected_Controllers_Contacts extends Core_BaseController
 
         return ['view'=>'contacts.php'];
 
-/*        Mail::tomail($_POST['message'], $_POST['email'], $_POST['name'], $_POST['phone']);
-        exit();*/
+
 
     }
 }

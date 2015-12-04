@@ -335,14 +335,42 @@ document.getElementById('touch-button').addEventListener('click', function(){
     }
 });
 
+
+
+
+
 //нажатие клавиши в строке поиска
 document.getElementById('search').addEventListener('keyup', function(){
    if(this.value != ''){//console.log(prior_result);
-    if(!prior_result.classList.contains('founded')){prior_result.classList.add('founded');}
+    if(!prior_result.classList.contains('founded')){prior_result.classList.add('founded');
+
+        var val= this.value;
+
+        xhr= new XMLHttpRequest();
+        xhr.open('POST', '/priorresult/search', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send('value'+val);
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4){
+                if(xhr.status == 200){
+                    prior_result.innerHTML = xhr.responseText;
+                }
+            }
+        };
+
+
+
+
+
+    }
    } else{
        if(prior_result.classList.contains('founded')){prior_result.classList.remove('founded');}
    }
 });
+
+
+
+
 
 //кикаем клавишу купить на странице product/index
 if(document.getElementById('add_item')) {
