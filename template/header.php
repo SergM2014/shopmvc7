@@ -44,7 +44,7 @@
 
                 </ul>
 
-                 <span class="right"><label for="search">Поиск </label><input type="text" id="search" name="search" maxlength="20" autofocus ><span>
+                 <span class="right"><label id="search_label" for="search">Поиск </label><input type="text" id="search" name="search" maxlength="20" autofocus ><span>
 
              </nav>
 

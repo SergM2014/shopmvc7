@@ -117,10 +117,11 @@ class AppUser {
 
  class Mail{
 
-     public static function tomail( $message, $from){
+     public static function tomail( $message, $from, $name, $phone){
+         $time_now = Language::rus_date("j F Y H:i ", time());
          $to= ADMINEMAIL;
-         $title= "Повидомлення з сайту";
-         $message= $message;
+         $title = $time_now. "\n Повидомлення з сайту Имя ".$name." Телефон ".$phone;
+        // $message= $message;
          $from = $from;
 //Возвращает TRUE, если письмо было принято для передачи, иначе FALSE.
          mail($to, $title, $message, 'From '.$from);

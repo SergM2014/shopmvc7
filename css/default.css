@@ -208,6 +208,7 @@ nav.pagination{
 
 #search{
     width:120px;
+    margin-top:0;
 }
 
 #prior_result{
@@ -241,6 +242,7 @@ nav.pagination{
     border-radius:3px;
     background-color: #6fa8cc;
     z-index:100;
+    cursor:pointer;
 }
 
 
@@ -696,5 +698,22 @@ article.good{
         width:70px;
     }
 
+    .orderform{
+        width:100%;
+
+    }
+    textarea#message{
+        width:97%;
+    }
+
+    #busket{
+        bottom:-122px;
+    }
+    #search_label{
+        display:none;
+    }
+    #search{
+        margin-top: 5px;
+    }
 
 }
