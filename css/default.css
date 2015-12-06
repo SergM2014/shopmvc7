@@ -216,6 +216,7 @@ nav.pagination{
     width:0;
     height:0;
     opacity: 0;
+    overflow:hidden;
     border:1px solid rosybrown;
     border-radius:4px;
     top:87px;
@@ -227,9 +228,13 @@ nav.pagination{
 }
 
 #prior_result.founded{
+    padding:5px;
     width:350px;
     height: 200px;
     opacity:1;
+}
+#prior_result ul{
+    list-style-type:none;
 }
 
 #busket{

@@ -13,11 +13,11 @@
 
         <label for="name">Имя<span class="red">*</span></label>  <small class="red"><?php if(isset($error['name'])) echo $error['name']; ?></small>
         <p> <input type="text" name="name" id="name" placeholder="Введите Ваше Имя" class="input <?php if(isset($error['name'])) echo "error"; ?>"
-                   value="<?php if(isset($inputs['name'])) echo $inputs['name']; ?>"  ></p>
+                   value="<?php if(isset($inputs['name'])) echo $inputs['name']; ?>" required ></p>
 
         <label for="phone" >Телефон<span class="red">*</span></label>   <small class="red"><?php if(isset($error['phone'])) echo $error['phone']; ?></small>
         <p><input type="tel" name="phone" id="phone" placeholder="Введите Ваш телефон" class="input <?php if(isset($error['phone'])) echo "error"; ?>"
-                  value="<?php if(isset($inputs['phone'])) echo $inputs['phone']; ?>"  ></p>
+                  value="<?php if(isset($inputs['phone'])) echo $inputs['phone']; ?>" required ></p>
 
         <label for="email">Email</label>
         <p><input type="email" name="email" id="email" placeholder="Введите Ваш почтовый ящик" class="input"
@@ -30,7 +30,7 @@
         <small>Кликните по рисунку чтобы обновить капчу</small>
         <p><img src="<?php echo URL ?>lib/kcaptcha/index.php?<?php echo session_name()?>=<?php echo session_id()?>" id="kcaptcha"></p>
         <label for="keystring">Введите капчу<span class="red">*</span></label>
-        <p><input type="text" name="keystring" id="keystring" class="input <?php if(isset($error['keystring'])) echo "error"; ?>"  ></p>
+        <p><input type="text" name="keystring" id="keystring" class="input <?php if(isset($error['keystring'])) echo "error"; ?>" required ></p>
 
         <input type="hidden" name="send" id="send" class="input" value="true">
         <br>
