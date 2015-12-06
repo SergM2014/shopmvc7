@@ -6,7 +6,7 @@ class Protected_Models_Search extends Core_DateBase
 
         $search= $_POST['value'];
 
-        $sql="SELECT `product_id`, `title`, `author` FROM `products` WHERE `title` LIKE ? OR `author` LIKE ? LIMIT 1,7";
+        $sql="SELECT `product_id`, `title`, `author` FROM `products` WHERE `title` LIKE ? OR `author` LIKE ? LIMIT 0,7 ";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(1, "%$search%", PDO::PARAM_STR);
         $stmt->bindValue(2, "%$search%", PDO::PARAM_STR);
@@ -15,6 +15,21 @@ class Protected_Models_Search extends Core_DateBase
 
 
         return $results;
+    }
+
+    public function getProduct(){
+
+        $sql="SELECT `product_id` , `author`, title`, `description`, `body`, `price`
+               FROM `products``  WHERE `product_id` = ? ";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1, $_GET['id'], PDO::PARAM_INT);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result;
+
     }
 
 

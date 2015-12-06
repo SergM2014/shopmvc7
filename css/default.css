@@ -236,6 +236,10 @@ nav.pagination{
 #prior_result ul{
     list-style-type:none;
 }
+#prior_result p{
+    margin-top:3px;
+    cursor:pointer;
+}
 
 #busket{
     position:absolute;

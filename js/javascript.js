@@ -312,8 +312,12 @@ if(leftmenu) {
                 }
             }
 
+        }
 
 
+        var show_preview = find_closest_heighest_class(e.target, 'date_to_preview');
+        if(show_preview){
+            console.log(1111);
 
         }
 
@@ -358,11 +362,6 @@ document.getElementById('search').addEventListener('keyup', function(){
                 }
             }
         };
-
-
-
-
-
 
    } else{
        if(prior_result.classList.contains('founded')){prior_result.classList.remove('founded');}

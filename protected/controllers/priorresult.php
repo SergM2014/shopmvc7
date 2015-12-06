@@ -9,4 +9,12 @@ class Protected_Controllers_Priorresult extends Core_BaseController
         return ['view'=>'priorresult.php', 'results'=>$results, 'ajax'=>true];
     }
 
+    public function getProduct(){
+
+        $model= new Protected_Models_Search();
+        $result= $model->getProduct();
+
+        return ['view'=>'productpreview.php', 'result'=>$result, 'ajax'=> true];
+    }
+
 }
