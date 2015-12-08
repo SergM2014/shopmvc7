@@ -19,16 +19,17 @@ class Protected_Models_Search extends Core_DateBase
 
     public function getProduct(){
 
-        $sql="SELECT `product_id` , `author`, title`, `description`, `body`, `price`
-               FROM `products``  WHERE `product_id` = ? ";
+      $sql="SELECT `product_id` , `author`, `title`, `description`, `price`
+               FROM `products`  WHERE `product_id` = ? ";
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1, $_GET['id'], PDO::PARAM_INT);
+        $stmt->bindParam(1, $_POST['id'], PDO::PARAM_INT);
         $stmt->execute();
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $result;
+
 
     }
 

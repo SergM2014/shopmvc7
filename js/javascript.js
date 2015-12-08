@@ -317,7 +317,37 @@ if(leftmenu) {
 
         var show_preview = find_closest_heighest_class(e.target, 'date_to_preview');
         if(show_preview){
-            console.log(1111);
+
+            var id = show_preview.id;
+
+            xhr = new XMLHttpRequest();
+            xhr.open('POST', '/priorresult/getProduct', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send('id='+id);
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState == 4){
+                    if(xhr.status == 200){
+                        var darkLayer = document.createElement('div'); // слой затемнения
+                        darkLayer.className = 'modalshadow'; // class чтобы подхватить стиль
+                        document.body.appendChild(darkLayer); // включаем затемнение
+
+                        var modalwindow = document.createElement('section');
+                        modalwindow.className = 'preview_product_window';
+                        document.body.appendChild(modalwindow);
+                        modalwindow.innerHTML = xhr.responseText;
+
+                        darkLayer.onclick = function () {  // при клике на слой затемнения все исчезнет
+
+                                darkLayer.parentNode.removeChild(darkLayer); // удаляем затемнение
+                                modalwindow.parentNode.removeChild(modalwindow);
+
+                        };
+
+
+
+                    }
+                }
+            }
 
         }
 
