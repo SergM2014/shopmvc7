@@ -18,7 +18,7 @@
             <h3>Производители</h3>
             <ul>
                 <?php foreach ($manufacturers as $manf) : ?>
-                <li><a href="<?php echo URL.$nomanufacturer.'manufacturer='.$manf['manf_url']; ?>"><?php echo $manf['manf_title']; ?></a></li>
+                <li><a href="<?php echo URL.$nomanufacturer.'manufacturer='.$manf['url']; ?>"><?php echo $manf['title']; ?></a></li>
                 <?php endforeach; ?>
             </ul>
         </div>
@@ -63,13 +63,13 @@
                         <?php echo $good['images']; ?>
                     </div>
                 <?php endif; ?>
-                    <h2><strong><?php echo $good['title']; ?></strong></h2>
+                    <h2><strong><?php echo $good['product_title']; ?></strong></h2>
                     <h3> <?php echo $good['author']; ?></h3>
                     <br>
                     <h3><?php echo $good['description']; ?></h3>
 
-                    <?php if($good['cat_title']) { ?><p>Категория: <b><?php echo $good['cat_title']; ?></b></p><?php } ?>
-                    <?php if($good['manf_title']) { ?><p>Производитель: <b><?php echo $good['manf_title']; ?></b></p><?php } ?>
+                    <?php if($good['translit_title']) { ?><p>Категория: <b><?php echo $good['translit_title']; ?></b></p><?php } ?>
+                    <?php if($good['manufacturer_title']) { ?><p>Производитель: <b><?php echo $good['manufacturer_title']; ?></b></p><?php } ?>
                     <h3><strong><?php echo $good['price']; ?> грн.</strong></h3>
                     <a href="/product/index?id=<?php echo $good['product_id']; ?>" id="detail" class="right">Подробнее</a>
             </article>
