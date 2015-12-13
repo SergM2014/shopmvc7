@@ -18,7 +18,7 @@
             <h3>Производители</h3>
             <ul>
                 <?php foreach ($manufacturers as $manf) : ?>
-                <li><a href="<?php echo URL.$nomanufacturer.'manufacturer='.$manf['url']; ?>"><?php echo $manf['title']; ?></a></li>
+                <li><a href="<?php echo URL.$nomanufacturer.'manufacturer='.$manf['title']; ?>"><?php echo $manf['title']; ?></a></li>
                 <?php endforeach; ?>
             </ul>
         </div>

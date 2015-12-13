@@ -6,9 +6,9 @@
 
 <div class="the_content clearfix">
     <section class="wide_content">
-        <h2>ССсылки для скачивания</h2>
+        <h2 >ССсылки для скачивания</h2>
         <br>
-        <ul>
+        <ul class="links">
             <li> <a href="#" download="">link1</a></li>
             <li> <a href="#" download="">link2</a></li>
             <li> <a href="#" download="">link3</a></li>

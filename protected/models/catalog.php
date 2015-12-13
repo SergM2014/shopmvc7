@@ -23,7 +23,7 @@ class Protected_Models_Catalog extends Core_DateBase
 
         if(isset($_GET['category'])){
             $category = $this->conn->quote($_GET['category']);
-            $category = "WHERE `c`.`translit_title`=".$category." ";
+            $category = "WHERE `c`.`title`=".$category." ";
             $conjunction =" AND";
         }
 
@@ -35,7 +35,7 @@ class Protected_Models_Catalog extends Core_DateBase
 
         $sql="SELECT `p`.`id` AS product_id , `p`.`author`, `p`.`title` as product_title , `p`.`description`, `p`.`body`, `p`.`price`, `p`.`cat_id`,
               `p`.`manf_id`, `p`.`images`, `c`.`id`, `c`.`title` AS category_title , `c`.`translit_title`, `c`.`parent_id`, `m`.`id` as manufacturer_id , `m`.`title` AS manufacturer_title FROM `products` `p` LEFT JOIN
-              `categories` `c` ON `p`.`cat_id` = `c`.`id` LEFT JOIN `manufacturer` `m` ON `p`.`id` = `m`.`id` ".$category.$manufacturer.$order."
+              `categories` `c` ON `p`.`cat_id` = `c`.`id` LEFT JOIN `manufacturer` `m` ON `p`.`manf_id` = `m`.`id` ".$category.$manufacturer.$order."
                LIMIT ?, ".AMOUNTONPAGE;
 
         $stmt = $this->conn->prepare($sql);
@@ -60,7 +60,7 @@ class Protected_Models_Catalog extends Core_DateBase
 
         if(isset($_GET['category'])){
             $category = $this->conn->quote($_GET['category']);
-            $category = "WHERE `c`.`translit_title`=".$category." ";
+            $category = "WHERE `c`.`title`=".$category." ";
             $conjunction =" AND";
         }
 
@@ -88,7 +88,7 @@ class Protected_Models_Catalog extends Core_DateBase
         foreach($categories as $category){
             if($category['parent_id'] ==$parent ){
 
-                $print.='<li ><a href="'.URL.'catalog?category='. $category['translit_title'] .'">'.$category['title'].'</a>' ;
+                $print.='<li ><a href="'.URL.'catalog?category='. $category['title'] .'">'.$category['translit_title'].'</a>' ;
                 foreach($categories as $sub_cat){
                     if($sub_cat['parent_id']==$category['id']){
                         $flag = TRUE; break;
