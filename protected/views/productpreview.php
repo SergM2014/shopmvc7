@@ -3,3 +3,4 @@
 <p><b>Описание:</b><?php echo $result['description'] ?></p>
 <p><b>Цена: </b><?php echo $result['price'] ?></p>
 
+

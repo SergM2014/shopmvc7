@@ -67,7 +67,7 @@
 
 
 class AppUser {
-    //makeinput klean
+    //makeinput clean
 	public static function cleanInput($arr, $esc=null){
 	   
 	  foreach($arr as $key=>$value){ 
@@ -109,6 +109,10 @@ class AppUser {
 
         return $url;
 
+    }
+    public static function _token(){
+        $_SESSION['_token']= md5(uniqid(rand(), true));
+        return $_SESSION['_token'];
     }
 
 
