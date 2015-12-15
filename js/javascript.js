@@ -406,13 +406,14 @@ document.getElementById('search').addEventListener('keyup', function(){
 if(document.getElementById('add_item')) {
     document.getElementById('add_item').addEventListener('click', function () {
         var id = this.getAttribute('item');
+        var _token = this.getAttribute('_token');
         var the_price = document.getElementById('the_price').innerHTML;
 
 
         xhr = new XMLHttpRequest();
         xhr.open('POST', '/addintobusket', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send('id=' + id + '&price=' + the_price);
+        xhr.send('id=' + id + '&price=' + the_price+'&_token='+_token );
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 if (xhr.status == 200) {

@@ -15,7 +15,7 @@
         <?php if (isset($product['cat_title'])) echo '<p> <b>Категория:</b> '.$product['cat_title'].'</p><br>'; ?>
         <?php if (isset($product['manf_title'])) echo '<p> <b>Производитель:</b> '.$product['manf_title'].'</p><br>'; ?>
         <p class="red"><b>Цена:</b> <span id="the_price"><?php echo $product['price']; ?></span> грн</p>
-        <button  id="add_item" item="<?php echo $_GET['id']; ?>" class="right">  Купить  </button>
+        <button  id="add_item" item="<?php echo $_GET['id']; ?>" class="right" _token="<?php echo AppUser::_token(); ?>">  Купить  </button>
     </article>
 
 </div>

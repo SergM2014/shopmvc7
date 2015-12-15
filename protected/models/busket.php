@@ -29,10 +29,15 @@ class Protected_Models_Busket extends Core_DateBase
     }
 
     //нажатие на клавишу купить  на странице товара
-    public function addintobusket(){
+    public function addIntoBusket(){
 
-        $price= $_POST['price'];
-        $id= $_POST['id'];
+        if($_SESSION['_token']!= $_POST['_token']) return false;
+
+        $price= filter_var($_POST['price'], FILTER_VALIDATE_FLOAT);
+
+        if(!$price) return false;
+
+        $id= (int)$_POST['id'];
 
 
         $_SESSION['totalsum']= (isset($_SESSION['totalsum']))? $_SESSION['totalsum']+$price : $price;
@@ -40,6 +45,7 @@ class Protected_Models_Busket extends Core_DateBase
         $_SESSION['totalamount']= (isset($_SESSION['totalamount']))? $_SESSION['totalamount']+1 : 1;
 
         $_SESSION['busket'][$id]= (isset($_SESSION['busket'][$id]))? $_SESSION['busket'][$id]+1: 1;
+        return false;
     }
 
     public function updateBusket(){
