@@ -68,7 +68,7 @@ class Protected_Models_Busket extends Core_DateBase
 
        $inputs= $this->decodePost();
 
-        if(isset($inputs['send'])) {
+        if(isset($inputs['_token']) && $inputs['_token']==$_SESSION['_token']) {
             $error = array();
 
             if (strlen($inputs['name']) < 3) {
@@ -134,7 +134,7 @@ class Protected_Models_Busket extends Core_DateBase
         $order=[];
 
         $counter=0;
-        $sql= "SELECT `author`, `title` FROM `products` WHERE `product_id`=?";
+        $sql= "SELECT `author`, `title` FROM `products` WHERE `id`=?";
 
         foreach($busket as $key=>$value){
 

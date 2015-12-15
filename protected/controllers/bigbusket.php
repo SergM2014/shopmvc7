@@ -35,12 +35,13 @@ class Protected_Controllers_BigBusket  extends Core_BaseController
 
         $model = new Protected_Models_Busket();
         $error = $model->makeOrder();
+        //get fields from json
         $inputs = $model->decodePost();
 
-            if( isset($inputs['send']))
+            if( isset($inputs['_token']) && $inputs['_token'] == $_SESSION['_token'])
                 { if( !empty($error)){
-
-                    return ['view'=>'orderform.php', 'error'=>$error, 'inputs'=>$inputs, 'ajax'=>1];
+                    $post = AppUser::cleanInput($inputs);
+                    return ['view'=>'orderform.php', 'error'=>$error, /*'inputs'=>$inputs,*/ 'post'=>$post, 'ajax'=>1];
                 } else {
 
                     //тут зберигаемо заказ в базу
