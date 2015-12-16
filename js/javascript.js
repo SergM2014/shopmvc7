@@ -180,35 +180,49 @@ if(leftmenu) {
 
             for(var i=0; i<numbers.length; i++){
 
+               if(numbers[i].id == 'updateBusket_token') continue;
+
                 var id = numbers[i].id;
                 var val = numbers[i].value;
                 o[id]=val;
                 o[id+'_price']= numbers[i].getAttribute('data-price');
             }
 
+            var _token= document.getElementById('updateBusket_token').value;
+           // console.log(_token);
+            if(_token){
 
-            xhr = new XMLHttpRequest();
-            xhr.open('POST', '/bigbusket/recount', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send('items=' + JSON.stringify(o));
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        //вставляемо в велику корзину
-                        document.getElementsByClassName('modalwindow')[0].innerHTML = xhr.responseText;
+                xhr = new XMLHttpRequest();
+                xhr.open('POST', '/bigbusket/recount', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.send('items=' + JSON.stringify(o)+'&_token='+_token);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status == 200) {
+                            //вставляемо в велику корзину
+                            document.getElementsByClassName('modalwindow')[0].innerHTML = xhr.responseText;
+                        }
                     }
-                }
-            };
+                };
 
-            xhr2 = new XMLHttpRequest();
-            xhr2.open('POST', '/bigbusket/updatesmallbusket', true);
-            xhr2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr2.send('items=' + JSON.stringify(o));
-            xhr2.onreadystatechange = function () {
-                if (xhr2.readyState == 4) {
-                    if (xhr2.status == 200) {
-                        //поновленнч малоъ корзини
-                        document.getElementById('busket_content').innerHTML = xhr2.responseText;
+            }
+
+
+           // var _token= document.getElementById('updateSmallBusket_token').innerHTML;
+            var _token= document.getElementById('busket_content').querySelector('#updateSmallBusket_token').innerHTML;
+            //console.log(_token);
+            if(_token) {
+
+                xhr2 = new XMLHttpRequest();
+                xhr2.open('POST', '/bigbusket/updatesmallbusket', true);
+                xhr2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr2.send('items=' + JSON.stringify(o)+'&_token='+_token);
+                xhr2.onreadystatechange = function () {
+                    if (xhr2.readyState == 4) {
+                        if (xhr2.status == 200) {
+                            //поновленнч малоъ корзини
+                            document.getElementById('busket_content').innerHTML = xhr2.responseText;
+                        }
                     }
                 }
             }
@@ -299,15 +313,21 @@ if(leftmenu) {
                 }
             };
 
-            xhr2 = new XMLHttpRequest();
-            xhr2.open('POST', '/bigbusket/updatesmallbusket', true);
-            xhr2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr2.send();
-            xhr2.onreadystatechange = function () {
-                if (xhr2.readyState == 4) {
-                    if (xhr2.status == 200) {
-                        //поновленнч малоъ корзини
-                        document.getElementById('busket_content').innerHTML = xhr2.responseText;
+
+            //var _token= document.getElementById('updateSmallBusket_token').innerHTML;
+            var _token= document.getElementById('busket_content').querySelector('#updateSmallBusket_token').innerHTML;
+            //console.log(_token);
+            if(_token) {
+                xhr2 = new XMLHttpRequest();
+                xhr2.open('POST', '/bigbusket/updatesmallbusket', true);
+                xhr2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr2.send('_token='+_token);
+                xhr2.onreadystatechange = function () {
+                    if (xhr2.readyState == 4) {
+                        if (xhr2.status == 200) {
+                            //поновленнч малоъ корзини
+                            document.getElementById('busket_content').innerHTML = xhr2.responseText;
+                        }
                     }
                 }
             }

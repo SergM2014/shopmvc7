@@ -12,6 +12,8 @@
     <?php endforeach; ?>
 
 </table>
+
+    <input type="hidden" id="updateBusket_token" value="<?php echo AppUser::_token('updateBusket') ?>" >
 <button id="make_order" class="right">Сделать заказ</button>
 <button id="recount_busket" class="right">Пересчитать</button>
 <strong class="red right">Загальна сумма: <?php echo $_SESSION['totalsum'] ?> грн.</strong>

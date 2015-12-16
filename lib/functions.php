@@ -110,9 +110,25 @@ class AppUser {
         return $url;
 
     }
-    public static function _token(){
-        $_SESSION['_token']= md5(uniqid(rand(), true));
-        return $_SESSION['_token'];
+
+
+    public static function _token($action){
+
+        if(!$_SESSION['_token'] OR ($_SESSION['_token']['time']+86400)< time()) {
+
+            $_SESSION['_token']['time'] =time();
+            $_SESSION['_token']['addintobusket'] = md5('addintobusket' . uniqid(rand(), true));//+
+
+            $_SESSION['_token']['search'] = md5('search' . uniqid(rand(), true));
+            $_SESSION['_token']['contactform'] = md5('contactform' . uniqid(rand(), true));//+
+            $_SESSION['_token']['orderform']         = md5(       'orderform' . uniqid(rand(), true));//+
+            $_SESSION['_token']['updateSmallBusket'] = md5('updatesmallbusket' .uniqid(rand(), true));//+
+            $_SESSION['_token']['updateBusket'] = md5('updatebusket' .uniqid(rand(), true));//+
+        }
+
+        $_token= $_SESSION['_token'];
+
+        return $_token[$action];
     }
 
 
