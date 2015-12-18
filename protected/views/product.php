@@ -21,19 +21,19 @@
     <section class="commentsarea">
         <div class="published_comments">
 
+        <?php foreach($product['comments'] as $comment): ?>
 
+            <p>Name: <?php echo $comment['name'] ?></p>
+            <p><?php echo $comment['comment'] ?></p>
+            <p><?php echo $comment['created_at'] ?></p>
+
+        <?php endforeach; ?>
 
         </div>
 
+        <?php
 
-        <h2>Add Your Comment</h2>
-        <div class="clearfix">
-             <div id="avatar_picture"></div>
-            <button id="load_avatar">Load avatar</button>
-        </div>
-
-
+        include ('commentBlock.php')  ?>
 
     </section>
 
-</div>

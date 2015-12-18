@@ -124,6 +124,8 @@ class AppUser {
             $_SESSION['_token']['orderForm']   = md5('orderform'.$random);//+
             $_SESSION['_token']['updateSmallBusket'] = md5('updatesmallbusket'.$random);//+
             $_SESSION['_token']['updateBusket'] = md5('updatebusket'.$random);//+
+            $_SESSION['_token']['updateBusket'] = md5('updatebusket'.$random);//+
+            $_SESSION['_token']['commentForm'] = md5('commentform'.$random);//+
         }
 
         $_token= $_SESSION['_token'];

@@ -14,6 +14,20 @@ class Protected_Models_Product extends Core_DateBase
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
+
+        $sql2= "SELECT `name`, `comment`, `created_at` FROM `comments` WHERE `product_id`=? AND `published`='1' ORDER BY `created_at` DESC";
+        $stmt = $this->conn->prepare($sql2);
+        $stmt->bindParam(1, $_GET['id'], PDO::PARAM_INT);
+        $stmt->execute();
+        $result['comments']= $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+            /*echo '<pre>';
+            (var_dump($result));
+            echo '</pre>';
+            exit;*/
+
+
         return $result;
     }
 }

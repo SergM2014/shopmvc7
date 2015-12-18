@@ -371,6 +371,39 @@ if(leftmenu) {
 
         }
 
+
+        var comment = find_closest_heighest_id(e.target, 'submitComment')
+        if(comment) {
+            e.preventDefault();
+            var _token = document.getElementById('commentForm_token').value;
+            //console.log(_token)
+            var message= document.getElementById('message').value;
+           // console.log(message);
+
+            var inputs = document.getElementsByClassName('commentBlock')[0].querySelectorAll('.input');
+            var obj={};
+            for( var i=0; i<inputs.length; i++){
+                //console.log(inputs[i]);
+                obj[inputs[i].id]= inputs[i].value;
+            }
+
+
+            xhr = new XMLHttpRequest();
+            xhr.open('POST', '/product/comment', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.send('inputs='+JSON.stringify(obj)+'&_token='+_token);
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState == 4){
+                    if(xhr.status == 200){
+                        document.getElementsByClassName('commentBlock')[0].innerHTML = xhr.responseText;
+
+                    }
+                }
+            }
+
+        }// commentend
+
     };
 //кфнець вішання на боді разной фігні
 //************************************************888

@@ -42,7 +42,7 @@
                 <label for="keystring">Введите капчу<span class="red">*</span></label>   <small class="red"><?php if(isset($error['keystring'])) echo $error['keystring']; ?></small>
                 <p><input type="text" name="keystring" id="keystring" <?php if(isset($error['keystring'])) echo 'class="error"'; ?> maxlength="10" required ></p>
 
-                <p><input type="hidden" name="_token" value="<?php echo AppUser::_token('contactform'); ?>"></p>
+                <p><input type="hidden" name="_token" value="<?php echo AppUser::_token('contactForm'); ?>"></p>
                 <br>
                 <p><input type="submit" value="Отправить"></p>
             </form>
