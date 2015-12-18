@@ -10,7 +10,7 @@ foreach($results as $one ): ?>
 
 
 
-    <p id="<?php echo $one['id'] ?>" class="date_to_preview"><?php echo $one['title'].'  '.$one['author']; ?></p>
+    <p priorResultId="<?php echo $one['id'] ?>" class="date_to_preview"><?php echo $one['title'].'  '.$one['author']; ?></p>
 
 <?php endforeach; ?>
 

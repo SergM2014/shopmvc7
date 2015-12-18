@@ -114,16 +114,16 @@ class AppUser {
 
     public static function _token($action){
 
-        if(!$_SESSION['_token'] OR ($_SESSION['_token']['time']+86400)< time()) {
+        if(!$_SESSION['_token'] OR ($_SESSION['_token']['time']+8/*6400*/)< time()) {
 
             $_SESSION['_token']['time'] =time();
-            $_SESSION['_token']['addintobusket'] = md5('addintobusket' . uniqid(rand(), true));//+
+            $random = uniqid(rand(), true);
 
-            $_SESSION['_token']['search'] = md5('search' . uniqid(rand(), true));
-            $_SESSION['_token']['contactform'] = md5('contactform' . uniqid(rand(), true));//+
-            $_SESSION['_token']['orderform']         = md5(       'orderform' . uniqid(rand(), true));//+
-            $_SESSION['_token']['updateSmallBusket'] = md5('updatesmallbusket' .uniqid(rand(), true));//+
-            $_SESSION['_token']['updateBusket'] = md5('updatebusket' .uniqid(rand(), true));//+
+            $_SESSION['_token']['addIntoBusket'] = md5('addintobusket'.$random);//+
+            $_SESSION['_token']['searchPriorResult'] = md5('searchPriorResult'.$random);//+
+            $_SESSION['_token']['orderForm']   = md5('orderform'.$random);//+
+            $_SESSION['_token']['updateSmallBusket'] = md5('updatesmallbusket'.$random);//+
+            $_SESSION['_token']['updateBusket'] = md5('updatebusket'.$random);//+
         }
 
         $_token= $_SESSION['_token'];

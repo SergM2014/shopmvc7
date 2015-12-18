@@ -2,11 +2,17 @@
 
 class Protected_Controllers_Priorresult extends Core_BaseController
 {
-    public function search(){
-        $model = new Protected_Models_Search();
-        $results= $model->search();
+    public function search()
+    {
 
-        return ['view'=>'priorresult.php', 'results'=>$results, 'ajax'=>true];
+        if (isset($_POST['_token']) && $_POST['_token'] == $_SESSION['_token']['searchPriorResult']) {
+
+            $model = new Protected_Models_Search();
+            $results = $model->search();
+
+            return ['view' => 'priorresult.php', 'results' => $results, 'ajax' => true];
+        } else
+            return ['view' => 'priorresult.php', 'ajax' => true];
     }
 
     public function getProduct(){

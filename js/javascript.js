@@ -157,7 +157,7 @@ if(leftmenu) {
         if (prior_result.classList.contains('founded')) {
             while (target.id != 'prior_result') {
                 target = target.parentNode;
-                if (target.tagName.toLowerCase() == 'html') {
+                if (!target || target.tagName.toLowerCase() == 'html') {
                     prior_result.classList.remove('founded');
                     break;
                 }
@@ -338,7 +338,7 @@ if(leftmenu) {
         var show_preview = find_closest_heighest_class(e.target, 'date_to_preview');
         if(show_preview){
 
-            var id = show_preview.id;
+            var id = show_preview.getAttribute('priorResultId');
 
             xhr = new XMLHttpRequest();
             xhr.open('POST', '/priorresult/getProduct', true);
@@ -396,7 +396,9 @@ document.getElementById('touch-button').addEventListener('click', function(){
 //нажатие клавиши в строке поиска
 document.getElementById('search').addEventListener('keyup', function(){
 
-   if(this.value != ''){
+    var _token= document.getElementById('searchPriorResult').value;
+//console.log(_token)
+   if(this.value != '' && _token){
     if(!prior_result.classList.contains('founded')) { prior_result.classList.add('founded');}
 
         var val= this.value;
@@ -404,7 +406,7 @@ document.getElementById('search').addEventListener('keyup', function(){
         xhr= new XMLHttpRequest();
         xhr.open('POST', '/priorresult/search', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send('value='+val);
+        xhr.send('value='+val+'&_token='+_token);
         xhr.onreadystatechange = function(){
             if(xhr.readyState == 4){
                 if(xhr.status == 200){

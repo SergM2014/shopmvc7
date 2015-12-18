@@ -31,7 +31,7 @@ class Protected_Models_Busket extends Core_DateBase
     //нажатие на клавишу купить  на странице товара
     public function addIntoBusket(){
 
-        if($_SESSION['_token']['addintobusket']!= $_POST['_token']) return false;
+        if($_SESSION['_token']['addIntoBusket']!= $_POST['_token']) return false;
 
         $price= filter_var($_POST['price'], FILTER_VALIDATE_FLOAT);
 
