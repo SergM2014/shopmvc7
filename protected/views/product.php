@@ -18,4 +18,22 @@
         <button  id="add_item" item="<?php echo $_GET['id']; ?>" class="right" _token="<?php echo AppUser::_token('addIntoBusket'); ?>">  Купить  </button>
     </article>
 
+    <section class="commentsarea">
+        <div class="published_comments">
+
+
+
+        </div>
+
+
+        <h2>Add Your Comment</h2>
+        <div class="clearfix">
+             <div id="avatar_picture"></div>
+            <button id="load_avatar">Load avatar</button>
+        </div>
+
+
+
+    </section>
+
 </div>

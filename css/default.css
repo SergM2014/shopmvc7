@@ -538,6 +538,26 @@ article.good{
 
 
 
+.commentsarea{
+    border:1px solid #d2171f;
+    min-height:400px;
+}
+
+#avatar_picture{
+    height:130px;
+    width:100px;
+    border:2px solid #000000;
+    margin:10px;
+    float:left;
+}
+
+#load_avatar{
+    float:left;
+    margin-top:115px;
+}
+
+
+
 
 
 @media screen and (max-width:1170px){
