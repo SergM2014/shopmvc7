@@ -379,6 +379,8 @@ if(leftmenu) {
             //console.log(_token)
             var message= document.getElementById('message').value;
            // console.log(message);
+            var product_id= document.getElementById('add_item').getAttribute('item');
+//console.log(product_id);
 
             var inputs = document.getElementsByClassName('commentBlock')[0].querySelectorAll('.input');
             var obj={};
@@ -386,7 +388,8 @@ if(leftmenu) {
                 //console.log(inputs[i]);
                 obj[inputs[i].id]= inputs[i].value;
             }
-
+            obj['product_id']= product_id;
+//console.log(obj);
 
             xhr = new XMLHttpRequest();
             xhr.open('POST', '/product/comment', true);

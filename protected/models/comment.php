@@ -1,10 +1,11 @@
 <?php
 
-class Protected_Models_Comment extends Core_DataBase
+class Protected_Models_Comment extends Core_DateBase
+
 {
 
     public function checkComment(){
-die(111);
+
         $inputs= $this->decodePost();
 
 
@@ -14,11 +15,12 @@ die(111);
                 $error['name'] = 'Имя должно состоять больше чем из 3 букв';
             }
 
-            $pattern = '/^\\+?(38)?(\\-|\\s)?(\\([0-9]{3}\\)|[0-9]{3})?[0-9\\-\\s]{6,10}$/';
-            if (!preg_match($pattern, $inputs['phone'])) {
-                $error['phone'] = 'Введите правильный телефон';
-            };
+            if(!filter_var($inputs['email'], FILTER_VALIDATE_EMAIL)){$error['email']='Неверный email';}
+            if(empty($inputs['email'])){$error['email']='Пустое поле';}
 
+            if(empty($inputs['message'])){
+                $error['message']= 'Пустое поле';
+            }
 
             if ($_SESSION['captcha_keystring'] != $inputs['keystring']) {
                 $error['keystring'] = 'неверная капча';
@@ -42,7 +44,6 @@ die(111);
         if(isset($_POST['inputs'])) {
             $inputs = json_decode($_POST['inputs']);
             $inputs = (array)$inputs;
-            die(var_dump($inputs));
             return $inputs;
         }
         return false;
@@ -52,16 +53,15 @@ die(111);
         $inputs = $this->decodePost();
         $cleaned = AppUser::cleanInput($inputs);
 
-       // $busket= $_SESSION['busket'];
-        /*$items = $this->getProductName($busket);
-        $items_str = serialize($items);*/
 
-        $sql="INSERT INTO `comments`(`name`, `email`,  `message`) VALUES (?, ?, ?, )";
+
+        $sql="INSERT INTO `comments`(`product_id`, `name`, `email`,  `comment`) VALUES (?, ?, ?, ? )";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1, $cleaned['name'], PDO::PARAM_STR);
-        $stmt->bindParam(2, $cleaned['email'], PDO::PARAM_STR);
+        $stmt->bindParam(1,$cleaned['product_id'], PDO::PARAM_INT);
+        $stmt->bindParam(2, $cleaned['name'], PDO::PARAM_STR);
+        $stmt->bindParam(3, $cleaned['email'], PDO::PARAM_STR);
 
-        $stmt->bindParam(3, $cleaned['message'], PDO::PARAM_STR);
+        $stmt->bindParam(4, $cleaned['message'], PDO::PARAM_STR);
 
         $stmt->execute();
         return true;

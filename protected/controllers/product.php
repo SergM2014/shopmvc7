@@ -16,7 +16,8 @@ class Protected_Controllers_Product  extends Core_BaseController
         $model = new Protected_Models_Comment();
         $error = $model->checkComment();
         if(!empty($error)){
-            return ['view'=>'commentBlock.php','error'=>$error, 'ajax'=>true ];
+            $post= $model->decodePost();
+           return ['view'=>'commentBlock.php','error'=>$error, 'post'=> $post, 'ajax'=> true ];
         }
 
        $success = $model->saveComment($_POST);
