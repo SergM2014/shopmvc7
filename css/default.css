@@ -543,13 +543,15 @@ article.good{
     min-height:400px;
 }
 
-#avatar_picture{
-    height:130px;
-    width:100px;
+#avatar_picture, #image_preview{
+    max-height:130px;
+    max-width:100px;
     border:2px solid #000000;
     margin:10px;
     float:left;
 }
+
+
 
 #load_avatar{
     float:left;

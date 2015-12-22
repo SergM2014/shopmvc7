@@ -9,7 +9,7 @@
     define('PASSWORD', '1'); //пароль
     define('NAME_BD', 'shopmvc7');
     define('DEBUG_MODE', TRUE); //режим отладки
-	define('VALID_FORMATS','jpg,imj,png,jpeg');
+	//define('VALID_FORMATS','jpg,img,png,jpeg');
 	define('UPLOAD_FILE','/uploads/');
 	define('LINKCOUNT',5);
 	define('ADMINEMAIL', 'weisse@ukr.net');

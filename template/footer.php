@@ -4,6 +4,7 @@
 
             </footer>
             <script src="/js/javascript.js"></script>
+            <script src="/js/uploadimage.js"></script>
 
     </div><!-- wrapper-->
 </body>

@@ -1,9 +1,9 @@
 var menu=document.getElementById('menu'),
-change_button = document.getElementById('touch-button'),
+
     progress=document.getElementById('progress-bar'),
     output= document.getElementById('output'),
     submit_btn= document.getElementById('submit-btn'),
-    reset_btn= document.getElementById('reset-btn');
+    reset_btn= document.getElementById('image-reset-btn');
 
 
 
@@ -26,9 +26,9 @@ function completeHandler(event){//тут ивент переобразуется
     progress.style.width= "0%";
     progress.innerHTML= "0%";
 
-    output.classList.remove('unvisible');
-    submit_btn.classList.add('unvisible');
-    progress.classList.add('unvisible');
+    output.classList.remove('invisible');
+    submit_btn.classList.add('invisible');
+    progress.classList.add('invisible');
     reset_btn.removeAttribute('disabled');
 }
 
@@ -46,8 +46,8 @@ function abortHandler(event){
 
 if(submit_btn){
     submit_btn.onclick = function(){
-
-        progress.classList.remove('unvisible');
+console.log('submit');
+        progress.classList.remove('invisible');
 
         var file=document.getElementById("FileInput").files[0];
 
@@ -60,7 +60,7 @@ if(submit_btn){
         ajax.addEventListener("load", completeHandler, false);
         ajax.addEventListener("error", errorHandler, false);
         ajax.addEventListener("abort", abortHandler, false);
-        ajax.open("POST", "/protected/ajax/upload.php/");
+        ajax.open("POST", "/image/upload");
         ajax.send(formdata);
 
         reset_btn.setAttribute('disabled', 'disabled');
@@ -69,51 +69,59 @@ if(submit_btn){
 }
 
 
+if(document.getElementById('FileInput')) {
+    document.getElementById('FileInput').onchange = function () {
 
-document.getElementById('FileInput').onchange = function(){
+        var input = this;
 
-    var input = this ;
+        if (input.files && input.files[0]) {
+            if (input.files[0].type.match('image.*')) {
+                var reader = new FileReader();
 
-    if ( input.files && input.files[0] ) {
-        if ( input.files[0].type.match('image.*') ) {
-            var reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('image_preview').setAttribute('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
 
-            reader.onload = function(e) { document.getElementById('image_preview').setAttribute('src', e.target.result); };
-            reader.readAsDataURL(input.files[0]);
+                document.getElementById('FileInput').classList.add('invisible');
 
-            document.getElementById('FileInput').classList.add('unvisible');
+                output.classList.add('invisible');
 
-            output.classList.add('unvisible');
+                reset_btn.classList.remove('invisible');
 
-            reset_btn.classList.remove('unvisible');
+                submit_btn.classList.remove('invisible');
 
-            submit_btn.classList.remove('unvisible');
+            }// else console.log('is not image mime type');
+        }// else console.log('not isset files data or files API not supordet');
 
-        }// else console.log('is not image mime type');
-    }// else console.log('not isset files data or files API not supordet');
+    };//end of function
+}
 
-};//end of function
+if(reset_btn) {
+    reset_btn.onclick = function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('reset');
 
+        document.getElementById('image_preview').setAttribute('src', '/img/noavatar.jpg');
+        document.getElementById('FileInput').classList.remove('unvisible');
 
+        xhr2 = new XMLHttpRequest();
+        xhr2.open('POST', '/image/delete', true);
+        xhr2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr2.onreadystatechange = function () {
+            if (xhr2.readyState == 4) {
+                if (xhr2.status == 200) {
+                    output.innerHTML = xhr2.responseText;
 
-reset_btn.onclick = function(){
-    document.getElementById('image_preview').setAttribute('src', '/images/noavatar.jpg');
-    document.getElementById('FileInput').classList.remove('unvisible');
-
-    xhr= new XMLHttpRequest();
-    xhr.open('POST', 'index/deleteimage/', true);
-    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4) {
-            if(xhr.status == 200) {
-                output.innerHTML=xhr.responseText;
+                }
             }
-        }
+        };
+         xhr2.send();
+
+        submit_btn.classList.add('unvisible');
+        this.classList.add('unvisible');
+
     };
-    xhr.send('ajax=1');
-
-    submit_btn.classList.add('unvisible');
-    this.classList.add('unvisible');
-
-};
+}
 //end of image upload
