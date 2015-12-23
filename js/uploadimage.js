@@ -100,11 +100,11 @@ if(document.getElementById('FileInput')) {
 if(reset_btn) {
     reset_btn.onclick = function (e) {
         e.preventDefault();
-        e.stopPropagation();
+       // e.stopPropagation();
         console.log('reset');
 
         document.getElementById('image_preview').setAttribute('src', '/img/noavatar.jpg');
-        document.getElementById('FileInput').classList.remove('unvisible');
+        document.getElementById('FileInput').classList.remove('invisible');
 
         xhr2 = new XMLHttpRequest();
         xhr2.open('POST', '/image/delete', true);
@@ -119,8 +119,8 @@ if(reset_btn) {
         };
          xhr2.send();
 
-        submit_btn.classList.add('unvisible');
-        this.classList.add('unvisible');
+        submit_btn.classList.add('invisible');
+        this.classList.add('invisible');
 
     };
 }

@@ -543,12 +543,13 @@ article.good{
     min-height:400px;
 }
 
-#avatar_picture, #image_preview{
+ #image_preview{
     max-height:130px;
     max-width:100px;
     border:2px solid #000000;
     margin:10px;
     float:left;
+    border-radius: 4px;
 }
 
 
@@ -567,6 +568,13 @@ article.good{
     max-width:600px;
     margin:0  auto;
     padding:10px;
+}
+
+#output {
+    margin:10px 0;
+}
+.green{
+    color: #0acc6b;
 }
 
 

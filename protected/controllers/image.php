@@ -11,9 +11,8 @@ class Protected_Controllers_Image extends Core_BaseController
 // Массив допустимых значений типа файла
         $types = array('image/gif', 'image/png', 'image/jpeg');
 
-// Максимальный размер файла
-       // $size = 1024000;
-        $size= 2048000;
+// Максимальный размер файла 2mb
+          $size = 2048000;
 
 // Обработка запроса
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -25,17 +24,16 @@ class Protected_Controllers_Image extends Core_BaseController
             if ($_FILES['FileInput']['size'] > $size)
                 die('Слишком большой размер файла.'.$_FILES['FileInput']['size']);
 
-            $name = $this->resize($_FILES['FileInput'], $tmp_path, $path);
+            $name = $this->resize($_FILES['FileInput'], $tmp_path);
 
             // Загрузка файла и вывод сообщения
-
                 if(!@copy($tmp_path.$name, $path.$name)) {
                     $message='<p>Что-то пошло не так.</p>';
                 }
             else {
-                $_SESSION['avatar']= $tmp_path.$name;
+                $_SESSION['avatar']= $path.$name;
 
-                $message='<p>Загрузка прошла удачно.</p>';
+                $message='Загрузка прошла удачно.';
                 chmod ($path.$name , 0777);
             }
             // Удаляем временный файл
@@ -48,11 +46,12 @@ class Protected_Controllers_Image extends Core_BaseController
     // Функция изменения размера
     private function resize($file, $tmp_path)
     {
+        $file['name'] = strtolower($file['name']);
        // $w =100;
         $h=130;
 
         // Качество изображения по умолчанию
-            $quality = 75;
+        $quality = 75;
 
         // Cоздаём исходное изображение на основе исходного файла
         if ($file['type'] == 'image/jpeg')
@@ -68,8 +67,7 @@ class Protected_Controllers_Image extends Core_BaseController
         $w_src = imagesx($source);
         $h_src = imagesy($source);
 
-        // Если ширина больше заданной
-       // if ($w_src > $w) {
+        // Если высота больше заданной
         if($h_src>$h){
             // Вычисление пропорций
            // $ratio = $w_src / $w;
@@ -84,7 +82,7 @@ class Protected_Controllers_Image extends Core_BaseController
             imagecopyresampled($dest, $source, 0, 0, 0, 0, $w_dest, $h_dest, $w_src, $h_src);
 
             // Вывод картинки и очистка памяти
-            imagejpeg($dest, $tmp_path . $file['name'], $quality);
+            imagejpeg($dest, $tmp_path. $file['name'], $quality);
             imagedestroy($dest);
             imagedestroy($source);
             chmod ($tmp_path . $file['name'] , 0777);
@@ -93,7 +91,7 @@ class Protected_Controllers_Image extends Core_BaseController
         } else {
             // Вывод картинки и очистка памяти
             //output image into browser or file
-            imagejpeg($source, $tmp_path . $file['name'], $quality);
+            imagejpeg($source, $tmp_path. $file['name'], $quality);
             imagedestroy($source);
             chmod ($tmp_path . $file['name'] , 0777);
 
@@ -101,13 +99,14 @@ class Protected_Controllers_Image extends Core_BaseController
         }
     }
 
+
     public function delete(){
 
         @unlink($_SESSION['avatar']);
-        $message='<p>Изображение удаленно.</p>';
-       // unset ($_SESSION['avatar']);
+        $message='Изображение удаленно.';
+        unset ($_SESSION['avatar']);
         return ['view'=> 'uploadimage/deletedimage.php', 'message'=>$message, 'ajax'=> 1];
-}
+    }
 
 }
 ?>

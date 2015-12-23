@@ -1,5 +1,1 @@
-<?php
-
-echo $message;
-
-?>
+<p class="red"><?php echo $message; ?></p>
