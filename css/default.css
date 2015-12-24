@@ -578,6 +578,33 @@ article.good{
 }
 
 
+.the_comment{
+    border-bottom:1px solid #000000;
+    min-height:60px;
+    margin-bottom:10px;
+    position:relative;
+}
+.the_comment img{
+    max-width:50px;
+    max-height:50px;
+}
+
+.the_comment:last-of-type{
+   border-bottom:none;
+}
+.right_of_comment{
+    float:left;
+    margin-left:20px;
+}
+.comment_time{
+
+    position:absolute;
+
+    bottom:0;
+    right:0;
+}
+
+
 
 @media screen and (max-width:1170px){
 

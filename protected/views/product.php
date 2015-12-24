@@ -19,14 +19,20 @@
     </article>
 
     <section class="commentsarea">
-        <div class="published_comments">
+        <div class="published_comments clearfix">
 
         <?php foreach($product['comments'] as $comment): ?>
-            <p><img src="/uploads/avatars/"<?php echo $comment['avatar']; ?> </p>
-            <p>Name: <?php echo $comment['name'] ?></p>
-            <p><?php echo $comment['comment'] ?></p>
-            <p><?php echo $comment['created_at'] ?></p>
+            <article class="the_comment"">
+                <div class="left">
+                   <?php if (isset($comment['avatar'])): ?> <p><img src="/uploads/avatars/<?php echo $comment['avatar']; ?>" > </p> <?php endif; ?>
+                    <b> <?php echo $comment['name'] ?></b>
+                </div>
+                <div class="right_of_comment">
+                    <i><?php echo $comment['comment'] ?></i>
 
+                </div>
+                 <p class="comment_time"><?php echo $comment['created_at'] ?></p>
+            </article>
         <?php endforeach; ?>
 
         </div>
