@@ -46,7 +46,7 @@ function abortHandler(event){
 
 if(submit_btn){
     submit_btn.onclick = function(){
-console.log('submit');
+
         progress.classList.remove('invisible');
 
         var file=document.getElementById("FileInput").files[0];
@@ -97,11 +97,10 @@ if(document.getElementById('FileInput')) {
     };//end of function
 }
 
+
 if(reset_btn) {
     reset_btn.onclick = function (e) {
         e.preventDefault();
-       // e.stopPropagation();
-        console.log('reset');
 
         document.getElementById('image_preview').setAttribute('src', '/img/noavatar.jpg');
         document.getElementById('FileInput').classList.remove('invisible');
@@ -113,7 +112,6 @@ if(reset_btn) {
             if (xhr2.readyState == 4) {
                 if (xhr2.status == 200) {
                     output.innerHTML = xhr2.responseText;
-
                 }
             }
         };

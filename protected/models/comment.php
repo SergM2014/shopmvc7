@@ -52,16 +52,17 @@ class Protected_Models_Comment extends Core_DateBase
     public function saveComment(){
         $inputs = $this->decodePost();
         $cleaned = AppUser::cleanInput($inputs);
+        if(isset($_SESSION['avatar'])) $avatar= $_SESSION['avatar'];
 
 
-
-        $sql="INSERT INTO `comments`(`product_id`, `name`, `email`,  `comment`) VALUES (?, ?, ?, ? )";
+        $sql="INSERT INTO `comments`(`avatar`, `product_id`, `name`, `email`,  `comment`) VALUES (?, ?, ?, ?, ? )";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1,$cleaned['product_id'], PDO::PARAM_INT);
-        $stmt->bindParam(2, $cleaned['name'], PDO::PARAM_STR);
-        $stmt->bindParam(3, $cleaned['email'], PDO::PARAM_STR);
+        $stmt->bindParam(1, $avatar, PDO::PARAM_STR);
+        $stmt->bindParam(2,$cleaned['product_id'], PDO::PARAM_INT);
+        $stmt->bindParam(3, $cleaned['name'], PDO::PARAM_STR);
+        $stmt->bindParam(4, $cleaned['email'], PDO::PARAM_STR);
 
-        $stmt->bindParam(4, $cleaned['message'], PDO::PARAM_STR);
+        $stmt->bindParam(5, $cleaned['message'], PDO::PARAM_STR);
 
         $stmt->execute();
         return true;

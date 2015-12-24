@@ -1,9 +1,6 @@
 <div class="commentBlock">
-    <h2>Add Your Comment</h2>
-  <!--  <div class="clearfix">
-        <img id="avatar_picture" src="<?php// echo URL.'img/noavatar.jpg' ?>">
-        <button id="load_avatar">Load avatar</button>
-    </div> -->
+    <h2>Додайте Ваш комментар</h2>
+
 
     <?php include('uploadimage/index.php'); ?>
 

@@ -31,7 +31,8 @@ class Protected_Controllers_Image extends Core_BaseController
                     $message='<p>Что-то пошло не так.</p>';
                 }
             else {
-                $_SESSION['avatar']= $path.$name;
+                //$_SESSION['avatar']= $path.$name;
+                $_SESSION['avatar']= $name;
 
                 $message='Загрузка прошла удачно.';
                 chmod ($path.$name , 0777);
@@ -102,9 +103,11 @@ class Protected_Controllers_Image extends Core_BaseController
 
     public function delete(){
 
-        @unlink($_SESSION['avatar']);
+        //@unlink($_SESSION['avatar']);
+        @unlink('uploads/avatars/'.$_SESSION['avatar']);
         $message='Изображение удаленно.';
         unset ($_SESSION['avatar']);
+
         return ['view'=> 'uploadimage/deletedimage.php', 'message'=>$message, 'ajax'=> 1];
     }
 

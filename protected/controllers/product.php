@@ -22,6 +22,7 @@ class Protected_Controllers_Product  extends Core_BaseController
 
        $success = $model->saveComment($_POST);
         if($success) {
+            if(isset($_SESSION['avatar'])){ unset($_SESSION['avatar']);}
             return ['view' => 'savedComment.php', 'ajax' => true];
         }
 

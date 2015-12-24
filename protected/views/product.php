@@ -22,7 +22,7 @@
         <div class="published_comments">
 
         <?php foreach($product['comments'] as $comment): ?>
-
+            <p><img src="/uploads/avatars/"<?php echo $comment['avatar']; ?> </p>
             <p>Name: <?php echo $comment['name'] ?></p>
             <p><?php echo $comment['comment'] ?></p>
             <p><?php echo $comment['created_at'] ?></p>
