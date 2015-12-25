@@ -19,11 +19,13 @@
     </article>
 
     <section class="commentsarea">
-        <div class="published_comments clearfix">
+        <div class="published_comments ">
 
         <?php foreach($product['comments'] as $comment): ?>
-            <article class="the_comment"">
-                <div class="left">
+
+
+            <article class="the_comment">
+                <div class="left left_of_comment ">
                    <?php if (isset($comment['avatar'])): ?> <p><img src="/uploads/avatars/<?php echo $comment['avatar']; ?>" > </p> <?php endif; ?>
                     <b> <?php echo $comment['name'] ?></b>
                 </div>
@@ -31,8 +33,11 @@
                     <i><?php echo $comment['comment'] ?></i>
 
                 </div>
-                 <p class="comment_time"><?php echo $comment['created_at'] ?></p>
+                <span class="comment_time red" ><?php echo date('d-m-Y H:i',strtotime($comment['created_at'])); ?></span>
             </article>
+
+
+
         <?php endforeach; ?>
 
         </div>

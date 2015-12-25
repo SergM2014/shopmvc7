@@ -582,7 +582,8 @@ article.good{
     border-bottom:1px solid #000000;
     min-height:60px;
     margin-bottom:10px;
-    position:relative;
+   /* position:relative;*/
+
 }
 .the_comment img{
     max-width:50px;
@@ -592,16 +593,23 @@ article.good{
 .the_comment:last-of-type{
    border-bottom:none;
 }
+
+.left_of_comment{
+    max-width:20%;
+    overflow:hidden;
+    margin-right:10px;
+}
+
 .right_of_comment{
-    float:left;
-    margin-left:20px;
+
+    margin-left:100px;
+    width:auto;
+
+
 }
 .comment_time{
-
-    position:absolute;
-
-    bottom:0;
-    right:0;
+    margin-left:75%;
+    font-size:80%;
 }
 
 
