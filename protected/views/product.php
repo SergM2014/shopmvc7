@@ -21,6 +21,13 @@
     <section class="commentsarea">
         <div class="published_comments ">
 
+        <?php if(empty($product['comments'])): ?>
+            <h2>No comments yet. you can be first!</h2>
+
+        <?php else: ?>
+
+            <h2>Comments</h2>
+
         <?php foreach($product['comments'] as $comment): ?>
 
 
@@ -33,12 +40,14 @@
                     <i><?php echo $comment['comment'] ?></i>
 
                 </div>
-                <span class="comment_time red" ><?php echo date('d-m-Y H:i',strtotime($comment['created_at'])); ?></span>
+                <b class="comment_time red" ><?php echo date('d-m-Y H:i',strtotime($comment['created_at'])); ?></b>
             </article>
 
 
 
         <?php endforeach; ?>
+
+        <?php endif; ?>
 
         </div>
 

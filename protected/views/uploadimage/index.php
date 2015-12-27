@@ -1,6 +1,6 @@
 <label for="FileInput" > Додать аватар</label>
 
-<form id="MyUploadForm"  enctype="multipart/form-data" method="post" a class="clearfix" >
+<form id="MyUploadForm"  enctype="multipart/form-data" method="post" class="clearfix" >
 
     <div id="avatarForm">
         <img alt="" id="image_preview" class="thumb" src="<?php if(isset($_SESSION['avatar'])) {echo '/uploads/avatars/'.$_SESSION['avatar'];} else {echo URL.'img/noavatar.jpg';} ?>"  />

@@ -12,18 +12,26 @@ class Protected_Controllers_Product  extends Core_BaseController
     }
 
     public function comment(){
-        //die(var_dump($_POST));
-        $model = new Protected_Models_Comment();
-        $error = $model->checkComment();
-        if(!empty($error)){
-            $post= $model->decodePost();
-           return ['view'=>'commentBlock.php','error'=>$error, 'post'=> $post, 'ajax'=> true ];
-        }
+        //check token
+        if(isset($_POST['_token']) && $_POST['_token']== $_SESSION['_token']['commentForm']) {
 
-       $success = $model->saveComment($_POST);
-        if($success) {
-            if(isset($_SESSION['avatar'])){ unset($_SESSION['avatar']);}
-            return ['view' => 'savedComment.php', 'ajax' => true];
+
+            $model = new Protected_Models_Comment();
+            $error = $model->checkComment();
+            if (!empty($error)) {
+                $post = $model->decodePost();
+                return ['view' => 'commentBlock.php', 'error' => $error, 'post' => $post, 'ajax' => true];
+            }
+
+            $success = $model->saveComment($_POST);
+            if ($success) {
+                if (isset($_SESSION['avatar'])) {
+                    unset($_SESSION['avatar']);
+                }
+                return ['view' => 'savedComment.php', 'ajax' => true];
+            }
+        } else {
+            return ['view'=>'commentBlock.php', 'ajax'=>true ];
         }
 
     }

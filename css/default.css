@@ -539,8 +539,10 @@ article.good{
 
 
 .commentsarea{
-    border:1px solid #d2171f;
+
+    border-top:1px solid #d2171f;
     min-height:400px;
+
 }
 
  #image_preview{
@@ -562,7 +564,7 @@ article.good{
 .published_comments{
     padding:10px;
     border-bottom:2px solid #27cc50;
-
+    margin-bottom:10px;
 }
 .commentBlock{
     max-width:600px;
@@ -588,6 +590,9 @@ article.good{
 .the_comment img{
     max-width:50px;
     max-height:50px;
+}
+.the_comment:first-of-type{
+    margin-top:20px;
 }
 
 .the_comment:last-of-type{

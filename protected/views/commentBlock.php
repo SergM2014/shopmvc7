@@ -9,6 +9,8 @@
         <p>Поля обозначеные <span class="red">*</span> есть обязательными</p>
         <br>
 
+
+
         <label for="name">Имя<span class="red">*</span></label>  <small class="red"><?php if(isset($error['name'])) echo $error['name']; ?></small>
         <p> <input type="text" name="name" id="name" placeholder="Введите Ваше Имя" class="input <?php if(isset($error['name'])) echo 'error'; ?>"
                    value="<?php if(isset($post['name'])) echo $post['name']; ?>" maxlength="15" required ></p>
