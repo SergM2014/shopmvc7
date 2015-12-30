@@ -52,8 +52,10 @@ if(submit_btn){
         var file=document.getElementById("FileInput").files[0];
 
         var formdata= new FormData();
+        var _token = document.getElementById('commentForm_token').value;
 
         formdata.append("FileInput", file);
+        formdata.append("_token", _token);
 
         var ajax=new XMLHttpRequest();
         ajax.upload.addEventListener("progress", progressHandler, false);
@@ -102,6 +104,8 @@ if(reset_btn) {
     reset_btn.onclick = function (e) {
         e.preventDefault();
 
+        var _token = document.getElementById('commentForm_token').value;
+
         document.getElementById('image_preview').setAttribute('src', '/img/noavatar.jpg');
         document.getElementById('FileInput').classList.remove('invisible');
 
@@ -115,7 +119,7 @@ if(reset_btn) {
                 }
             }
         };
-         xhr2.send();
+         xhr2.send('_token='+_token);
 
         submit_btn.classList.add('invisible');
         this.classList.add('invisible');

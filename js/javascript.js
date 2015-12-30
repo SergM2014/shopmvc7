@@ -248,7 +248,7 @@ if(leftmenu) {
             document.body.appendChild(orderform);
 
             xhr= new XMLHttpRequest();
-            xhr.open('POST', '/bigbusket/order', true);
+            xhr.open('POST', '/bigbusket/createOrderForm', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.send();
             xhr.onreadystatechange = function(){
@@ -469,7 +469,7 @@ if(document.getElementById('add_item')) {
 
 
         xhr = new XMLHttpRequest();
-        xhr.open('POST', '/addintobusket', true);
+        xhr.open('POST', '/bigbusket/addintobusket', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.send('id=' + id + '&price=' + the_price+'&_token='+_token );
         xhr.onreadystatechange = function () {

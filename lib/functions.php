@@ -114,7 +114,7 @@ class AppUser {
 
     public static function _token($action){
 
-        if(!$_SESSION['_token'] OR ($_SESSION['_token']['time']+8/*6400*/)< time()) {
+        if(!$_SESSION['_token'] OR ($_SESSION['_token']['time']+86400)< time()) {
 
             $_SESSION['_token']['time'] =time();
             $random = uniqid(rand(), true);
@@ -132,6 +132,43 @@ class AppUser {
         $_token= $_SESSION['_token'];
 
         return $_token[$action];
+    }
+
+
+
+    public static function setBusketCookies(){
+       // var_dump($_COOKIE);
+       // echo "<br>";
+      //  var_dump($_SESSION);
+        $expire_time = time()+1209600;
+        $value = json_encode($_SESSION['busket']);
+        setcookie('busket', $value, $expire_time, '/');
+        setcookie('totalsum', (int)$_SESSION['totalsum'], $expire_time, '/');
+        setcookie('totalamount', (int)$_SESSION['totalamount'], $expire_time, '/');
+       // die(var_dump($_COOKIE));
+    }
+
+    public static function updateBusketCookies(){
+
+    }
+
+    public static function getBusketCookies(){
+        return json_decode($_COOKIE('busket'), true);
+    }
+
+    public static function initBusket()
+    {
+        if (!isset($_SESSION['busket'])) {
+            if (isset($_COOKIE['busket'])) $_SESSION['busket'] = json_decode($_COOKIE['busket'], true);
+            if (isset($_COOKIE['totalsum'])) $_SESSION['totalsum'] = (int)$_COOKIE['totalsum'];
+            if (isset($_COOKIE['totalamount'])) $_SESSION['totalamount'] = (int)$_COOKIE['totalamount'];
+        }
+    }
+
+    public static function deleteBusketCookies(){
+        setcookie('busket', NULL, -1, '/');
+        setcookie('totalsum', NULL, -1, '/');
+        setcookie('totalamount', NULL, -1, '/');
     }
 
 

@@ -1,11 +1,12 @@
 <?php
 
-class Protected_Models_Busket extends Core_DateBase
+class Protected_Models_Busket extends Core_DataBase
 {
     public function getBigBusket(){
 
         $goods =[];
-
+//die(var_dump($_SESSION));
+     
         if(!isset($_SESSION['busket'])) return false;
 
         $sql="SELECT `p`.`id`, `p`.`author`, `p`.`title`,  `p`.`price` FROM `products` `p` LEFT JOIN `categories` `c` ON
@@ -45,6 +46,9 @@ class Protected_Models_Busket extends Core_DateBase
         $_SESSION['totalamount']= (isset($_SESSION['totalamount']))? $_SESSION['totalamount']+1 : 1;
 
         $_SESSION['busket'][$id]= (isset($_SESSION['busket'][$id]))? $_SESSION['busket'][$id]+1: 1;
+
+        AppUser::setBusketCookies();
+
         return false;
     }
 
@@ -66,7 +70,8 @@ class Protected_Models_Busket extends Core_DateBase
             }
         }
 
-
+        AppUser::setBusketCookies();
+//die(var_dump($_COOKIE));
     }
 
 
@@ -74,22 +79,21 @@ class Protected_Models_Busket extends Core_DateBase
 
        $inputs= $this->decodePost();
 
-        if(isset($inputs['_token']) && $inputs['_token']==$_SESSION['_token']) {
             $error = array();
 
-            if (strlen($inputs['name']) < 3) {
+            if (strlen($inputs['name']) < 3 OR !isset($inputs['name'])) {
                 $error['name'] = 'Имя должно состоять больше чем из 3 букв';
             }
 
             $pattern = '/^\\+?(38)?(\\-|\\s)?(\\([0-9]{3}\\)|[0-9]{3})?[0-9\\-\\s]{6,10}$/';
-            if (!preg_match($pattern, $inputs['phone'])) {
+            if (!preg_match($pattern, $inputs['phone']) ) {
                 $error['phone'] = 'Введите правильный телефон';
             };
-            if (strlen($inputs['phone']) < 8) {
+            if (strlen($inputs['phone']) < 8 OR  !isset($inputs['phone'])) {
                 $error['phone'] = 'телефон должен иметь не меньще чем 8 цифр';
             }
 
-            if ($_SESSION['captcha_keystring'] != $inputs['keystring']) {
+            if ($_SESSION['captcha_keystring'] != $inputs['keystring'] OR !isset($inputs['keystring'])) {
                 $error['keystring'] = 'неверная капча';
             }
             if (empty($inputs['keystring'])) {
@@ -101,8 +105,8 @@ class Protected_Models_Busket extends Core_DateBase
 
 
             return $error;
-        }
-        return false;
+
+
     }
 
 

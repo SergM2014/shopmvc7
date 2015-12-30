@@ -1,6 +1,6 @@
 <?php
 
- class Protected_Models_Index extends Core_DateBase
+ class Protected_Models_Index extends Core_DataBase
   {	  
     public function getSlider(){
      $sql ="SELECT `image`, `url` FROM `slider`";

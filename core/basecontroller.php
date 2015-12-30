@@ -16,7 +16,8 @@
 	
 		  return $this->member;	
      } */
-	 
+
+
  }
  
 ?>

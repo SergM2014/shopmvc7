@@ -8,9 +8,6 @@ class Core_Application  //класс маршрутизатор, подбира�
 		$url = $_SERVER['REQUEST_URI'];
 		$url= trim($url, '/');
 
-
-
-
 		if(strripos($url, '?')== true){$url = explode('?', $url); $url= $url[0];}
 		if(strripos($url, '/')== true){$url = explode('/', $url);}
 
@@ -29,6 +26,7 @@ class Core_Application  //класс маршрутизатор, подбира�
 
  	public function runController($controller){
 		session_start();
+		AppUser::initBusket();
 
 		if(isset($controller['admin']) && $controller['admin']=='admin'){$name_contr= 'Admin_Controllers_'.$controller[0];}
 			else{$name_contr = 'Protected_Controllers_'.$controller[0];}

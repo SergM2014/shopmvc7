@@ -617,6 +617,14 @@ article.good{
     font-size:80%;
 }
 
+.progress{
+    width:300px;
+}
+
+#progress-bar{
+    background-color: #234bcc;
+    border-radius: 2px;
+}
 
 
 @media screen and (max-width:1170px){

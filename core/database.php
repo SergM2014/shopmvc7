@@ -1,6 +1,6 @@
 <?php
 
-class Core_DateBase {
+class Core_DataBase {
 	protected $conn;
     function __construct(){
 

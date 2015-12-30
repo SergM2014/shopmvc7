@@ -1,6 +1,6 @@
 <?php
 
-class Protected_Models_Comment extends Core_DateBase
+class Protected_Models_Comment extends Core_DataBase
 
 {
 

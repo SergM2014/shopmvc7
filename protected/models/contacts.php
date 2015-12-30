@@ -1,6 +1,6 @@
 <?php
 
-class Protected_Models_Contacts extends Core_DateBase
+class Protected_Models_Contacts extends Core_DataBase
 {
 
     public function findErrors(){

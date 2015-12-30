@@ -1,6 +1,6 @@
 <?php
 
-class Protected_Models_Search extends Core_DateBase
+class Protected_Models_Search extends Core_DataBase
 {
     public function search(){
 

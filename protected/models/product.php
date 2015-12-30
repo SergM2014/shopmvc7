@@ -1,6 +1,6 @@
 <?php
 
-class Protected_Models_Product extends Core_DateBase
+class Protected_Models_Product extends Core_DataBase
 {
     function getProduct(){
 

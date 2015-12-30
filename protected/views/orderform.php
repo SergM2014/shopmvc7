@@ -2,7 +2,6 @@
 
 <?php if(isset($success)): ?>
     <h2 class="success"> Ваш заказ прийнято мы свяжемось з вами самим найближчим часом</h2>
-
 <?php else: ?>
 
 <div id="orderform">

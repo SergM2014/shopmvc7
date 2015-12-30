@@ -1,6 +1,6 @@
 <?php
 
-class Protected_Models_Admin extends Core_DateBase
+class Protected_Models_Admin extends Core_DataBase
 {
 
 
