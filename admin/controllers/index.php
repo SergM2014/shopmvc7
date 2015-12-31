@@ -5,11 +5,11 @@
       function index() 
 	  {  
 	  
-	    $data=AppUser::cleanInput($_POST, false);
+	  /*  $data=AppUser::cleanInput($_POST, false);
 		
           $model= new Protected_Models_Admin;
-          $model->getAdmin($data);
-		
+          $model->getAdmin($data);*/
+		die ('you are in admin now!');
 	    }
 		
    

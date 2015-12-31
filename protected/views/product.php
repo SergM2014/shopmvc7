@@ -21,33 +21,23 @@
     <section class="commentsarea">
         <div class="published_comments ">
 
-        <?php if(empty($product['comments'])): ?>
-            <h2>No comments yet. you can be first!</h2>
+            <?php if(empty($comments)): ?>
+                <h2>No comments yet. you can be first!</h2>
 
-        <?php else: ?>
+            <?php else: ?>
 
             <h2>Comments</h2>
 
-        <?php foreach($product['comments'] as $comment): ?>
-
-
-            <article class="the_comment">
-                <div class="left left_of_comment ">
-                   <?php if (isset($comment['avatar'])): ?> <p><img src="/uploads/avatars/<?php echo $comment['avatar']; ?>" > </p> <?php endif; ?>
-                    <b> <?php echo $comment['name'] ?></b>
-                </div>
-                <div class="right_of_comment">
-                    <i><?php echo $comment['comment'] ?></i>
-
-                </div>
-                <b class="comment_time red" ><?php echo date('d-m-Y H:i',strtotime($comment['created_at'])); ?></b>
-            </article>
-
-
-
-        <?php endforeach; ?>
-
-        <?php endif; ?>
+            <form id="comments_order" data-id="<?php echo $_GET['id']; ?>">
+                <p><b>Сортироват по: </b></p>
+                <label><input name="comments_order" type="radio" value="new_first" checked> Сначала новые </label>
+                <label><input name="comments_order" type="radio" value="old_first"> Сначала старые </label>
+                <input type="hidden" id ="comments_order_token" name="comments_order_token" value="<?php echo AppUser::_token('commentsOrder'); ?>" >
+            </form>
+            <div id="ordered_comments"
+             <?php include 'orderedComments.php'; ?>
+            </div>
+            <?php endif; ?>
 
         </div>
 

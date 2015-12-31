@@ -372,9 +372,9 @@ if(leftmenu) {
         }
 
 
-        var comment = find_closest_heighest_id(e.target, 'submitComment')
+        var comment = find_closest_heighest_id(e.target, 'submitComment');
         if(comment) {
-            e.preventDefault();
+           e.preventDefault();
             var _token = document.getElementById('commentForm_token').value;
             //console.log(_token)
             var message= document.getElementById('message').value;
@@ -406,6 +406,31 @@ if(leftmenu) {
             }
 
         }// commentend
+
+
+        var radio_button = find_closest_heighest_id(e.target, "comments_order");
+        if(radio_button){
+            var value = document.querySelector('input[type="radio"]:checked').value;
+            //console.log(value);
+            var _token = radio_button.querySelector('#comments_order_token').value;
+           // console.log(_token);
+            var id = radio_button.getAttribute('data-id');
+
+            xhr = new XMLHttpRequest();
+            xhr.open('POST', '/product/orderComment', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.send('id='+id+'&order='+value+'&_token='+_token);
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState == 4){
+                    if(xhr.status == 200){
+                        document.getElementById('ordered_comments').innerHTML = xhr.responseText;
+
+                    }
+                }
+            }
+
+        }
 
     };
 //кфнець вішання на боді разной фігні

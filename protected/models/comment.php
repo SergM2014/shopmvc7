@@ -8,7 +8,6 @@ class Protected_Models_Comment extends Core_DataBase
 
         $inputs= $this->decodePost();
 
-
             $error = array();
 
             if (strlen($inputs['name']) < 3) {
@@ -29,15 +28,12 @@ class Protected_Models_Comment extends Core_DataBase
                 $error['keystring'] = 'Пустое поле';
             }
 
-
             unset($_SESSION['captcha_keystring']);
 
 
             return $error;
 
     }
-
-
 
 
     public function decodePost(){
@@ -48,6 +44,7 @@ class Protected_Models_Comment extends Core_DataBase
         }
         return false;
     }
+
 
     public function saveComment(){
         $inputs = $this->decodePost();
