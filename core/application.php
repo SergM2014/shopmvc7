@@ -11,20 +11,21 @@ class Core_Application  //класс маршрутизатор, подбира�
 		if(strripos($url, '?')== true){$url = explode('?', $url); $url= $url[0];}
 		if(strripos($url, '/')== true){$url = explode('/', $url);}
 
-		if($url=='admin'){$controller['admin']='admin'; $url='';}
-		//если в масива есть член с админ то его удаляем повнистю разом з ключем
-
+		if($url=='admin'){$controller['admin']='admin'; $url='';}//+
+		if(isset($url[0]) && $url[0] =='admin') { $admin = array_shift($url);}
 
 
 		if(!is_array($url) && !empty($url)){ $controller[0]= $url; $controller[1]= 'index';}
 		if(empty($url)){$controller[0]= 'index'; $controller[1]= 'index';}
 		if(!isset($controller)){$controller= $url;}
+        if(isset($admin)){ $controller['admin'] = $admin; }
 
 		return $controller;
 	}
 	 
 
  	public function runController($controller){
+
 		session_start();
 		AppUser::initBusket();
 
@@ -44,13 +45,18 @@ class Core_Application  //класс маршрутизатор, подбира�
 
 
 
-	public function getView($view)//получить представление для контролера
+	public function getView($view, $admin= false )//получить представление для контролера
 	{
+        if(!$admin) {
+            $view_path = '/protected/views/'.$view;
+        } else {
+            $view_path = '/admin/views/'.$view;
+        }
 
-		$view = 'protected/views/'.$view;
-
-		return $view;
+        return PATH_SITE.$view_path;
 	}
+
+
 
  }
  

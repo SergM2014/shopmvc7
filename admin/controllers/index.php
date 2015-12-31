@@ -9,7 +9,8 @@
 		
           $model= new Protected_Models_Admin;
           $model->getAdmin($data);*/
-		die ('you are in admin now!');
+
+          return ['view'=>'index.php'];
 	    }
 		
    

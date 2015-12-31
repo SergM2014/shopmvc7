@@ -1,14 +1,14 @@
 <?php
 
-require_once "./../config.php"; 
+require_once $_SERVER['DOCUMENT_ROOT']."/config.php";
 
-$router=new Core_Application; 
+$router=new Core_Application;
 
-$member=$router->Run();
+$controller=$router->getController();
 
-if(isset($member)){ 
+$data_and_view = $router->runController($controller);
 
-extract($member, EXTR_OVERWRITE);}
+if(isset($data_and_view)){ extract($data_and_view, EXTR_OVERWRITE);}
+//var_dump($data_and_view);
+include_once PATH_SITE . "/admin/template/index.php";
 
-require_once "./template/index.php";
-?>
