@@ -2,8 +2,6 @@
 
 class Protected_Models_Admin extends Core_DataBase
 {
-
-
     function getAdmin($data)
     {
         if (!isset($data['login']) OR !isset($data['password'])) return false;
@@ -17,7 +15,6 @@ class Protected_Models_Admin extends Core_DataBase
         }
         return false;
     }
-
 
 }
 ?>

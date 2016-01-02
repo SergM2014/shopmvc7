@@ -1,7 +1,7 @@
 <?php
 	require_once $_SERVER['DOCUMENT_ROOT']."/config.php";
 	
-	$router=new Core_Application;
+	$router=new Core_CustomApplication();
 	
 	$controller=$router->getController();
 

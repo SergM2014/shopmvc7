@@ -1,6 +1,6 @@
 <?php
 
-class Core_Application  //класс маршрутизатор, подбирает нужный контролер для обработки данных
+abstract class Core_Application  //класс маршрутизатор, подбирает нужный контролер для обработки данных
  {
     //получаем путь помещаем в массивб фильтруем от гет переменных
 	public function getController(){
@@ -23,38 +23,18 @@ class Core_Application  //класс маршрутизатор, подбира�
 		return $controller;
 	}
 	 
+    abstract function runController($controller);
 
- 	public function runController($controller){
+    abstract function getView($view);
 
-		session_start();
-		AppUser::initBusket();
 
-		if(isset($controller['admin']) && $controller['admin']=='admin'){$name_contr= 'Admin_Controllers_'.$controller[0];}
-			else{$name_contr = 'Protected_Controllers_'.$controller[0];}
 
-		$action = $controller[1];
-		$contr = new $name_contr;
-
-		$data=call_user_func(array($contr, $action));
-
-		return $data;
-
-	}
 
 	 
 
 
 
-	public function getView($view, $admin= false )//получить представление для контролера
-	{
-        if(!$admin) {
-            $view_path = '/protected/views/'.$view;
-        } else {
-            $view_path = '/admin/views/'.$view;
-        }
 
-        return PATH_SITE.$view_path;
-	}
 
 
 

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Дек 15 2015 г., 13:32
+-- Время создания: Янв 02 2016 г., 13:18
 -- Версия сервера: 5.5.46-0ubuntu0.14.04.2
 -- Версия PHP: 5.5.9-1ubuntu4.14
 
@@ -103,11 +103,43 @@ INSERT INTO `categories` (`id`, `title`, `parent_id`, `translit_title`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `comments`
+--
+
+CREATE TABLE IF NOT EXISTS `comments` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) unsigned NOT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
+  `name` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `comment` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `changed` enum('0','1') NOT NULL,
+  `published` enum('0','1') NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+
+--
+-- Дамп данных таблицы `comments`
+--
+
+INSERT INTO `comments` (`id`, `product_id`, `avatar`, `name`, `email`, `comment`, `created_at`, `changed`, `published`) VALUES
+(1, 1, NULL, 'Voelkischer beobachter', 'weisse@ukr.net', 'Редчайшая фигня для коня и путина', '2015-12-18 14:43:06', '0', '1'),
+(2, 1, NULL, 'хуйло обыкновеноу', 'weisse@ukr.net', 'согласен с колеггою', '2015-12-18 14:43:06', '0', '1'),
+(3, 1, NULL, 'кремлевский троль', 'weisse@ukr.net', 'а мне нравится', '2015-12-18 14:45:13', '0', '1'),
+(4, 1, NULL, 'ворошиловский стрелок', 'weisse@ukr.net', 'бум бум це я шляпа выд ', '2015-12-18 14:53:31', '0', '1'),
+(10, 1, 'p1010001.jpg', 'test', 'weisse@ukr.net', 'asasasasasasas', '2015-12-24 11:08:56', '0', '1'),
+(11, 1, 'p1010002.jpg', 'test2', 'weisse@ukr.net', 'Є, звичайно, й інші закони... Стверджують, що "наркотик вже не вставляє", і необхідно щось надпотужне, щоб напівбожевільний від реальної кризи глядач раптом "вштирився" і "закайфував". Мовляв, українська ейфорія вже розсіялася, а Сирія — далека і не настільки приваблива як "мрія про возз''єднання з Кримом та Україною". І можна не сумніватися, що наркотичну речовину, здатну затьмарити ефект попереднього, вже знайшли. Це — глобальна війна,\n— пише Саша Сотник.', '2015-12-24 11:19:09', '0', '1');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `manufacturer`
 --
 
 CREATE TABLE IF NOT EXISTS `manufacturer` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(50) NOT NULL,
   `url` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
@@ -138,14 +170,18 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `products` text NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 --
 -- Дамп данных таблицы `orders`
 --
 
 INSERT INTO `orders` (`id`, `name`, `email`, `phone`, `message`, `products`, `time`) VALUES
-(3, '4www', 'weisse@ukr.net', '888888888888', 'wwwwww', 'a:1:{i:0;a:4:{s:2:"id";i:1;s:6:"author";s:12:"Пушкин";s:5:"title";s:30:"Руслан и Людмила";s:6:"number";i:1;}}', '2015-12-15 11:19:00');
+(16, '', '', '', '', 'a:1:{i:0;a:4:{s:2:"id";i:1;s:6:"author";s:12:"Пушкин";s:5:"title";s:30:"Руслан и Людмила";s:6:"number";i:60;}}', '2015-12-30 14:48:01'),
+(17, '3333', '', '33333333', '', 'a:1:{i:0;a:4:{s:2:"id";i:1;s:6:"author";s:12:"Пушкин";s:5:"title";s:30:"Руслан и Людмила";s:6:"number";i:60;}}', '2015-12-30 14:57:04'),
+(18, 'rrrrrrr', '', '555555555', '', 'a:1:{i:0;a:4:{s:2:"id";i:1;s:6:"author";s:12:"Пушкин";s:5:"title";s:30:"Руслан и Людмила";s:6:"number";i:60;}}', '2015-12-30 15:00:22'),
+(19, '4444444', '', '4444444444', '', 'a:1:{i:0;a:4:{s:2:"id";i:1;s:6:"author";s:12:"Пушкин";s:5:"title";s:30:"Руслан и Людмила";s:6:"number";i:20;}}', '2015-12-30 15:05:41'),
+(20, '333', '', '333333333333', '', 'a:1:{i:0;a:4:{s:2:"id";i:1;s:6:"author";s:12:"Пушкин";s:5:"title";s:30:"Руслан и Людмила";s:6:"number";i:20;}}', '2015-12-30 15:07:00');
 
 -- --------------------------------------------------------
 
@@ -154,16 +190,18 @@ INSERT INTO `orders` (`id`, `name`, `email`, `phone`, `message`, `products`, `ti
 --
 
 CREATE TABLE IF NOT EXISTS `products` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `author` varchar(50) NOT NULL,
   `title` varchar(50) NOT NULL,
   `description` text NOT NULL,
   `body` text NOT NULL,
   `price` decimal(12,2) NOT NULL,
-  `cat_id` int(11) DEFAULT NULL,
-  `manf_id` int(11) DEFAULT NULL,
+  `cat_id` int(11) unsigned DEFAULT NULL,
+  `manf_id` int(11) unsigned DEFAULT NULL,
   `images` text,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `cat_id` (`cat_id`),
+  KEY `manf_id` (`manf_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
@@ -206,6 +244,37 @@ INSERT INTO `slider` (`id`, `image`, `url`) VALUES
 (3, 'P1010026.jpg', '/'),
 (4, 'P1010034.jpg', '/'),
 (5, 'P1010046.jpg', '/');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `users`
+--
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `login` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `role` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`cat_id`) REFERENCES `categories` (`id`),
+  ADD CONSTRAINT `products_ibfk_3` FOREIGN KEY (`manf_id`) REFERENCES `manufacturer` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

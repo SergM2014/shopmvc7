@@ -1,0 +1,1 @@
+<p>That s the product view page</p>

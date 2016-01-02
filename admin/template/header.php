@@ -10,7 +10,7 @@
 	
 	<body>
 		
-	    <?php if (isset($_SESSION['login'])): ?>
+	    <?php if (isset($_SESSION['admin'])): ?>
 		<div class="container">
 		   <div id="message" class="message"></div>
 		<header class="clearfix">
@@ -26,11 +26,11 @@
 			<nav >
 				<a href="<?php echo URL; ?>/admin" class="left">Главная</a>   
 
-				<?php if(isset($_SESSION['login'])): ?>
+				<?php if(isset($_SESSION['admin'])): ?>
 				
 				<a href="/admin/comments" class="left">Коментарии</a>
 				
-				<div class="right"> <?php echo $_SESSION['login']; ?> (<a href="/admin/exit">Выход</a>)</div>
+				<div class="right"> <?php echo $_SESSION['admin']; ?> (<a href="/admin/exit">Выход</a>)</div>
 					
 				<?php endif; ?>
 			</nav>

@@ -5,10 +5,10 @@
       function index() 
 	  {  
 	  
-	  /*  $data=AppUser::cleanInput($_POST, false);
+	   $data=AppUser::cleanInput($_POST, false);
 		
           $model= new Protected_Models_Admin;
-          $model->getAdmin($data);*/
+          $model->getAdmin($data);
 
           return ['view'=>'index.php'];
 	    }

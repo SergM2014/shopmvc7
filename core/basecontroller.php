@@ -2,20 +2,19 @@
 //любой контролер будет наследоваться от базового класса
  class Core_BaseController 
  {
-    /* private $member;
-	 
+    public $notAuthorized;
 
-	 
-     function __set($name,$val)
-	 {	     
-	     $this->member[$name] = $val;
+     public function __construct($controller){
+         session_start();
+         AppUser::initBusket();
+
+        if (isset($controller['admin']) && $controller['admin']== 'admin' && !isset($_SESSION['admin'])){
+            $this->notAuthorized = true;
+        }
      }
 
-     function __get($name) 
-	 {
-	
-		  return $this->member;	
-     } */
+
+
 
 
  }
