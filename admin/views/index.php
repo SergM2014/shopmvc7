@@ -1,4 +1,5 @@
     <?php
+    if(isset($restriction)) echo $restriction;
     if(!isset($_SESSION['admin'])):
     ?>
 
@@ -7,10 +8,10 @@
                 <div id="login">
 
                     <fieldset>
-                        <form  method="POST" action="/admin">
+                        <form  method="POST" action="/admin/index">
                             <input type="hidden" name="_token" value="<?php echo AppUser::_token('enterAdmin') ?>">
                            <p><label for="login">Логин</label><br>
-                            <input   name="login" id="login" type="text" value="<?php if(isset($_SESSION['admin']))echo $_SESSION['admin'] ?>" maxlength="25"> </p>
+                            <input   name="login" id="login" type="text" value="" maxlength="25"> </p>
                             <p><label for="password">Пароль </label><br>
                             <input   name="password" id="password" type="password" maxlength="20" > </p>
 
@@ -25,5 +26,6 @@
 
     </div><!--frame-->
 <?php endif; ?>
+
 
 

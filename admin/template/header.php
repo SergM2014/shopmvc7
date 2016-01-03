@@ -18,22 +18,22 @@
 			<h1>Добро пожаловать в панель администрирования системы!</h1>
 			
 			 
-		   <?php else: ?>
-			   <div style="width:350px; margin:0 auto;">
-			<?php endif; ?>
+
 
 
 			<nav >
-				<a href="<?php echo URL; ?>/admin" class="left">Главная</a>   
-
-				<?php if(isset($_SESSION['admin'])): ?>
+				<a href="<?php echo URL; ?>/admin" class="left">Главная</a>
 				
-				<a href="/admin/comments" class="left">Коментарии</a>
+				<a href="/admin/###" class="left">#####</a>
 				
-				<div class="right"> <?php echo $_SESSION['admin']; ?> (<a href="/admin/exit">Выход</a>)</div>
+				<div class="right"> <?php echo $_SESSION['login']; ?> (<a href="/admin/exit">Выход</a>)</div>
 					
-				<?php endif; ?>
+
 			</nav>
-		</header>	
-		
+		</header>
+
+    <?php else: ?>
+    <div style="width:350px; margin:0 auto;">
+    <?php endif; ?>
+
 		

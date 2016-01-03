@@ -8,9 +8,11 @@
          session_start();
          AppUser::initBusket();
 
-        if (isset($controller['admin']) && $controller['admin']== 'admin' && !isset($_SESSION['admin'])){
+        if (isset($controller['admin']) && $controller['admin']== 'admin' && !isset($_SESSION['admin']) && $controller[0] != "index"){
             $this->notAuthorized = true;
         }
+
+
      }
 
 
