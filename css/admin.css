@@ -31,7 +31,12 @@ html{
 }
 
 
-
+.edit_form{
+	border: 1px solid #234bcc;
+    max-width:800px;
+    margin:20px auto;
+    padding:15px;
+}
 
 
 

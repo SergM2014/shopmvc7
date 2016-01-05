@@ -11,6 +11,7 @@ class Core_AdminApplication extends Core_Application {
         if($contr->notAuthorized) return ['view'=>'index.php'];
 
         $action = isset($controller[1])? $controller[1]: "index";
+        //die(var_dump($controller));
         $data=call_user_func(array($contr, $action));
 
         return $data;

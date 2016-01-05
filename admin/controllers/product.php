@@ -2,7 +2,7 @@
 
 class Admin_Controllers_Product  extends Core_BaseController
 {
-    function index()
+    public function index()
     {
 
        /* $data=AppUser::cleanInput($_POST, false);
@@ -10,8 +10,20 @@ class Admin_Controllers_Product  extends Core_BaseController
         $model= new Protected_Models_Admin;
         $model->getAdmin($data);*/
 
-        return ['view'=>'product.php'];
+        return ['view'=>'getproduct.php'];
     }
 
+
+    public function getProduct(){
+
+
+
+        $model= new Protected_Models_Product;
+        $product = $model->getProduct();
+        $categories= $model->getAllCategories();
+        $categories_tree =$model->build_tree($categories,0);
+        $comments= $model->getComments();
+        return ['view'=>'getproduct.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'comments'=>$comments];
+    }
 
 }
