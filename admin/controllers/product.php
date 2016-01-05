@@ -20,8 +20,9 @@ class Admin_Controllers_Product  extends Core_BaseController
 
         $model= new Protected_Models_Product;
         $product = $model->getProduct();
-        $categories= $model->getAllCategories();
-        $categories_tree =$model->build_tree($categories,0);
+        $current_category_id= $product['cat_id'];
+        $categories= $model->getAllCategoriesForTree();
+        $categories_tree =$model->build_tree($categories, 0, $current_category_id);
         $comments= $model->getComments();
         return ['view'=>'getproduct.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'comments'=>$comments];
     }

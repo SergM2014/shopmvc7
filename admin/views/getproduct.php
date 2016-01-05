@@ -16,11 +16,16 @@
         <p>Цена: <br>
             <input type="text" name="price" value="<?php echo $product['price']; ?>"></p>
         <p>Категория: <br>
-            <input type="text" name="category" value="<?php echo $product['category_translit_title'] ?>"></p>
+            <?php echo $categories_tree; ?></p>
         <p>Производитель: <br>
-            <input type="text" name="manufacturer" value="<?php echo $product['manufacturer_title'] ?>"></p>
+            <input type="text" name="manufacturer" value="<?php echo $product['manufacturer_title'] ?>">
+        <select name ="manufacturer" >
+            <option  ></option>
+        </select>
 
-<p><?php echo $categories_tree; ?></p>
+        </p>
+
+
     </form>
 
 </div>
@@ -34,12 +39,6 @@
     <?php var_dump($comments); ?>
 <?php endif; ?>
 
-<p><select size="1"  name="hero">
-<option disabled>Выберите героя</option>
-<option value="Чебурашка">Чебурашка</option>
-<option  value="Крокодил Гена">Крокодил Гена</option>
-<option value="Шапокляк">Шапокляк</option>
-<option selected value="Крыса Лариса">Крыса Лариса</option>
-</select></p>
+
 
 <hr>

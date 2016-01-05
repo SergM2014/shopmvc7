@@ -35,7 +35,7 @@ class Protected_Models_Product extends Core_DataBase
 
     }
 
-    public function getAllCategories(){
+    public function getAllCategoriesForTree(){
         $sql ="SELECT `id`, `title`, `parent_id`, `translit_title` FROM `categories`";
         $res=$this->conn->query($sql);
         $cats= array();
@@ -48,19 +48,24 @@ class Protected_Models_Product extends Core_DataBase
         return $cats;
     }
 
-    function build_tree($cats,$parent_id,$only_parent = false){
+    function build_tree($cats,$parent_id, $current_cat_id, $only_parent = false){
+      //  die(var_dump($current_cat_id));
         if(is_array($cats) and isset($cats[$parent_id])){
-            $tree = '<ul>';
+            $tree = '<ul class="ul-treefree">';
             if($only_parent==false){
                 foreach($cats[$parent_id] as $cat){
-                    $tree .= '<li>parent=>'.$cat['parent_id'].'title=>'.$cat['title'].' id=>'.$cat['id'];
-                    $tree .= $this-> build_tree($cats,$cat['id']);
+                   if($current_cat_id == $cat['id']) {
+                        $tree .= '<li><span  class="current_category" data-id="'.$cat['id'].'">'.$cat['translit_title'].'</span>';
+                    } else {
+                        $tree .= '<li><span data-id="' . $cat['id'] . '">' . $cat['translit_title'] . '</span>';
+                    }
+                    $tree .= $this-> build_tree($cats,$cat['id'], $current_cat_id);
                     $tree .= '</li>';
                 }
             }elseif(is_numeric($only_parent)){
                 $cat = $cats[$parent_id][$only_parent];
-                $tree .= '<li>'.$cat['title'].' #'.$cat['id'];
-                $tree .=  $this->build_tree($cats,$cat['id']);
+                $tree .= '<li><span data-id="'.$cat['id'].'">'.$cat['translit_title'].'</span>';
+                $tree .=  $this->build_tree($cats,$cat['id'], $current_cat_id);
                 $tree .= '</li>';
             }
             $tree .= '</ul>';
