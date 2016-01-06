@@ -48,8 +48,8 @@ class Protected_Models_Product extends Core_DataBase
         return $cats;
     }
 
-    function build_tree($cats,$parent_id, $current_cat_id, $only_parent = false){
-      //  die(var_dump($current_cat_id));
+    public function build_tree($cats,$parent_id, $current_cat_id, $only_parent = false){
+
         if(is_array($cats) and isset($cats[$parent_id])){
             $tree = '<ul class="ul-treefree">';
             if($only_parent==false){
@@ -73,6 +73,15 @@ class Protected_Models_Product extends Core_DataBase
         else return null;
         return $tree;
     }
+
+    public function getManufacturerForList(){
+        $sql="SELECT `id`, `title`, `url` FROM `manufacturer`";
+        $res= $this->conn->query($sql);
+        $result= $res->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+
 
 
 }

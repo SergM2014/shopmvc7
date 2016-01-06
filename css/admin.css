@@ -48,7 +48,7 @@ ul.ul-treefree li:before { content:''; display:block; border-bottom:solid 1px #9
 ul.ul-treefree li:last-child { border-left:0 none; }
 ul.ul-treefree li:last-child:before { border-left:solid 1px #999; }
 
-.ul-treefree {
+.ul-treefree span {
     cursor:pointer;
 
 }
@@ -65,6 +65,39 @@ ul.ul-treefree li:last-child:before { border-left:solid 1px #999; }
     color:#27cc50;
 }
 
+
+.styled-select select {
+	background: transparent;
+	width: 278px;
+	padding: 5px;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	height: 34px;
+}
+
+.styled-select {
+	width: 240px;
+	height: 34px;
+	overflow: hidden;
+	background: url('/img/back_arrow.png') no-repeat right #ddd;
+}
+
+.edit_form textarea{
+    resize:none;
+    wrap:off;
+}
+.edit_form h4{
+    color:red;
+}
+h2{text-align:center;}
+
+#sub_edited{
+    font-size:120%;
+    color:red;
+    width:150px;
+    height:40px;
+   margin-left:300px;
+}
 
 @media (max-width:768px){
 

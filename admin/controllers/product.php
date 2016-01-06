@@ -5,11 +5,6 @@ class Admin_Controllers_Product  extends Core_BaseController
     public function index()
     {
 
-       /* $data=AppUser::cleanInput($_POST, false);
-
-        $model= new Protected_Models_Admin;
-        $model->getAdmin($data);*/
-
         return ['view'=>'getproduct.php'];
     }
 
@@ -24,7 +19,8 @@ class Admin_Controllers_Product  extends Core_BaseController
         $categories= $model->getAllCategoriesForTree();
         $categories_tree =$model->build_tree($categories, 0, $current_category_id);
         $comments= $model->getComments();
-        return ['view'=>'getproduct.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'comments'=>$comments];
+        $manufacturers = $model->getManufacturerForList();
+        return ['view'=>'getproduct.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'comments'=>$comments];
     }
 
 }
