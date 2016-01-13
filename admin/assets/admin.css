@@ -31,7 +31,7 @@ html{
 }
 
 
-.edit_form{
+.edit_form, .edit_images {
 	border: 1px solid #234bcc;
     max-width:800px;
     margin:20px auto;
@@ -98,6 +98,22 @@ h2{text-align:center;}
     height:40px;
    margin-left:300px;
 }
+
+.error{
+	border:1px solid #d2171f;
+}
+
+.red{
+    color:#d2171f;
+}
+
+.invisible{
+    display:none;
+}
+
+
+
+
 
 @media (max-width:768px){
 

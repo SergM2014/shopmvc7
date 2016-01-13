@@ -4,11 +4,11 @@ if(isset($_SESSION['admin'])): ?>
 	 </div><!-- container -->
 	 
 
-	<link href="/../../css/admin.css" rel="stylesheet" />
+	<link href="/admin/assets/admin.css" rel="stylesheet" />
 	
 	
 
-	<script src="/../../js/admin.js"></script>
+	<script src="/admin/assets/admin.js"></script>
 
 
 <?php endif;?>
