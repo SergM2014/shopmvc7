@@ -9,8 +9,8 @@ class Protected_Models_Image extends Core_DataBase
 // Массив допустимых значений типа файла
         $types = array('image/gif', 'image/png', 'image/jpeg');
 
-// Максимальный размер файла 20mb
-        $size = 20480000;
+// Максимальный размер файла 2mb
+        $size = 2048000;
 
 // Обработка запроса
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -109,6 +109,103 @@ class Protected_Models_Image extends Core_DataBase
         unset ($_SESSION['avatar']);
 
         return $message;
+    }
+
+
+    public function uploadImage(){
+        $id= $_POST['id'];
+
+        $path = PATH_SITE.UPLOAD_FILE.'product_images/';
+
+        $thumb_path = PATH_SITE.UPLOAD_FILE.'product_images/thumbs/';
+// Массив допустимых значений типа файла
+        $types = array('image/gif', 'image/png', 'image/jpeg');
+
+// Максимальный размер файла 2mb
+        $size = 2048000;
+
+// Обработка запроса
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Проверяем тип файла
+            if (!in_array(strtolower($_FILES['FileInput_'.$id]['type']), $types))
+                die('<p>Запрещённый тип файла.</p>');
+
+            // Проверяем размер файла
+            if ($_FILES['FileInput_'.$id]['size'] > $size)
+                die('Слишком большой размер файла.'.$_FILES['FileInput_'.$id]['size']);
+
+            $name = $this->thumbImage($_FILES['FileInput_'.$id], $thumb_path);
+
+            /*var_dump($_FILES['FileInput_'.$id]['name']);*/
+
+         /* var_dump($path);
+            var_dump($name);*/
+            //echo $path.$name;
+           move_uploaded_file($_FILES['FileInput_'.$id]['tmp_name'], $path.$name);
+            if(!file_exists($path.$name)){
+               $message='<p>Что-то пошло не так.</p>';
+           } else {
+               $message='<p>Загрузка прошла удачно.</p>';
+               chmod ($path.$name , 0777);
+           }
+
+        }
+
+        return $message;
+
+    }
+
+
+    // Функция изменения размера
+    private function thumbImage($file, $thumb_path)
+    {
+        $file['name'] = strtolower($file['name']);
+        $arr = explode('.', $file['name']);
+        $file['name'] = $arr[0].'_'.time().'.'.$arr[1];
+
+        $w = 130;
+        $h = 130;
+
+        // Качество изображения по умолчанию
+        $quality = 75;
+
+        // Cоздаём исходное изображение на основе исходного файла
+        if ($file['type'] == 'image/jpeg')
+            $source = imagecreatefromjpeg($file['tmp_name']);
+        elseif ($file['type'] == 'image/png')
+            $source = imagecreatefrompng($file['tmp_name']);
+        elseif ($file['type'] == 'image/gif')
+            $source = imagecreatefromgif($file['tmp_name']);
+        else
+            return false;
+
+        // Определяем ширину и высоту изображения
+        $w_src = imagesx($source);
+        $h_src = imagesy($source);
+
+        if($h_src> $w_src) {
+            // Вычисление пропорций
+            $ratio = $h_src / $h;
+        } else{
+            $ratio = $w_src/$w;
+        }
+            $w_dest = round($w_src / $ratio);
+            $h_dest = round($h_src / $ratio);
+
+            // Создаём пустую картинку
+            $dest = imagecreatetruecolor($w_dest, $h_dest);
+
+            // Копируем старое изображение в новое с изменением параметров
+            imagecopyresampled($dest, $source, 0, 0, 0, 0, $w_dest, $h_dest, $w_src, $h_src);
+
+            // Вывод картинки и очистка памяти
+            imagejpeg($dest, $thumb_path. $file['name'], $quality);
+            imagedestroy($dest);
+            imagedestroy($source);
+            chmod ($thumb_path . $file['name'] , 0777);
+
+            return $file['name'];
+
     }
 
 }

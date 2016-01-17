@@ -111,6 +111,14 @@ h2{text-align:center;}
     display:none;
 }
 
+.thumb{
+	max-width:130px;
+	max-height:130px;
+}
+
+.images_area{
+	margin-bottom:30px!important;
+}
 
 
 

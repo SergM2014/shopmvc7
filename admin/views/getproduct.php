@@ -1,12 +1,14 @@
 <h2>Product number <?php echo $product['product_id']; ?></h2>
 
-<div class="edit_images">
-  <?php include PATH_SITE.'/protected/views/uploadimage/poductImageUpload.php'; ?>
+<?php $_SESSION['image_id']=0; ?>
+
+<section class="edit_images">
+
+  <?php include PATH_SITE.'/admin/views/poductImageUpload.php'; ?>
+
+</section>
 
 <script src="/admin/assets/uploadimage.js"></script>
-
-
-</div>
 
 
 <div class="edit_form">
