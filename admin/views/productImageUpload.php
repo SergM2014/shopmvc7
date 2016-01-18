@@ -1,4 +1,4 @@
-<div class="images_area">
+
 
     <?php $_SESSION['image_id']+=1; ?>
 
@@ -22,8 +22,6 @@
             0%
         </div>
     </div>
-
-</div>
 
 
 

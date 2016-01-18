@@ -114,12 +114,20 @@ h2{text-align:center;}
 .thumb{
 	max-width:130px;
 	max-height:130px;
+    border:1px solid #999999;
+    border-radius:2px;
 }
 
 .images_area{
 	margin-bottom:30px!important;
 }
 
+
+
+.note{
+	width:20px;
+	height:20px;
+}
 
 
 

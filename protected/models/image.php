@@ -104,7 +104,7 @@ class Protected_Models_Image extends Core_DataBase
 
     public function deleteAvatar(){
 
-        @unlink('uploads/avatars/'.$_SESSION['avatar']);
+        @unlink(PATH_SITE.'/uploads/avatars/'.$_SESSION['avatar']);
         $message='Изображение удаленно.';
         unset ($_SESSION['avatar']);
 
@@ -136,17 +136,14 @@ class Protected_Models_Image extends Core_DataBase
 
             $name = $this->thumbImage($_FILES['FileInput_'.$id], $thumb_path);
 
-            /*var_dump($_FILES['FileInput_'.$id]['name']);*/
 
-         /* var_dump($path);
-            var_dump($name);*/
-            //echo $path.$name;
            move_uploaded_file($_FILES['FileInput_'.$id]['tmp_name'], $path.$name);
             if(!file_exists($path.$name)){
                $message='<p>Что-то пошло не так.</p>';
            } else {
                $message='<p>Загрузка прошла удачно.</p>';
                chmod ($path.$name , 0777);
+                $_SESSION['product_image'][$id]= $name;
            }
 
         }
@@ -205,7 +202,16 @@ class Protected_Models_Image extends Core_DataBase
             chmod ($thumb_path . $file['name'] , 0777);
 
             return $file['name'];
+    }
 
+    public function deleteImage(){
+
+        unlink(PATH_SITE.'/uploads/product_images/'.$_SESSION['product_image'][$_POST['id']]);
+        unlink(PATH_SITE.'/uploads/product_images/thumbs/'.$_SESSION['product_image'][$_POST['id']]);
+        $message='Изображение удаленно.';
+        unset ($_SESSION['product_image'][$_POST['id']]);
+
+        return $message;
     }
 
 }

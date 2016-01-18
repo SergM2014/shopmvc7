@@ -36,34 +36,52 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
     function progressHandler(event) {
 
         var percent = Math.round((event.loaded / event.total) * 100);
-console.log(document.getElementById('progress_'+global_id))
         document.getElementById('progress_'+global_id).style.width = percent + "%";
         document.getElementById('progress_'+global_id).innerHTML = percent + "%";
     }
 
     function completeHandler(event) {//тут ивент переобразуется в XMLHttpRequestProgressEvent {}
 
-       /* document.getElementById('output_'+id).innerHTML = event.target.responseText;
+        document.getElementById('output_'+global_id).innerHTML = event.target.responseText;
 
-        document.getElementById('progress_'+id).style.width = "0%";
-        document.getElementById('progress_'+id).innerHTML = "0%";
+        document.getElementById('progress_'+global_id).style.width = "0%";
+        document.getElementById('progress_'+global_id).innerHTML = "0%";
 
-        document.getElementById('output_'+id).classList.remove('invisible');
-        submit_btn.classList.add('invisible');
-        document.getElementById('progress_'+id).classList.add('invisible');
-        reset_btn.removeAttribute('disabled');*/
+        document.getElementById('output_'+global_id).classList.remove('invisible');
+        document.getElementById('submit_btn_'+global_id).classList.add('invisible');
+        document.getElementById('progress_'+global_id).classList.add('invisible');
+        document.getElementById('reset_btn_'+global_id).removeAttribute('disabled');
+        delete  global_id;
+
+        var node = document.createElement('div');
+        node.className='images_area';
+       var node2 = document.getElementsByClassName('edit_images')[0].appendChild(node);
+        //console.log(node2);
+        xhr2 = new XMLHttpRequest();
+        xhr2.open('POST', '/admin/image/addsection', true);
+        xhr2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr2.onreadystatechange = function () {
+            if (xhr2.readyState == 4) {
+                if (xhr2.status == 200) {
+                    node2.innerHTML = xhr2.responseText;
+                }
+            }
+        };
+        xhr2.send();
+
+
     }
 
 
     function errorHandler(event) {
 
-        /*document.getElementById('output_'+id).innerHTML = 'Upload failed';*/
+        document.getElementById('output_'+global_id).innerHTML = 'Upload failed';
     }
 
 
     function abortHandler(event) {
 
-   /*     document.getElementById('output_'+id).innerHTML = 'Upload aborted';*/
+      document.getElementById('output_'+global_id).innerHTML = 'Upload aborted';
     }
 
     var submit_btn = find_closest_heighest_class(e.target, 'submit_btn');
@@ -132,21 +150,27 @@ console.log(document.getElementById('progress_'+global_id))
             document.getElementById('image_preview_'+id).setAttribute('src', '/img/nophoto.jpg');
             document.getElementById('FileInput_'+id).classList.remove('invisible');
 
-           /* xhr2 = new XMLHttpRequest();
-            xhr2.open('POST', '/image/delete', true);
+            xhr2 = new XMLHttpRequest();
+            xhr2.open('POST', '/admin/image/delete', true);
             xhr2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr2.onreadystatechange = function () {
                 if (xhr2.readyState == 4) {
                     if (xhr2.status == 200) {
-                        output.innerHTML = xhr2.responseText;
+                       // document.getElementById('output_'+id).innerHTML = xhr2.responseText;
+                        var images = document.getElementsByClassName('edit_images')[0].querySelectorAll('.images_area');
+
+                        if(images.length>1) {
+                            var images_area = find_closest_heighest_class(e.target, 'images_area');
+                            // console.log(images_area);
+                            images_area.parentNode.removeChild(images_area);
+                        }
                     }
                 }
             };
-            xhr2.send('_token=' + _token);*/
+            xhr2.send('id='+id);
 
-        document.getElementById('submit_btn_'+id).classList.add('invisible');
-        reset_btn.classList.add('invisible');
-
+       // document.getElementById('submit_btn_'+id).classList.add('invisible');
+       // document.getElementById('reset_btn_'+id).classList.add('invisible');
 
         };
 

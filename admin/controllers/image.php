@@ -9,28 +9,27 @@ class Admin_Controllers_Image extends Core_BaseController
 
         $model = new Protected_Models_Image();
         $message = $model->uploadImage();
-die(var_dump($message));
-       // return ['ajax'=>1, 'message'=> $message, 'view'=>'uploadimage/uploadresponce.php'];
-/*var_dump($_FILES);
-        echo "<br>";
-        die(var_dump($_POST));*/
 
+        echo $message;
+        ?> <img src="/img/tick.jpg" class="note"> <?php
+        exit();
     }
-
-
 
 
 
     public function delete(){
 
        // if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['commentForm']) exit();
-
         $model = new Protected_Models_Image();
-        $message = $model->deleteAvatar();
+        $message = $model->deleteImage();
 
-
-        return ['view'=> 'uploadimage/deletedimage.php', 'message'=>$message, 'ajax'=> 1];
+        echo $message;
+        exit();
     }
+     public function addSection()
+     {
+         return ['view'=>'productImageUpload.php', 'ajax'=>1];
+     }
 
 }
 ?>

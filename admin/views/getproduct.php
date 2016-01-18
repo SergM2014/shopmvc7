@@ -3,9 +3,9 @@
 <?php $_SESSION['image_id']=0; ?>
 
 <section class="edit_images">
-
-  <?php include PATH_SITE.'/admin/views/poductImageUpload.php'; ?>
-
+    <div class="images_area">
+        <?php include PATH_SITE.'/admin/views/productImageUpload.php'; ?>
+    </div>
 </section>
 
 <script src="/admin/assets/uploadimage.js"></script>
