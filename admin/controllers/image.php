@@ -8,17 +8,18 @@ class Admin_Controllers_Image extends Core_BaseController
       //  if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['commentForm']) exit();
 
         $model = new Protected_Models_Image();
-        $message = $model->uploadImage();
+        $response = $model->uploadImage();
 
-        echo $message;
-        ?> <img src="/img/tick.jpg" class="note"> <?php
-        exit();
+        echo json_encode($response);
+
+        /*?><!-- <img src="/img/tick.jpg" class="note"> --><?php */
+       exit();
     }
 
 
 
-    public function delete(){
-
+    public function delete()
+    {
        // if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['commentForm']) exit();
         $model = new Protected_Models_Image();
         $message = $model->deleteImage();

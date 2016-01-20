@@ -128,7 +128,7 @@ class Protected_Models_Image extends Core_DataBase
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Проверяем тип файла
             if (!in_array(strtolower($_FILES['FileInput_'.$id]['type']), $types))
-                die('<p>Запрещённый тип файла.</p>');
+                die('Запрещённый тип файла.');
 
             // Проверяем размер файла
             if ($_FILES['FileInput_'.$id]['size'] > $size)
@@ -139,16 +139,18 @@ class Protected_Models_Image extends Core_DataBase
 
            move_uploaded_file($_FILES['FileInput_'.$id]['tmp_name'], $path.$name);
             if(!file_exists($path.$name)){
-               $message='<p>Что-то пошло не так.</p>';
+               $response['message']='Что-то пошло не так.';
            } else {
-               $message='<p>Загрузка прошла удачно.</p>';
+                $response['message']='Загрузка прошла удачно.';
                chmod ($path.$name , 0777);
-                $_SESSION['product_image'][$id]= $name;
+               // $_SESSION['product_image'][$id]= $name;
+                $_SESSION['product_image'][$id][$name] = $name;
+                $response['name']= $name;
            }
 
         }
 
-        return $message;
+        return $response;
 
     }
 
@@ -205,11 +207,13 @@ class Protected_Models_Image extends Core_DataBase
     }
 
     public function deleteImage(){
+var_dump($_POST['name']);
+       // var_dump($_SESSION['product_image'][$_POST['id']][$_POST['name']]);
 
-        unlink(PATH_SITE.'/uploads/product_images/'.$_SESSION['product_image'][$_POST['id']]);
-        unlink(PATH_SITE.'/uploads/product_images/thumbs/'.$_SESSION['product_image'][$_POST['id']]);
+        unlink(PATH_SITE.'/uploads/product_images/'.$_SESSION['product_image'][$_POST['id']][$_POST['name']]);
+        unlink(PATH_SITE.'/uploads/product_images/thumbs/'.$_SESSION['product_image'][$_POST['id']][$_POST['name']]);
         $message='Изображение удаленно.';
-        unset ($_SESSION['product_image'][$_POST['id']]);
+        unset ($_SESSION['product_image'][$_POST['id']][$_POST['name']]);
 
         return $message;
     }

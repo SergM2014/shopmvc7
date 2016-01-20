@@ -228,6 +228,14 @@ class Protected_Models_Product extends Core_DataBase
         $result->bindParam(8, $_POST['product_id'], PDO::PARAM_INT);
 
         $result->execute();
+
+        // here persist the images
+       /* if(isset($_SESSION['product_image'][$_POST['product_id']])) {
+
+            $serialized = serialize($_SESSION['product_image'][$_POST['product_id']]);
+
+        }
+        die(var_dump($serialized));*/
         return true;
     }
 

@@ -9,20 +9,24 @@
         <div class="image_form">
             <img alt="" id="image_preview_<?php echo $_SESSION['image_id']; ?>" class="thumb" src="/img/nophoto.jpg"  />
             <input name="FileInput_<?php echo $_SESSION['image_id']; ?>" id="FileInput_<?php echo $_SESSION['image_id']; ?>" class="FileInput" type="file" data-id="<?php echo $_SESSION['image_id']; ?>" >
-        </div>
 
-        <div id="output_<?php echo $_SESSION['image_id']; ?>" class="invisible" ></div>
-        <input type="button"  id="submit_btn_<?php echo $_SESSION['image_id']; ?>" class="submit_btn invisible" value="Загрузить"  />
-        <button id="reset_btn_<?php echo $_SESSION['image_id']; ?>" class="reset_btn invisible" > Удалить</button>
+             <img src="/img/tick.jpg" class="success_tick invisible" id="success_tick_<?php echo $_SESSION['image_id']; ?>" >
+             <div id="output_<?php echo $_SESSION['image_id']; ?>" class=" output invisible" ></div>
 
+
+            <img src="<?php echo '/img/upload.png' ?>" id="submit_btn_<?php echo $_SESSION['image_id']; ?>" alt="Загрузить изображение" class="submit_btn invisible">
+            <img src="<?php echo '/img/close.png' ?>" id="reset_btn_<?php echo $_SESSION['image_id']; ?>" alt="Удалить изображение" class="note reset_btn invisible">
+
+
+
+
+            <div id="progress_<?php echo $_SESSION['image_id']; ?>" class="progress left">
+                <div class="progress-bar invisible"   style="width: 0">
+                    0%
+                </div>
+            </div>
+        </div><!--image form -->
     </form>
-
-    <div id="progress_<?php echo $_SESSION['image_id']; ?>">
-        <div class="progress-bar invisible"   style="width: 0">
-            0%
-        </div>
-    </div>
-
 
 
 

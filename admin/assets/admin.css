@@ -30,6 +30,10 @@ html{
 	float:left;
 }
 
+.right{
+    float:right;
+}
+
 
 .edit_form, .edit_images {
 	border: 1px solid #234bcc;
@@ -111,22 +115,76 @@ h2{text-align:center;}
     display:none;
 }
 
+.image_form{
+    padding:5px;
+
+}
+
 .thumb{
-	max-width:130px;
-	max-height:130px;
+	width:130px;
+	height:130px;
     border:1px solid #999999;
     border-radius:2px;
+
+}
+.FileInput{
+    position:absolute;
+    top:140px;
+    left:5px;
 }
 
 .images_area{
 	margin-bottom:30px!important;
 }
 
+.image_form{
+    position:relative;
+}
 
+.reset_btn{
+    position:absolute;
+    top:0;
+    right:0;
+}
 
-.note{
-	width:20px;
-	height:20px;
+.note {
+    width:40px;
+    height:40px;
+    cursor:pointer;
+
+}
+
+.success_tick{
+    position:absolute;
+    left:150px;
+    top:60px;
+	width:40px;
+	height:40px;
+
+}
+
+.progress{
+    position:absolute;
+    top:90px;
+    left:140px;
+    border:1px solid #d2171f;
+    width:400px;
+}
+
+.submit_btn{
+    width:80px;
+    height:80px;
+    position:absolute;
+    top:50px;
+    left:150px;
+    cursor:pointer;
+}
+
+.output {
+    position:absolute;
+    top:80px;
+    left:200px;
+    cursor: default;
 }
 
 

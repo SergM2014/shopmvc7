@@ -2,7 +2,7 @@
 
 <?php $_SESSION['image_id']=0; ?>
 
-<section class="edit_images">
+<section  class="edit_images">
     <div class="images_area">
         <?php include PATH_SITE.'/admin/views/productImageUpload.php'; ?>
     </div>
