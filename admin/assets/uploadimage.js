@@ -29,37 +29,38 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
     function progressHandler(event) {
 
         var percent = Math.round((event.loaded / event.total) * 100);
-        document.getElementById('progress_'+global_id).style.width = percent + "%";
-        document.getElementById('progress_'+global_id).innerHTML = percent + "%";
+
+        image_area.querySelector('.progress-bar').style.width = percent + "%";
+        image_area.querySelector('.progress-bar').innerHTML = percent + "%";
     }
 
     function completeHandler(event) {//тут ивент переобразуется в XMLHttpRequestProgressEvent {}
 
         var response = JSON.parse(event.target.responseText);
-        document.getElementById('output_'+global_id).innerHTML= response.message;
 
-        var images_area = find_closest_heighest_class(e.target, 'images_area');
+        image_area.querySelector('.output').innerHTML= response.message;
 
-        images_area.setAttribute('data-name', response.name);
+        image_area.querySelector('.progress-bar').style.width = "0%";
+        image_area.querySelector('.progress-bar').innerHTML = "0%";
 
+        image_area.querySelector('.progress').classList.add('invisible');
 
+        image_area.querySelector('.output').classList.remove('invisible');
+        image_area.querySelector('.success_tick').classList.remove('invisible');
 
-        document.getElementById('progress_'+global_id).style.width = "0%";
-        document.getElementById('progress_'+global_id).innerHTML = "0%";
+        image_area.querySelector('.submit_btn').classList.add('invisible');
 
-        document.getElementById('progress_'+global_id).classList.add('invisible');
-
-        document.getElementById('output_'+global_id).classList.remove('invisible');
-        document.getElementById('success_tick_'+global_id).classList.remove('invisible');
-
-        document.getElementById('submit_btn_'+global_id).classList.add('invisible');
-
-        document.getElementById('reset_btn_'+global_id).removeAttribute('disabled');
-        delete  global_id;
+        image_area.querySelector('.reset_btn').removeAttribute('disabled');
+        delete  image_area;
 
         var node = document.createElement('div');
-        node.className='images_area';
-       var node2 = document.getElementsByClassName('edit_images')[0].appendChild(node);
+        var time = Math.floor((new Date()).getTime() / 1000);
+        var randomNum = Math.round((Math.random() * (1000 - 1) + 1));
+        var id= time+'_'+randomNum;
+
+        node.id= id;
+        node.className='image_area';
+       var add_image = document.getElementsByClassName('edit_images')[0].appendChild(node);
         //console.log(node2);
         xhr2 = new XMLHttpRequest();
         xhr2.open('POST', '/admin/image/addsection', true);
@@ -67,7 +68,7 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
         xhr2.onreadystatechange = function () {
             if (xhr2.readyState == 4) {
                 if (xhr2.status == 200) {
-                    node2.innerHTML = xhr2.responseText;
+                    add_image.innerHTML = xhr2.responseText;
                 }
             }
         };
@@ -79,29 +80,34 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
 
     function errorHandler(event) {
 
-        document.getElementById('output_'+global_id).innerHTML = 'Upload failed';
+        //document.getElementById('output_'+global_id).innerHTML = 'Upload failed';
+        image_area.querySelector('.output').innerHTML = 'Upload failed';
     }
 
 
     function abortHandler(event) {
 
-      document.getElementById('output_'+global_id).innerHTML = 'Upload aborted';
+      //document.getElementById('output_'+global_id).innerHTML = 'Upload aborted';
+        image_area.querySelector('.output').innerHTML = 'Upload aborted';
     }
+
+
 
     var submit_btn = find_closest_heighest_class(e.target, 'submit_btn');
    if(submit_btn){
 
 
-       var id= submit_btn.id;
-       var arr = id.split('_');
-       global_id= arr[arr.length-1];
-     // console.log(id)
-       document.getElementById('progress_'+global_id).classList.remove('invisible');
-       var file = document.getElementById("FileInput_"+global_id).files[0];
+        image_area= find_closest_heighest_class(e.target, 'image_area');
+        var id= image_area.id;
+
+
+       image_area.querySelector('.progress').classList.remove('invisible');
+
+       var file= image_area.querySelector('.FileInput').files[0];
        var formdata = new FormData();
 
-       formdata.append("FileInput_"+global_id, file);
-       formdata.append("id", global_id);
+       formdata.append("FileInput", file);
+       formdata.append("id", id);
 
             var ajax = new XMLHttpRequest();
             ajax.upload.addEventListener("progress", progressHandler, false);
@@ -111,9 +117,7 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
             ajax.open("POST", "/admin/image/upload");
             ajax.send(formdata);
 
-
-
-       document.getElementById('reset_btn_'+global_id).setAttribute('disabled', 'disabled');
+       image_area.querySelector('.reset_btn').setAttribute('disabled', 'disabled');
 
     }
 
@@ -121,43 +125,42 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
     var file_input = find_closest_heighest_class(e.target, 'FileInput');
 
     file_input.onchange = function(){
-        var id= file_input.getAttribute('data-id');
         var input = this;
- //       console.log(1212);
+        var image_area= find_closest_heighest_class(e.target, 'image_area');
+
 
             if (input.files && input.files[0]) {
                 if (input.files[0].type.match('image.*')) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
-                     document.getElementById('image_preview_'+id).setAttribute('src', e.target.result);
+                        image_area.querySelector('.thumb').setAttribute('src', e.target.result);
                     };
                     reader.readAsDataURL(input.files[0]);
 
                     this.classList.add('invisible');
-                    document.getElementById('output_'+id).classList.add('invisible');
-                    document.getElementById('reset_btn_'+id).classList.remove('invisible');
-                    document.getElementById('submit_btn_'+id).classList.remove('invisible');
+                    image_area.querySelector('.output').classList.add('invisible');
+                    image_area.querySelector('.reset_btn').classList.remove('invisible');
+                    image_area.querySelector('.submit_btn').classList.remove('invisible');
 
                 }// else console.log('is not image mime type');
             }// else console.log('not isset files data or files API not supordet');
 
-        };//end of function
+        };//end of function file_input on change
+
+
 
 
     var reset_btn = find_closest_heighest_class(e.target, 'reset_btn');
     if(reset_btn){
 
-            e.preventDefault();
-            var id= reset_btn.id;
-            var arr = id.split('_');
-            id= arr[arr.length-1];
+        var image_area= find_closest_heighest_class(e.target, 'image_area');
+        var id= image_area.id;
 
-        var image_name= find_closest_heighest_class(e.target, 'images_area');
-        var name= image_name.getAttribute('data-name');
-       // console.log(name);
 
-            document.getElementById('image_preview_'+id).setAttribute('src', '/img/nophoto.jpg');
-            document.getElementById('FileInput_'+id).classList.remove('invisible');
+        image_area.querySelector('.thumb').setAttribute('src', '/img/nophoto.jpg');
+        var file_input = image_area.querySelector('.FileInput');
+
+        if(file_input.classList.contains('invisible')) file_input.classList.remove('invisible');
 
             xhr2 = new XMLHttpRequest();
             xhr2.open('POST', '/admin/image/delete', true);
@@ -165,21 +168,23 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
             xhr2.onreadystatechange = function () {
                 if (xhr2.readyState == 4) {
                     if (xhr2.status == 200) {
-                       // document.getElementById('output_'+id).innerHTML = xhr2.responseText;
-                        var images = document.getElementsByClassName('edit_images')[0].querySelectorAll('.images_area');
-                        //избегаем удаления если область добавления изображений вего лишь одна
-                        if(images.length>1) {
-                            var images_area = find_closest_heighest_class(e.target, 'images_area');
-                            // console.log(images_area);
-                            images_area.parentNode.removeChild(images_area);
+
+                        image_area.querySelector('.output').innerHTML = xhr2.responseText;
+                        image_area.querySelector('.success_tick').classList.add('invisible');
+
+                        var images = document.getElementsByClassName('edit_images')[0].querySelectorAll('.image_area');
+
+                        if(images.length>1){
+                            image_area.parentNode.removeChild(image_area)
                         }
+
                     }
                 }
             };
             xhr2.send('id='+id+'&name='+name);
 
-        document.getElementById('submit_btn_'+id).classList.add('invisible');
-       document.getElementById('reset_btn_'+id).classList.add('invisible');
+        image_area.querySelector('.submit_btn').classList.add('invisible');
+        image_area.querySelector('.reset_btn').classList.add('invisible');
 
         };
 

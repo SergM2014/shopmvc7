@@ -127,24 +127,24 @@ class Protected_Models_Image extends Core_DataBase
 // Обработка запроса
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Проверяем тип файла
-            if (!in_array(strtolower($_FILES['FileInput_'.$id]['type']), $types))
+            if (!in_array(strtolower($_FILES['FileInput']['type']), $types))
                 die('Запрещённый тип файла.');
 
             // Проверяем размер файла
-            if ($_FILES['FileInput_'.$id]['size'] > $size)
-                die('Слишком большой размер файла.'.$_FILES['FileInput_'.$id]['size']);
+            if ($_FILES['FileInput']['size'] > $size)
+                die('Слишком большой размер файла.'.$_FILES['FileInput']['size']);
 
-            $name = $this->thumbImage($_FILES['FileInput_'.$id], $thumb_path);
+            $name = $this->thumbImage($_FILES['FileInput'], $thumb_path);
 
 
-           move_uploaded_file($_FILES['FileInput_'.$id]['tmp_name'], $path.$name);
+           move_uploaded_file($_FILES['FileInput']['tmp_name'], $path.$name);
             if(!file_exists($path.$name)){
                $response['message']='Что-то пошло не так.';
            } else {
                 $response['message']='Загрузка прошла удачно.';
                chmod ($path.$name , 0777);
                // $_SESSION['product_image'][$id]= $name;
-                $_SESSION['product_image'][$id][$name] = $name;
+                $_SESSION['product_image'][$id] = $name;
                 $response['name']= $name;
            }
 
@@ -160,7 +160,8 @@ class Protected_Models_Image extends Core_DataBase
     {
         $file['name'] = strtolower($file['name']);
         $arr = explode('.', $file['name']);
-        $file['name'] = $arr[0].'_'.time().'.'.$arr[1];
+
+        $file['name'] = $_POST['id'].'.'.$arr[1];
 
         $w = 130;
         $h = 130;
@@ -206,15 +207,15 @@ class Protected_Models_Image extends Core_DataBase
             return $file['name'];
     }
 
+
+
     public function deleteImage(){
-var_dump($_POST['name']);
-       // var_dump($_SESSION['product_image'][$_POST['id']][$_POST['name']]);
 
-        unlink(PATH_SITE.'/uploads/product_images/'.$_SESSION['product_image'][$_POST['id']][$_POST['name']]);
-        unlink(PATH_SITE.'/uploads/product_images/thumbs/'.$_SESSION['product_image'][$_POST['id']][$_POST['name']]);
+        unlink(PATH_SITE.'/uploads/product_images/'.$_SESSION['product_image'][$_POST['id']]);
+        unlink(PATH_SITE.'/uploads/product_images/thumbs/'.$_SESSION['product_image'][$_POST['id']]);
         $message='Изображение удаленно.';
-        unset ($_SESSION['product_image'][$_POST['id']][$_POST['name']]);
-
+        unset ($_SESSION['product_image'][$_POST['id']]);
+        var_dump($_SESSION['product_image']);
         return $message;
     }
 

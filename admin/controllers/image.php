@@ -11,9 +11,7 @@ class Admin_Controllers_Image extends Core_BaseController
         $response = $model->uploadImage();
 
         echo json_encode($response);
-
-        /*?><!-- <img src="/img/tick.jpg" class="note"> --><?php */
-       exit();
+        exit();
     }
 
 
@@ -27,6 +25,7 @@ class Admin_Controllers_Image extends Core_BaseController
         echo $message;
         exit();
     }
+
      public function addSection()
      {
          return ['view'=>'productImageUpload.php', 'ajax'=>1];

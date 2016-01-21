@@ -1,9 +1,21 @@
 <h2>Product number <?php echo $product['product_id']; ?></h2>
 
-<?php $_SESSION['image_id']=0; ?>
+
+<?php $images= unserialize($product['images']);?>
+
 
 <section  class="edit_images">
-    <div class="images_area">
+    <?php if(isset($images)): $_SESSION['product_image']= $images;  var_dump($_SESSION['product_image']); ?>
+
+    <?php foreach ($images as $key=>$image): ?>
+    <div id="<?php echo $key; ?>" class="image_area">
+        <?php include PATH_SITE.'/admin/views/productImageUpload.php'; ?>
+
+    </div>
+    <?php endforeach; ?>
+<?php unset($image); ?>
+    <?php endif; ?>
+    <div id="<?php echo time().'_'.mt_rand(1, 1000); ?>" class="image_area">
         <?php include PATH_SITE.'/admin/views/productImageUpload.php'; ?>
     </div>
 </section>

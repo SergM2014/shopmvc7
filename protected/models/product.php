@@ -209,6 +209,8 @@ class Protected_Models_Product extends Core_DataBase
         return $content;
     }
 
+
+
     public function saveUpdatedProduct()
     {
         $updated= $this->getUpdatedProduct();
@@ -230,12 +232,18 @@ class Protected_Models_Product extends Core_DataBase
         $result->execute();
 
         // here persist the images
-       /* if(isset($_SESSION['product_image'][$_POST['product_id']])) {
+        if(isset($_SESSION['product_image'])) {
 
-            $serialized = serialize($_SESSION['product_image'][$_POST['product_id']]);
+            $serialized = serialize($_SESSION['product_image']);
+            $sql="UPDATE `products` SET `images`=? WHERE `id`=?";
+            $result = $this->conn->prepare($sql);
+            $result->bindParam(1,$serialized, PDO::PARAM_STR);
+            $result->bindParam(2, $_POST['product_id'], PDO::PARAM_INT);
 
+            $result->execute();
+            unset($_SESSION['product_image']);
         }
-        die(var_dump($serialized));*/
+
         return true;
     }
 
