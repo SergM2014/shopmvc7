@@ -11,8 +11,9 @@ class Admin_Controllers_Product  extends Core_BaseController
         $categories= $model->getAllCategoriesForTree();
         $categories_tree =$model->buildSelectTree($categories, 0,$current_category_id);
         $manufacturers = $model->getManufacturerForList();
+        $images= $model->getProductImages();
 
-        return ['view'=>'getproduct.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers];
+        return ['view'=>'getproduct.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'images'=>$images];
     }
 
     public function updateProduct()
@@ -26,7 +27,7 @@ class Admin_Controllers_Product  extends Core_BaseController
             return ['view'=>'getproduct.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'error'=> $error ];
         } else {
             $result= $model->saveUpdatedProduct();
-           // die(var_dump($result));
+
             if($result){
                return ['view'=>'savedproduct.php', 'success'=> "The product ".$_POST['product_id']." is changed and saved successfully"];
             }

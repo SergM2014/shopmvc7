@@ -211,11 +211,10 @@ class Protected_Models_Image extends Core_DataBase
 
     public function deleteImage(){
 
-        unlink(PATH_SITE.'/uploads/product_images/'.$_SESSION['product_image'][$_POST['id']]);
-        unlink(PATH_SITE.'/uploads/product_images/thumbs/'.$_SESSION['product_image'][$_POST['id']]);
+        $_SESSION['delete_image_product'][$_POST['id']]= $_SESSION['product_image'][$_POST['id']];
         $message='Изображение удаленно.';
         unset ($_SESSION['product_image'][$_POST['id']]);
-        var_dump($_SESSION['product_image']);
+
         return $message;
     }
 

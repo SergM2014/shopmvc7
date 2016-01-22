@@ -18,6 +18,21 @@ class Protected_Models_Product extends Core_DataBase
         return $result;
     }
 
+    public function getProductImages()
+    {
+        $sql ="SELECT `images` FROM `products` WHERE `id`=?";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->bindParam(1, $_GET['id'], PDO::PARAM_INT);
+        $stmt->execute();
+
+        $result= $stmt->fetch(PDO::FETCH_ASSOC);
+       // var_dump($result);
+        if($result)  $images= unserialize($result['images']);
+//die(var_dump($images));
+        if($images) $_SESSION['product_image']= $images;
+        return $images;
+    }
+
     public function getComments($order = null )
     {
         $id= (isset($_GET['id']))? $_GET['id']: $_POST['id'];
@@ -241,6 +256,14 @@ class Protected_Models_Product extends Core_DataBase
             $result->bindParam(2, $_POST['product_id'], PDO::PARAM_INT);
 
             $result->execute();
+
+            if(isset($_SESSION['delete_image_product'])){
+                foreach($_SESSION['delete_image_product'] as $image ){
+                    @unlink(PATH_SITE.'/uploads/product_images/'.$image);
+                    @unlink(PATH_SITE.'/uploads/product_images/thumbs/'.$image);
+                }
+                unset($_SESSION['delete_image_product']);
+            }
             unset($_SESSION['product_image']);
         }
 
