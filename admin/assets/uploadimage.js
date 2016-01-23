@@ -24,6 +24,33 @@ function find_closest_heighest_id(el, id){
 //вешаем на область где есть где есть изображения
 document.getElementsByClassName('edit_images')[0].onclick = function (e) {
 
+//File API
+    var file_input = find_closest_heighest_class(e.target, 'FileInput');
+
+    file_input.onchange = function(){
+        var input = this;
+        var image_area= find_closest_heighest_class(e.target, 'image_area');
+
+
+        if (input.files && input.files[0]) {
+            if (input.files[0].type.match('image.*')) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    image_area.querySelector('.thumb').setAttribute('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+
+                this.classList.add('invisible');
+                image_area.querySelector('.output').classList.add('invisible');
+                image_area.querySelector('.reset_btn').classList.remove('invisible');
+                image_area.querySelector('.submit_btn').classList.remove('invisible');
+
+            }// else console.log('is not image mime type');
+        }// else console.log('not isset files data or files API not supordet');
+
+    };//end of function file_input on change
+//end of File API
+
 
 
     function progressHandler(event) {
@@ -51,6 +78,7 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
         image_area.querySelector('.submit_btn').classList.add('invisible');
 
         image_area.querySelector('.reset_btn').removeAttribute('disabled');
+        image_area.querySelector('h4').classList.add('invisible');
         delete  image_area;
 
         var node = document.createElement('div');
@@ -80,14 +108,12 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
 
     function errorHandler(event) {
 
-        //document.getElementById('output_'+global_id).innerHTML = 'Upload failed';
         image_area.querySelector('.output').innerHTML = 'Upload failed';
     }
 
 
     function abortHandler(event) {
 
-      //document.getElementById('output_'+global_id).innerHTML = 'Upload aborted';
         image_area.querySelector('.output').innerHTML = 'Upload aborted';
     }
 
@@ -95,10 +121,13 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
 
     var submit_btn = find_closest_heighest_class(e.target, 'submit_btn');
    if(submit_btn){
-
+        submit_btn.classList.add('invisible');
 
         image_area= find_closest_heighest_class(e.target, 'image_area');
         var id= image_area.id;
+
+       var _token= document.getElementById('update_product_token').value;
+
 
 
        image_area.querySelector('.progress').classList.remove('invisible');
@@ -108,6 +137,7 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
 
        formdata.append("FileInput", file);
        formdata.append("id", id);
+       formdata.append("_token", _token);
 
             var ajax = new XMLHttpRequest();
             ajax.upload.addEventListener("progress", progressHandler, false);
@@ -122,30 +152,7 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
     }
 
 
-    var file_input = find_closest_heighest_class(e.target, 'FileInput');
 
-    file_input.onchange = function(){
-        var input = this;
-        var image_area= find_closest_heighest_class(e.target, 'image_area');
-
-
-            if (input.files && input.files[0]) {
-                if (input.files[0].type.match('image.*')) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        image_area.querySelector('.thumb').setAttribute('src', e.target.result);
-                    };
-                    reader.readAsDataURL(input.files[0]);
-
-                    this.classList.add('invisible');
-                    image_area.querySelector('.output').classList.add('invisible');
-                    image_area.querySelector('.reset_btn').classList.remove('invisible');
-                    image_area.querySelector('.submit_btn').classList.remove('invisible');
-
-                }// else console.log('is not image mime type');
-            }// else console.log('not isset files data or files API not supordet');
-
-        };//end of function file_input on change
 
 
 
@@ -156,6 +163,7 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
         var image_area= find_closest_heighest_class(e.target, 'image_area');
         var id= image_area.id;
 
+        var _token= document.getElementById('update_product_token').value;
 
         image_area.querySelector('.thumb').setAttribute('src', '/img/nophoto.jpg');
         var file_input = image_area.querySelector('.FileInput');
@@ -181,10 +189,11 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
                     }
                 }
             };
-            xhr2.send('id='+id+'&name='+name);
+            xhr2.send('id='+id+'&name='+name+'&_token='+_token);
 
         image_area.querySelector('.submit_btn').classList.add('invisible');
         image_area.querySelector('.reset_btn').classList.add('invisible');
+        image_area.querySelector('h4').classList.remove('invisible');
 
         };
 

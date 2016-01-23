@@ -18,6 +18,9 @@ class Admin_Controllers_Product  extends Core_BaseController
 
     public function updateProduct()
     {
+
+        if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['update_product']) exit();
+
         $model= new Protected_Models_Product;
         $error=$model->checkIfNotEmpty();
 

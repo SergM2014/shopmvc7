@@ -114,7 +114,7 @@ class AppUser {
 
     public static function _token($action){
 
-        if(!$_SESSION['_token'] OR ($_SESSION['_token']['time']+86400)< time()) {
+        if(!$_SESSION['_token'] OR ($_SESSION['_token']['time']+8/*6400*/)< time()) {
 
             $_SESSION['_token']['time'] =time();
             $random = uniqid(rand(), true);
@@ -128,6 +128,7 @@ class AppUser {
             $_SESSION['_token']['commentForm'] = md5('commentform'.$random);//+
             $_SESSION['_token']['commentsOrder'] = md5('commentsorder'.$random);
             $_SESSION['_token']['enterAdmin']= md5('enteradmin'.$random);
+            $_SESSION['_token']['update_product']= md5('update_product'.$random);
         }
 
         $_token= $_SESSION['_token'];
@@ -138,15 +139,13 @@ class AppUser {
 
 
     public static function setBusketCookies(){
-       // var_dump($_COOKIE);
-       // echo "<br>";
-      //  var_dump($_SESSION);
+
         $expire_time = time()+1209600;
         $value = json_encode($_SESSION['busket']);
         setcookie('busket', $value, $expire_time, '/');
         setcookie('totalsum', (int)$_SESSION['totalsum'], $expire_time, '/');
         setcookie('totalamount', (int)$_SESSION['totalamount'], $expire_time, '/');
-       // die(var_dump($_COOKIE));
+
     }
 
     public static function updateBusketCookies(){

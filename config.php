@@ -8,8 +8,8 @@
     define('USER', 'root'); //пользователь
     define('PASSWORD', '1'); //пароль
     define('NAME_BD', 'shopmvc7');
-    define('DEBUG_MODE', TRUE); //режим отладки
-	//define('VALID_FORMATS','jpg,img,png,jpeg');
+    define('DEBUG_MODE', true ); //режим отладки
+
 	define('UPLOAD_FILE','/uploads/');
 	define('LINKCOUNT',5);
 	define('ADMINEMAIL', 'weisse@ukr.net');

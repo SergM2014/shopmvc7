@@ -24,6 +24,7 @@
 <div class="edit_form">
 
     <form action="/admin/product/updateProduct" method="POST">
+        <input type="hidden" name="_token" id="update_product_token" value="<?php echo AppUser::_token('update_product') ?>" >
         <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
         <p><h4>Название: </h4>
             <input type="text" name="title" <?php if (isset($error['title'])) echo 'class="error"'; ?> value="<?php echo isset($product['title'])? $product['title']:''; ?>"   maxlength="120">
@@ -74,7 +75,7 @@
         </div>
         </p>
         <br>
-        <p><input type="submit" id="sub_edited" value="Aplay changes" ></p>
+        <input type="submit" id="sub_edited" value="Aplay changes" >
 
     </form>
 

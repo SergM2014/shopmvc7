@@ -5,7 +5,7 @@ class Admin_Controllers_Image extends Core_BaseController
     public function upload()
     {
 
-      //  if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['commentForm']) exit();
+        if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['update_product']) exit();
 
         $model = new Protected_Models_Image();
         $response = $model->uploadImage();
@@ -18,7 +18,7 @@ class Admin_Controllers_Image extends Core_BaseController
 
     public function delete()
     {
-       // if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['commentForm']) exit();
+        if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['update_product']) exit();
         $model = new Protected_Models_Image();
         $message = $model->deleteImage();
 

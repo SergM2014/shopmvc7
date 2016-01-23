@@ -1,13 +1,13 @@
 
 
 
-    <label for="FileInput_>" > Додать изображение</label>
+    <h4 <?php if(isset($image)) echo ' class="invisible"'; ?> > Додать изображение</h4>
 
     <form enctype="multipart/form-data" method="post" class=" MyUploadForm clearfix" >
 
         <div class="image_form">
             <img alt=""  class="thumb" src="<?php if(isset($image)) {echo '/uploads/product_images/thumbs/'.$image;} else {echo '/img/nophoto.jpg';} ?>"  />
-            <input name="FileInput" id="FileInput_>" class="FileInput <?php if(isset($image)) echo 'invisible' ?>" type="file"  >
+            <input name="FileInput" id="FileInput>" class="FileInput <?php if(isset($image)) echo 'invisible' ?>" type="file"  >
 
              <img src="/img/tick.jpg" class="success_tick invisible" >
              <div class="output invisible" ></div>

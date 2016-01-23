@@ -101,7 +101,9 @@ h2{text-align:center;}
     width:150px;
     height:40px;
    margin-left:300px;
+
 }
+
 
 .error{
 	border:1px solid #d2171f;
@@ -135,6 +137,10 @@ h2{text-align:center;}
 
 .image_area{
 	margin-bottom:30px!important;
+}
+
+.image_area h4{
+    text-align:center;
 }
 
 .image_form{
@@ -189,7 +195,27 @@ h2{text-align:center;}
 
 
 
-@media (max-width:768px){
+@media (max-width:970px){
 
+    .progress{
+        position:static;
+    }
 
+}
+
+@media (max-width: 750px){
+    .progress{
+        width:380px;
+    }
+
+    .image_form{
+        padding:0;
+    }
+
+    .edit_images{
+        padding:0;
+    }
+    #sub_edited{
+        margin-left:150px;
+    }
 }
