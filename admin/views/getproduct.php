@@ -21,6 +21,7 @@
 <script src="/admin/assets/uploadimage.js"></script>
 
 
+
 <div class="edit_form">
 
     <form action="/admin/product/updateProduct" method="POST">

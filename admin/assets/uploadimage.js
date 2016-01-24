@@ -79,6 +79,7 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
 
         image_area.querySelector('.reset_btn').removeAttribute('disabled');
         image_area.querySelector('h4').classList.add('invisible');
+        image_area.querySelector('.thumb').classList.add('uploaded');
         delete  image_area;
 
         var node = document.createElement('div');
@@ -194,11 +195,31 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
         image_area.querySelector('.submit_btn').classList.add('invisible');
         image_area.querySelector('.reset_btn').classList.add('invisible');
         image_area.querySelector('h4').classList.remove('invisible');
+        image_area.querySelector('.thumb').classList.remove('uploaded');
 
         };
 
+    var image_uploaded = find_closest_heighest_class(e.target, 'uploaded');
+    if(image_uploaded) {
 
 
+        var darkLayer = document.createElement('div');
+        darkLayer.className='darkLayer';
+        document.body.appendChild(darkLayer);
+
+        var src=image_uploaded.src;
+        src= src.replace('thumbs/', '');
+        var image= document.createElement('img');
+        image.setAttribute('src',src);
+
+        var big_image =document.createElement('div');
+        big_image.className="big_image";
+
+        big_image.appendChild(image);
+
+        document.body.appendChild(big_image);
+
+    };
 
 
 }

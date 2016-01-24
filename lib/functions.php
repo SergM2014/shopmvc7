@@ -114,7 +114,7 @@ class AppUser {
 
     public static function _token($action){
 
-        if(!$_SESSION['_token'] OR ($_SESSION['_token']['time']+8/*6400*/)< time()) {
+        if(!isset($_SESSION['_token']['time']) OR ($_SESSION['_token']['time']+8/*6400*/)< time()) {
 
             $_SESSION['_token']['time'] =time();
             $random = uniqid(rand(), true);
