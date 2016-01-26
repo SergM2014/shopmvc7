@@ -154,10 +154,6 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
 
 
 
-
-
-
-
     var reset_btn = find_closest_heighest_class(e.target, 'reset_btn');
     if(reset_btn){
 
@@ -207,15 +203,24 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
         darkLayer.className='darkLayer';
         document.body.appendChild(darkLayer);
 
+
+
         var src=image_uploaded.src;
         src= src.replace('thumbs/', '');
         var image= document.createElement('img');
         image.setAttribute('src',src);
 
+        var close =document.createElement('img');
+        close.setAttribute('src','/img/close.png');
+        close.className="close_img";
+
+
         var big_image =document.createElement('div');
         big_image.className="big_image";
 
         big_image.appendChild(image);
+        big_image.appendChild(close);
+
 
         document.body.appendChild(big_image);
 
@@ -223,3 +228,16 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
 
 
 }
+
+document.body.onclick = function (e) {
+
+    var close_img= find_closest_heighest_class(e.target,'close_img');
+    var dark_layer_close= find_closest_heighest_class(e.target,'darkLayer');
+
+    if (close_img || dark_layer_close) {
+        document.body.removeChild(document.getElementsByClassName('darkLayer')[0]);
+        document.body.removeChild(document.getElementsByClassName('big_image')[0]);
+
+
+    }
+};
