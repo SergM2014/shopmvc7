@@ -1,4 +1,5 @@
-<h2>Product number <?php echo $product['product_id']; ?></h2>
+<?php if(isset($product['product_id'])) : ?> <h2>Product number <?php echo $product['product_id']; ?></h2>
+<?php else: ?> <h2>Add new product</h2> <?php endif; ?>
 
 
 
@@ -23,10 +24,15 @@
 
 
 <div class="edit_form">
-
+    <?php if (isset($product)) :?>
     <form action="/admin/product/updateProduct" method="POST">
-        <input type="hidden" name="_token" id="update_product_token" value="<?php echo AppUser::_token('update_product') ?>" >
-        <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
+
+            <input type="hidden" name="_token" id="update_product_token" value="<?php echo AppUser::_token('update_product') ?>" >
+            <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
+        <?php else: ?>
+    <form action="/admin/product/createProduct" method="POST">
+            <input type="hidden" name="_token" id="create_product_token" value="<?php echo AppUser::_token('add_product') ?>" >
+        <?php endif; ?>
         <p><h4>Название: </h4>
             <input type="text" name="title" <?php if (isset($error['title'])) echo 'class="error"'; ?> value="<?php echo isset($product['title'])? $product['title']:''; ?>"   maxlength="120">
         <?php if (isset($error['title'])) echo '<small class="red">'.$error['title'].'</small>'; ?>
@@ -69,14 +75,18 @@
             <select size="1" name ="manufacturer_id" >
                 <option value="">Без производителя</option>
                 <?php foreach ($manufacturers as $manf): ?>
-                <option <?php if($product['manufacturer_id']== $manf['id']) echo "selected"; ?> value="<?php echo $manf['id']; ?>"> <?php echo $manf['title']; ?></option>
+                <option <?php if(isset($product['manufacturer_id']) && $product['manufacturer_id']== $manf['id']) echo "selected"; ?> value="<?php echo $manf['id']; ?>"> <?php echo $manf['title']; ?></option>
                 <?php endforeach; ?>
 
             </select>
         </div>
         </p>
         <br>
-        <input type="submit" id="sub_edited" value="Aplay changes" >
+        <?php if(isset($product)): ?>
+            <input type="submit" id="sub_edited" value="Aplay changes" >
+        <?php else: ?>
+            <input type="submit" id="sub_created" value="Add product" >
+        <?php endif; ?>
 
     </form>
 

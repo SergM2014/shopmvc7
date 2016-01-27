@@ -29,8 +29,11 @@ class Protected_Models_Product extends Core_DataBase
        // var_dump($result);
         if($result)  $images= unserialize($result['images']);
 //die(var_dump($images));
-        if($images) $_SESSION['product_image']= $images;
-        return $images;
+        if(isset($images)) {
+            $_SESSION['product_image'] = $images;
+
+            return $images;
+        }
     }
 
     public function getComments($order = null )

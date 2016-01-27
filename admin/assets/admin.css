@@ -95,7 +95,7 @@ ul.ul-treefree li:last-child:before { border-left:solid 1px #999; }
 }
 h2{text-align:center;}
 
-#sub_edited{
+#sub_edited, #sub_created{
     font-size:120%;
     color:red;
     width:150px;
@@ -259,7 +259,7 @@ h2{text-align:center;}
     .edit_images{
         padding:0;
     }
-    #sub_edited{
+    #sub_edited, #sub_created{
         margin-left:150px;
     }
 }

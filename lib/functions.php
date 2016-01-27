@@ -114,7 +114,9 @@ class AppUser {
 
     public static function _token($action){
 
-        if(!isset($_SESSION['_token']['time']) OR ($_SESSION['_token']['time']+8/*6400*/)< time()) {
+        if(DEBUG_MODE){$period =8;} else {$period= 86400;}//фбо доба або 8 сек
+
+        if(!isset($_SESSION['_token']['time']) OR ($_SESSION['_token']['time']+$period < time())) {
 
             $_SESSION['_token']['time'] =time();
             $random = uniqid(rand(), true);
@@ -129,6 +131,7 @@ class AppUser {
             $_SESSION['_token']['commentsOrder'] = md5('commentsorder'.$random);
             $_SESSION['_token']['enterAdmin']= md5('enteradmin'.$random);
             $_SESSION['_token']['update_product']= md5('update_product'.$random);
+            $_SESSION['_token']['add_product']= md5('add_product'.$random);
         }
 
         $_token= $_SESSION['_token'];

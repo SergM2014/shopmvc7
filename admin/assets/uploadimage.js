@@ -127,7 +127,8 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
         image_area= find_closest_heighest_class(e.target, 'image_area');
         var id= image_area.id;
 
-       var _token= document.getElementById('update_product_token').value;
+        if(document.getElementById('update_product_token'))  var _token= document.getElementById('update_product_token').value;
+       if(document.getElementById('create_product_token')) var _token=document.getElementById('create_product_token').value;
 
 
 
@@ -160,7 +161,8 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
         var image_area= find_closest_heighest_class(e.target, 'image_area');
         var id= image_area.id;
 
-        var _token= document.getElementById('update_product_token').value;
+        if(document.getElementById('update_product_token'))  var _token= document.getElementById('update_product_token').value;
+        if(document.getElementById('create_product_token')) var _token=document.getElementById('create_product_token').value;
 
         image_area.querySelector('.thumb').setAttribute('src', '/img/nophoto.jpg');
         var file_input = image_area.querySelector('.FileInput');
