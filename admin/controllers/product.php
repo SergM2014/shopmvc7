@@ -24,7 +24,7 @@ class Admin_Controllers_Product  extends Core_BaseController
         $error=$model->checkIfNotEmpty();
 
         if(!empty($error)){
-            $page =$model->errorUpdatePage();
+            $page =$model->errorTriggerPage();
             extract($page);
             return ['view'=>'getproduct.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'error'=> $error ];
         } else {
@@ -46,6 +46,25 @@ class Admin_Controllers_Product  extends Core_BaseController
        // die(var_dump($manufacturers));
         $images= $model->getProductImages();
         return ['view'=>'getproduct.php',  'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'images'=>$images];
+    }
+
+    public function createProduct()
+    {
+        if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['add_product']) exit();
+
+        $model= new Protected_Models_Product;
+        $error=$model->checkIfNotEmpty();
+        if(!empty($error)){
+            $page =$model->errorTriggerPage();
+            extract($page);
+            return ['view'=>'getproduct.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'error'=> $error ];
+        } else {
+            $result= $model->saveAddedProduct();
+
+            if($result){
+                return ['view'=>'savedproduct.php', 'success'=> "The new product is saved successfully"];
+            }
+        }
     }
 
 

@@ -9,7 +9,7 @@
 	</head>
 	
 	<body>
-		
+		<?php var_dump($_SESSION); ?>
 	    <?php if (isset($_SESSION['admin'])): ?>
 		<div class="container">
 		   <div id="message" class="message"></div>
@@ -24,7 +24,7 @@
 			<nav >
 				<a href="<?php echo URL; ?>/admin" class="left">Главная</a>
 				
-				<a href="/admin/###" class="left">#####</a>
+				<a href="/" class="left">#####</a>
 				
 				<div class="right"> <?php echo $_SESSION['login']; ?> (<a href="/admin/exit">Выход</a>)</div>
 					

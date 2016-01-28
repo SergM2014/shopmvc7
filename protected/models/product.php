@@ -129,7 +129,7 @@ class Protected_Models_Product extends Core_DataBase
     }
 
 
-    public function errorUpdatePage()
+    public function errorTriggerPage()
     {
         $product= $this->getUpdatedProduct();
 
@@ -273,6 +273,48 @@ class Protected_Models_Product extends Core_DataBase
         return true;
     }
 
+
+    public function saveAddedProduct()
+    {
+        $added= $this->getUpdatedProduct();
+
+        if(isset($_SESSION['product_image'])) {
+
+            $serialized = serialize($_SESSION['product_image']);
+
+            if(isset($_SESSION['delete_image_product'])){
+                foreach($_SESSION['delete_image_product'] as $image ){
+                    @unlink(PATH_SITE.'/uploads/product_images/'.$image);
+                    @unlink(PATH_SITE.'/uploads/product_images/thumbs/'.$image);
+                }
+                unset($_SESSION['delete_image_product']);
+            }
+            unset($_SESSION['product_image']);
+        }
+
+        $serialized = (isset($serialized))? $serialized: null;
+        $category_id = ($_POST['category_id']!='')? (int)$_POST['category_id']: null;
+        $manufacturer_id = ($_POST['manufacturer_id']!='')? (int)$_POST['manufacturer_id']: null;
+
+        $sql= "INSERT INTO `products` ( `author`, `title`, `description`, `body`, `price`, `cat_id`, `manf_id`, `images`)  VALUES  (?, ?, ?, ?, ?, ?, ?, ?)";
+        $result = $this->conn->prepare($sql);
+        $result->bindParam(1,$added['author'], PDO::PARAM_STR);
+        $result->bindParam(2, $added['title'], PDO::PARAM_STR);
+        $result->bindParam(3, $added['description'], PDO::PARAM_STR);
+        $result->bindParam(4, $added['body'], PDO::PARAM_STR);
+        $result->bindParam(5, $added['price'], PDO::PARAM_STR);
+        $result->bindParam(6, $category_id);
+        $result->bindParam(7, $manufacturer_id);
+        $result->bindParam(8, $serialized, PDO::PARAM_STR);
+
+
+        $result->execute();
+
+        // here persist the images
+unset($_POST);
+
+        return true;
+    }
 
 
 
