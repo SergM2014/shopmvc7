@@ -18,7 +18,7 @@ class Admin_Controllers_Product  extends Core_BaseController
 
     public function updateProduct()
     {
-        if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['update_product']) exit();
+        if(!isset($_POST['_token']['update_product']) OR $_POST['_token']!= $_SESSION['_token']['update_product']) exit();
 
         $model= new Protected_Models_Product;
         $error=$model->checkIfNotEmpty();
@@ -50,7 +50,7 @@ class Admin_Controllers_Product  extends Core_BaseController
 
     public function createProduct()
     {
-        if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['add_product']) exit();
+        if(!isset($_POST['_token']['add_product']) OR $_POST['_token']!= $_SESSION['_token']['add_product']) exit();
 
         $model= new Protected_Models_Product;
         $error=$model->checkIfNotEmpty();
@@ -65,6 +65,27 @@ class Admin_Controllers_Product  extends Core_BaseController
                 return ['view'=>'savedproduct.php', 'success'=> "The new product is saved successfully"];
             }
         }
+    }
+
+    public function lists()
+    {
+        $nomanufacturer = AppUser::washfromRepetition('manufacturer');
+
+
+        $model = new Protected_Models_Catalog();
+        $pages = $model->countPages();
+        $catalog= $model->getCatalog();
+
+        $nop = AppUser::washfromRepetition('p');
+
+        $model2 = new Protected_Models_Index();
+        //get informatiom for left vertical menu
+        $categories = $model2->getCategories();
+        $menu = $model->getleftCatalogMenu($categories, 0);
+
+        $manufacturers = $model-> getManufacturers();
+
+        return ['view'=>'productslist.php', 'manufacturers'=>$manufacturers, 'menu'=> $menu, 'pages'=>$pages, 'catalog'=> $catalog, 'nop'=>$nop, 'nomanufacturer'=>$nomanufacturer];
     }
 
 

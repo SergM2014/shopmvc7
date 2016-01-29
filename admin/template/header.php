@@ -9,7 +9,7 @@
 	</head>
 	
 	<body>
-		<?php var_dump($_SESSION); ?>
+
 	    <?php if (isset($_SESSION['admin'])): ?>
 		<div class="container">
 		   <div id="message" class="message"></div>
@@ -22,11 +22,18 @@
 
 
 			<nav >
-				<a href="<?php echo URL; ?>/admin" class="left">Главная</a>
+				<a href="<?php echo URL; ?>/" class="left menu_button">Back to site </a>
 				
-				<a href="/" class="left">#####</a>
+				<a href="/admin" class="left menu_button">back to main admin</a>
+				<a href="/admin/product/lists" class="left menu_button">Products</a>
+                <a href="/admin/category/lists" class="left menu_button">Categories</a>
+                <a href="/admin/manufacturer/lists" class="left menu_button">Manufacturers</a>
+                <a href="/admin/category/lists" class="left menu_button">Categories</a>
+                <a href="/admin/comment/lists" class="left menu_button">Coments</a>
+                <a href="/admin/aboutus" class="left menu_button">About Us</a>
+                <a href="/admin/contact" class="left menu_button">Contacts</a>
 				
-				<div class="right"> <?php echo $_SESSION['login']; ?> (<a href="/admin/exit">Выход</a>)</div>
+				<div class="right menu_button"> <?php echo $_SESSION['login']; ?> (<a href="/admin/exit">Выход</a>)</div>
 					
 
 			</nav>

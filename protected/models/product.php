@@ -269,7 +269,8 @@ class Protected_Models_Product extends Core_DataBase
             }
             unset($_SESSION['product_image']);
         }
-
+        // избегаем повторного сохранения в базу при обновленнии страницы
+        unset($_SESSION['_token']['update_product']);
         return true;
     }
 
@@ -310,8 +311,8 @@ class Protected_Models_Product extends Core_DataBase
 
         $result->execute();
 
-        // here persist the images
-unset($_POST);
+        // избегаем повторного сохранения в базу при обновленнии страницы
+        unset($_SESSION['_token']['add_product']);
 
         return true;
     }

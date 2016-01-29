@@ -44,11 +44,12 @@ class Protected_Models_Catalog extends Core_DataBase
         $result= $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-      /*  foreach ($result as $one){
-            if(!empty($one['images'])){
-                $result['images']= unserialize($one['images']);
+        foreach ($result as $key=> $value){
+            if(!empty($value['images'])){
+                $result[$key]['images']= unserialize($value['images']);
+
             }
-        }*/
+        }
 
         return $result;
     }
@@ -83,7 +84,8 @@ class Protected_Models_Catalog extends Core_DataBase
     }
 
 
-    function getleftCatalogMenu( $categories, $parent = 0){
+    function getleftCatalogMenu( $categories, $parent = 0)
+    {
         if(!isset($print)){$print='';}
         foreach($categories as $category){
             if($category['parent_id'] ==$parent ){

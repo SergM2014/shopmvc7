@@ -57,12 +57,12 @@
 
 
 
-                <?php if(isset($good['images'])): ?>
+               <!-- <?php// if(isset($good['images'])): ?>
 
                     <div class="images">
-                        <?php echo $good['images']; ?>
+                        <?php// echo $good['images']; ?>
                     </div>
-                <?php endif; ?>
+                <?php// endif; ?>-->
                     <h2><strong><?php echo $good['product_title']; ?></strong></h2>
                     <h3> <?php echo $good['author']; ?></h3>
                     <br>
