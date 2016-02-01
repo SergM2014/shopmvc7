@@ -33,7 +33,7 @@
                 <a href="/admin/aboutus" class="left menu_button">About Us</a>
                 <a href="/admin/contact" class="left menu_button">Contacts</a>
 				
-				<div class="right menu_button"> <?php echo $_SESSION['login']; ?> (<a href="/admin/exit">Выход</a>)</div>
+				<div id="admin_exit_btn" class="right menu_button"> <?php echo $_SESSION['login']; ?> (<a href="/admin/exit">Выход</a>)</div>
 					
 
 			</nav>

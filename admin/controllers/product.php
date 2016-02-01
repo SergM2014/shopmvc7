@@ -79,9 +79,9 @@ class Admin_Controllers_Product  extends Core_BaseController
         $nop = AppUser::washfromRepetition('p');
 
         $model2 = new Protected_Models_Index();
-        //get informatiom for left vertical menu
+
         $categories = $model2->getCategories();
-        $menu = $model->getleftCatalogMenu($categories, 0);
+        $menu = $model->getadminCatMenu($categories, 0);
 
         $manufacturers = $model-> getManufacturers();
 

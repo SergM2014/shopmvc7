@@ -27,55 +27,52 @@
 
     <section class="main-content right">
 
-        <form action="/catalog/index" id="reset_all">
+        <form action="/admin/product/lists" id="reset_all" class="right">
             <button>Сбросить все фильтры</button>
         </form>
 
         <?php if(!empty($catalog)) : ?>
 
 
+        <form  method="GET" action="/admin/product/lists">
 
-            <form  method="GET" action="/catalog/index">
+            <?php if (isset($_GET['category'])) { ?> <input type="hidden" name="category" value="<?php echo $_GET['category']; ?>" > <?php }
+            if(isset($_GET['manufacturer'])) { ?> <input type="hidden" name="manufacturer" value="<?php echo $_GET['manufacturer']; ?>" > <?php } ?>
 
-                <?php if (isset($_GET['category'])) { ?> <input type="hidden" name="category" value="<?php echo $_GET['category']; ?>" > <?php }
-                if(isset($_GET['manufacturer'])) { ?> <input type="hidden" name="manufacturer" value="<?php echo $_GET['manufacturer']; ?>" > <?php } ?>
+            <label for="select">Сортировать по: </label>
+            <select size="1" name="order" id="select">
+                <option value="default"></option>
+                <option value="abc">а-я</option>
+                <option value="cba">я-а</option>
+                <option value="cheap_first">сначала дешевые</option>
+                <option value="expensive_first">сначала дорогие</option>
+            </select>
 
-                <label for="select">Сортировать по: </label>
-                <select size="1" name="order" id="select">
-                    <option value="default"></option>
-                    <option value="abc">а-я</option>
-                    <option value="cba">я-а</option>
-                    <option value="cheap_first">сначала дешевые</option>
-                    <option value="expensive_first">сначала дорогие</option>
-                </select>
-
-                <input type="submit" value="OK">
-            </form>
-
-            <?php foreach($catalog as $good): ?>
-                <article class="good">
+            <input type="submit" value="OK">
+        </form>
 
 
+        <div class="articles_good">
 
-                    <!-- <?php// if(isset($good['images'])): ?>
+            <table>
+                <tr><th>Id</th><th>Author</th><th>Title</th><th>Category</th><th>Manufacturer</th><th>Description</th><th>Price</th></tr>
+                 <?php foreach($catalog as $one): ?>
 
-                    <div class="images">
-                        <?php// echo $good['images']; ?>
-                    </div>
-                <?php// endif; ?>-->
-                    <h2><strong><?php echo $good['product_title']; ?></strong></h2>
-                    <h3> <?php echo $good['author']; ?></h3>
-                    <br>
-                    <h3><?php echo $good['description']; ?></h3>
+                <tr>
+                    <td><?php echo $one['product_id']; ?></td>
+                    <td><?php echo $one['author']; ?></td>
+                    <td><?php echo $one['product_title']; ?></td>
+                    <td><?php echo $one['translit_title']; ?></td>
+                    <td><?php echo $one['manufacturer_title']; ?></td>
+                    <td><?php echo $one['description']; ?></td>
+                    <td><?php echo $one['price']; ?></td>
+                </tr>
 
-                    <?php if($good['translit_title']) { ?><p>Категория: <b><?php echo $good['translit_title']; ?></b></p><?php } ?>
-                    <?php if($good['manufacturer_title']) { ?><p>Производитель: <b><?php echo $good['manufacturer_title']; ?></b></p><?php } ?>
-                    <h3><strong><?php echo $good['price']; ?> грн.</strong></h3>
-                    <a href="/product/index?id=<?php echo $good['product_id']; ?>" id="detail" class="right">Подробнее</a>
-                </article>
+                 <?php endforeach; ?>
 
+            </table>
 
-            <?php endforeach; ?>
+        </div>
 
             <?php if($pages>1): ?>
 

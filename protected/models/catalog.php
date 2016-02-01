@@ -84,7 +84,7 @@ class Protected_Models_Catalog extends Core_DataBase
     }
 
 
-    function getleftCatalogMenu( $categories, $parent = 0)
+    public function getleftCatalogMenu( $categories, $parent = 0)
     {
         if(!isset($print)){$print='';}
         foreach($categories as $category){
@@ -100,6 +100,32 @@ class Protected_Models_Catalog extends Core_DataBase
                 if(isset($flag)){
                     $print.= "<ul>";
                     $print.= $this->getleftCatalogMenu( $categories, $category['id']);
+                    $print.= "</ul>";
+                    $print.= "</li>";
+                } else{
+                    $print.="</li>";
+                }
+            }
+        }
+        return $print;
+    }
+
+    function getAdminCatMenu( $categories, $parent = 0)
+    {
+        if(!isset($print)){$print='';}
+        foreach($categories as $category){
+            if($category['parent_id'] ==$parent ){
+
+                $print.='<li ><a href="'.URL.'admin/product/lists?category='. $category['title'] .'">'.$category['translit_title'].'</a>' ;
+                foreach($categories as $sub_cat){
+                    if($sub_cat['parent_id']==$category['id']){
+                        $flag = TRUE; break;
+                    }
+                }
+
+                if(isset($flag)){
+                    $print.= "<ul>";
+                    $print.= $this->getAdminCatMenu( $categories, $category['id']);
                     $print.= "</ul>";
                     $print.= "</li>";
                 } else{
