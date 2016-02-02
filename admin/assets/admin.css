@@ -254,7 +254,7 @@ h2{text-align:center;}
 }
 
 #admin_exit_btn{
-    background-color: #9f2023;
+    background-color: rgba(197, 49, 39, 0.83);
 }
 
 .content{
@@ -275,6 +275,7 @@ h2{text-align:center;}
 
 .main-content{
     width:78%;
+    position:relative;
 }
 
 .articles_good{
@@ -283,7 +284,34 @@ h2{text-align:center;}
 
 .articles_good tr{
     height:35px;
-    align:center;
+    text-align:center;
+}
+
+
+
+.articles_good tr:first-child{
+    background-color: #c55b5c!important;
+    cursor:default!important;
+}
+
+.articles_good tr:nth-child(odd){
+    background-color: #5bcc82;
+}
+
+.articles_good tr:nth-child(even){
+    background-color: #7eafcc;
+}
+
+.articles_good tr:hover{
+    cursor:pointer;
+    background-color: #999999;
+}
+
+.popup{
+    position: absolute;
+    width:100px;
+    height:100px;
+    background-color: #9f2023;
 }
 
 
