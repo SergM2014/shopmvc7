@@ -1,3 +1,9 @@
+<div id="popup_menu" class="invisible">
+    <p><a href="/admin/product/review?id=" id="rewiev_item" >review</a></p>
+    <p><a href="/admin/product/update?id=#" id="update_item">edit</a></p>
+    <p><a href="/admin/product/delete?id=#" id="delete_item">delete</a></p>
+</div>
+
 <nav class="breadcrumbs">
 
     <a href="<?php echo URL; ?>">Головна</a> / <span>Каталог</span>
@@ -27,6 +33,12 @@
 
     <section class="main-content right">
 
+        <div id="popup_menu" class="invisible">
+            <a href="#">просмотреть</a>
+            <a href="#">редактировать</a>
+            <a href="#">Удалить</a>
+        </div>
+
         <form action="/admin/product/lists" id="reset_all" class="right">
             <button>Сбросить все фильтры</button>
         </form>
@@ -55,11 +67,11 @@
         <div class="articles_good">
 
             <table>
-                <tr><th>Id</th><th>Author</th><th>Title</th><th>Category</th><th>Manufacturer</th><th>Description</th><th>Price</th></tr>
+                <tr><th>№</th><th>Author</th><th>Title</th><th>Category</th><th>Manufacturer</th><th>Description</th><th>Price</th></tr>
                  <?php foreach($catalog as $one): ?>
 
                 <tr>
-                    <td><?php echo $one['product_id']; ?></td>
+                    <td data-id="<?php echo $one['product_id']; ?>"></td>
                     <td><?php echo $one['author']; ?></td>
                     <td><?php echo $one['product_title']; ?></td>
                     <td><?php echo $one['translit_title']; ?></td>

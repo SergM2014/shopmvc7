@@ -9,23 +9,61 @@ function find_closest_table_tr(el){
     return elem;
 }
 
-document.getElementsByClassName('main-content')[0].onclick = function(e) {
+function find_closest_heighest_id(el, id){
+    var elem = el;
+
+    while( elem.id != id){
+
+        if(elem.tagName.toLowerCase() == 'html') return false;
+        elem = elem.parentNode;
+        if(!elem) return false;
+    }
+    return elem;
+}
+
+
+
+document.body.onclick = function(e){
+
+
+    var popup_menu= document.getElementById('popup_menu');
+
+    if(popup_menu.className==''){
+
+        popup_menu.className="invisible";
+    }
+
     var table =find_closest_table_tr(e.target);
     if(table) {
-        var x = e.offsetX == undefined ? e.layerX : e.offsetX;
-        var y = e.offsetY == undefined ? e.layerY : e.offsetY;
-        //alert(x + 'x' + y);
 
-        var popup_menu= document.createElement('div');
+        var main_content = document.getElementsByClassName('main-content')[0].getBoundingClientRect();
+        var body = document.body.getBoundingClientRect();
 
-        popup_menu.className= "popup";
-        popup_menu.style.left= x;
-        popup_menu.style.top= y;
+        var border_right= Math.round(main_content.right);
+        var body_bottom = Math.round(body.bottom);
 
 
-      document.getElementsByClassName('articles_good')[0].appendChild(popup_menu);
+        var item_id= table.querySelector('[data-id]').getAttribute('data-id');
+
+        document.getElementById('rewiev_item').setAttribute('href', '/admin/product/review?id='+item_id);
+        document.getElementById('update_item').setAttribute('href', '/admin/product/update?id='+item_id);
+        document.getElementById('delete_item').setAttribute('href', '/admin/product/delete?id='+item_id);
+
+        popup_menu.className = "";
+
+        var x = e.clientX;
+        var y = e.clientY;
 
 
+        if((x+101)>border_right) { x= (x-101)+(border_right-x); }
+        /*console.log(border_right);
+        console.log(x);*/
 
-    }//конец клика по тейбл
-}
+        if((y+71)>body_bottom){ y = (y-71)+(body_bottom-y);}
+
+        popup_menu.style.left = x+"px";
+        popup_menu.style.top = y+"px";
+
+   }//конец клика по тейбл
+};
+

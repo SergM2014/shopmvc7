@@ -4,7 +4,7 @@
 	padding:0;
 	box-sizing:border-box;
 }
-html{
+html, body{
 	height:100%;
 }
 
@@ -115,6 +115,10 @@ h2{text-align:center;}
 
 .invisible{
     display:none;
+}
+
+.visible{
+    display:block!important;
 }
 
 .image_form{
@@ -275,7 +279,7 @@ h2{text-align:center;}
 
 .main-content{
     width:78%;
-    position:relative;
+
 }
 
 .articles_good{
@@ -307,12 +311,18 @@ h2{text-align:center;}
     background-color: #999999;
 }
 
-.popup{
+#popup_menu{
     position: absolute;
+
     width:100px;
-    height:100px;
+    height:70px;
     background-color: #9f2023;
+    padding:5px;
+    border-radius:5px;
+
 }
+
+
 
 
 
