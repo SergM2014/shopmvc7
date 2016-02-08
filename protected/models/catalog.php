@@ -2,82 +2,97 @@
 class Protected_Models_Catalog extends Core_DataBase
 {
 
-    function getCatalog( ){
+    private $amount;
+    private $page;
+    private $order;
+    private $category;
+    private $manufacturer;
 
-        $page= (isset($_GET['p']))? $_GET['p']: 1;
 
-        $page= ($page-1)*AMOUNTONPAGE;
-        $order='';
-        $category='';
-        $manufacturer='';
+    public function __construct($in_admin=false)
+    {
+        $this->amount = ($in_admin)? NUMBERONPAGEADMIN: AMOUNTONPAGE;
+        $this->page = (isset($_GET['p']))? $_GET['p']: 1;
+        $this->category='';
+        $this->manufacturer='';
+
+        parent::__construct();
+    }
+
+    public function getCatalog()
+    {
+
+        $page= ($this->page-1)*$this->amount;
+        $this->order='';
+
 
         if(isset($_GET['order'])) {
             switch($_GET['order']){
-                case 'abc': $order=' ORDER BY `p`.`title` ASC'; break;
-                case 'cba': $order=' ORDER BY `p`.`title` DESC'; break;
-                case 'cheap_first': $order=' ORDER BY `p`.`price` ASC'; break;
-                case 'expensive_first': $order= ' ORDER BY `p`.`price` DESC'; break;
-                case 'default': $order= ' ORDER BY `p`.`title` ASC'; break;
+                case 'abc': $this->order=' ORDER BY `p`.`title` ASC'; break;
+                case 'cba': $this->order=' ORDER BY `p`.`title` DESC'; break;
+                case 'cheap_first': $this->order=' ORDER BY `p`.`price` ASC'; break;
+                case 'expensive_first': $this->order= ' ORDER BY `p`.`price` DESC'; break;
+                case 'default': $this->order= ' ORDER BY `p`.`title` ASC'; break;
             }
         }
 
         if(isset($_GET['category'])){
-            $category = $this->conn->quote($_GET['category']);
-            $category = "WHERE `c`.`title`=".$category." ";
+            $this->category = $this->conn->quote($_GET['category']);
+            $this->category = "WHERE `c`.`title`=".$this->category." ";
             $conjunction =" AND";
         }
 
         if(isset($_GET['manufacturer'])){
             if(!isset($conjunction)) { $conjunction = " WHERE ";} else {$conjunction = " AND "; }
             $name= $this->conn->quote($_GET['manufacturer']);
-            $manufacturer = $conjunction."`m`.`title`=".$name." ";
+            $this->manufacturer = $conjunction."`m`.`title`=".$name." ";
         }
 
         $sql="SELECT `p`.`id` AS product_id , `p`.`author`, `p`.`title` as product_title , `p`.`description`, `p`.`body`, `p`.`price`, `p`.`cat_id`,
               `p`.`manf_id`, `p`.`images`, `c`.`id`, `c`.`title` AS category_title , `c`.`translit_title`, `c`.`parent_id`, `m`.`id` as manufacturer_id , `m`.`title` AS manufacturer_title FROM `products` `p` LEFT JOIN
-              `categories` `c` ON `p`.`cat_id` = `c`.`id` LEFT JOIN `manufacturer` `m` ON `p`.`manf_id` = `m`.`id` ".$category.$manufacturer.$order."
-               LIMIT ?, ".AMOUNTONPAGE;
+              `categories` `c` ON `p`.`cat_id` = `c`.`id` LEFT JOIN `manufacturer` `m` ON `p`.`manf_id` = `m`.`id` ".$this->category.$this->manufacturer.$this->order."
+               LIMIT ?, ".$this->amount;
 
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(1, $page, PDO::PARAM_INT);
         $stmt->execute();
         $result= $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-
+//добавляем порядковый номер товарыв для вывода таблиць и розюыраемось з изображениямы
         foreach ($result as $key=> $value){
+            $number =(!isset($number))? ($this->page-1)*$this->amount+1: $number+1;
+            $result[$key]['number']= $number;
             if(!empty($value['images'])){
-                $result[$key]['images']= unserialize($value['images']);
 
+                $images= unserialize($value['images']);
+                $result[$key]['images']= array_values($images);
             }
         }
 
         return $result;
     }
 
-    function countPages(){
-        $category='';
-        $manufacturer='';
 
+    public function countPages()
+    {
 
         if(isset($_GET['category'])){
-            $category = $this->conn->quote($_GET['category']);
-            $category = "WHERE `c`.`title`=".$category." ";
+            $this->category = $this->conn->quote($_GET['category']);
+            $this->category = "WHERE `c`.`title`=".$this->category." ";
             $conjunction =" AND";
         }
 
         if(isset($_GET['manufacturer'])){
             if(!isset($conjunction)) { $conjunction = " WHERE ";} else {$conjunction = " AND "; }
             $name= $this->conn->quote($_GET['manufacturer']);
-            $manufacturer = $conjunction."`m`.`title`=".$name." ";
+            $this->manufacturer = $conjunction."`m`.`title`=".$name." ";
         }
 
-
-        //подсчет количества страниц
         $sql= "SELECT COUNT(`p`.`id`) AS number FROM `products` `p` LEFT JOIN
-              `categories` `c` ON `p`.`cat_id` = `c`.`id` LEFT JOIN `manufacturer` `m` ON `p`.`id` = `m`.`id` ".$category.$manufacturer;
+              `categories` `c` ON `p`.`cat_id` = `c`.`id` LEFT JOIN `manufacturer` `m` ON `p`.`id` = `m`.`id` ".$this->category.$this->manufacturer;
         $res= $this->conn->query($sql);
         $res= $res->fetch(PDO::FETCH_ASSOC);
-        $pages= ceil($res['number']/AMOUNTONPAGE);
+        $pages= ceil($res['number']/$this->amount);
 
         return $pages;
 
@@ -110,7 +125,7 @@ class Protected_Models_Catalog extends Core_DataBase
         return $print;
     }
 
-    function getAdminCatMenu( $categories, $parent = 0)
+    public function getAdminCatMenu( $categories, $parent = 0)
     {
         if(!isset($print)){$print='';}
         foreach($categories as $category){
@@ -136,8 +151,8 @@ class Protected_Models_Catalog extends Core_DataBase
         return $print;
     }
 
-    function getManufacturers(){
-
+    public function getManufacturers()
+    {
         $sql="SELECT `id`, `title`, `url`  FROM `manufacturer`";
         $stmt = $this->conn->query($sql);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -25,11 +25,11 @@
 				<a href="<?php echo URL; ?>/" class="left menu_button">Back to site </a>
 				
 				<a href="/admin" class="left menu_button">back to main admin</a>
-				<a href="/admin/product/lists" class="left menu_button">Products</a>
-                <a href="/admin/category/lists" class="left menu_button">Categories</a>
-                <a href="/admin/manufacturer/lists" class="left menu_button">Manufacturers</a>
-                <a href="/admin/category/lists" class="left menu_button">Categories</a>
-                <a href="/admin/comment/lists" class="left menu_button">Coments</a>
+				<a href="/admin/product/index" class="left menu_button">Products</a>
+                <a href="/admin/category/index" class="left menu_button">Categories</a>
+                <a href="/admin/manufacturer/index" class="left menu_button">Manufacturers</a>
+                <a href="/admin/category/index" class="left menu_button">Categories</a>
+                <a href="/admin/comment/index" class="left menu_button">Coments</a>
                 <a href="/admin/aboutus" class="left menu_button">About Us</a>
                 <a href="/admin/contact" class="left menu_button">Contacts</a>
 				

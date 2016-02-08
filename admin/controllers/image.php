@@ -7,7 +7,7 @@ class Admin_Controllers_Image extends Core_BaseController
        /* var_dump($_POST['_token']);
         var_dump($_SESSION['_token']['add_product']);*/
 //die();
-        if(!isset($_POST['_token']) OR ( $_POST['_token']!= $_SESSION['_token']['update_product'] AND $_POST['_token']!= $_SESSION['_token']['add_product'])) exit();
+       // if(!isset($_POST['_token']) OR ( $_POST['_token']!= $_SESSION['_token']['update_product'] AND $_POST['_token']!= $_SESSION['_token']['add_product'])) exit();
 
         $model = new Protected_Models_Image();
         $response = $model->uploadImage();

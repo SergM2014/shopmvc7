@@ -25,10 +25,10 @@ function find_closest_heighest_id(el, id){
 
 document.body.onclick = function(e){
 
-
+//dealing with popup menu
     var popup_menu= document.getElementById('popup_menu');
 
-    if(popup_menu.className==''){
+    if( popup_menu && popup_menu.className==''){
 
         popup_menu.className="invisible";
     }
@@ -45,8 +45,8 @@ document.body.onclick = function(e){
 
         var item_id= table.querySelector('[data-id]').getAttribute('data-id');
 
-        document.getElementById('rewiev_item').setAttribute('href', '/admin/product/review?id='+item_id);
-        document.getElementById('update_item').setAttribute('href', '/admin/product/update?id='+item_id);
+        document.getElementById('rewiev_item').setAttribute('href', '/admin/product/show?id='+item_id);
+        document.getElementById('update_item').setAttribute('href', '/admin/product/edit?id='+item_id);
         document.getElementById('delete_item').setAttribute('href', '/admin/product/delete?id='+item_id);
 
         popup_menu.className = "";
@@ -65,5 +65,7 @@ document.body.onclick = function(e){
         popup_menu.style.top = y+"px";
 
    }//конец клика по тейбл
+
+
 };
 

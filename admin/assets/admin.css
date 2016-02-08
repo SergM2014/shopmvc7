@@ -322,6 +322,15 @@ h2{text-align:center;}
 
 }
 
+.content-header{
+    max-width:800px;
+    margin:20px auto;
+}
+.content-header-width{
+    max-width:1200px;
+    margin:20px auto;
+}
+
 
 
 

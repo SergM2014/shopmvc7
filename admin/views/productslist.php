@@ -1,5 +1,5 @@
 <div id="popup_menu" class="invisible">
-    <p><a href="/admin/product/review?id=" id="rewiev_item" >review</a></p>
+    <p><a href="/admin/product/review?id=#" id="rewiev_item" >review</a></p>
     <p><a href="/admin/product/update?id=#" id="update_item">edit</a></p>
     <p><a href="/admin/product/delete?id=#" id="delete_item">delete</a></p>
 </div>
@@ -39,6 +39,8 @@
             <a href="#">Удалить</a>
         </div>
 
+        <div class="content-header-width"><a href="/admin/product/create" class="menu_button">+ Add Item</a></div>
+
         <form action="/admin/product/lists" id="reset_all" class="right">
             <button>Сбросить все фильтры</button>
         </form>
@@ -67,11 +69,12 @@
         <div class="articles_good">
 
             <table>
-                <tr><th>№</th><th>Author</th><th>Title</th><th>Category</th><th>Manufacturer</th><th>Description</th><th>Price</th></tr>
+                <tr><th>№</th><th>Picture</th><th>Author</th><th>Title</th><th>Category</th><th>Manufacturer</th><th>Description</th><th>Price</th></tr>
                  <?php foreach($catalog as $one): ?>
 
                 <tr>
-                    <td data-id="<?php echo $one['product_id']; ?>"></td>
+                    <td data-id="<?php echo $one['product_id']; ?>"><?php echo $one['number']; ?></td>
+                    <td><?php if(!empty($one['images'])){   ?> <img src="/uploads/product_images/thumbs/<?php echo $one['images'][0]; ?>" > <?php } ?></td>
                     <td><?php echo $one['author']; ?></td>
                     <td><?php echo $one['product_title']; ?></td>
                     <td><?php echo $one['translit_title']; ?></td>
@@ -91,7 +94,7 @@
                 <nav class="pagination">
 
                     <?php
-                    $current = (isset($_GET['p']))? $_GET['p']: 1;
+                    $current =(isset($_GET['p']))? $_GET['p']: 1;
 
                     for($i =0; $i<$pages; $i++): ?>
 

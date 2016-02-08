@@ -13,8 +13,9 @@ class Core_DataBase {
          //на время разработки
          $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 	   }
-	  
+       // die(var_dump($this->conn));
     }
+
 }
 
 ?>

@@ -1,6 +1,11 @@
-<?php if(isset($product['product_id'])) : ?> <h2>Product number <?php echo $product['product_id']; ?></h2>
-<?php else: ?> <h2>Add new product</h2> <?php endif; ?>
+<div class="content-header">
 
+    <input type="button" onclick="history.back();" value="Назад" class="menu_button">
+
+    <?php if(isset($product['product_id'])) : ?> <h2>Edit product number <?php echo $product['product_id']; ?></h2>
+    <?php else: ?> <h2>Add new product</h2> <?php endif; ?>
+
+</div>
 
 
 <section  class="edit_images">
@@ -25,12 +30,12 @@
 
 <div class="edit_form">
     <?php if (isset($product)) :?>
-    <form action="/admin/product/updateProduct" method="POST">
+    <form action="/admin/product/update" method="POST">
 
             <input type="hidden" name="_token" id="update_product_token" value="<?php echo AppUser::_token('update_product') ?>" >
             <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
         <?php else: ?>
-    <form action="/admin/product/createProduct" method="POST">
+    <form action="/admin/product/store" method="POST">
             <input type="hidden" name="_token" id="create_product_token" value="<?php echo AppUser::_token('add_product') ?>" >
         <?php endif; ?>
         <p><h4>Название: </h4>
