@@ -5,6 +5,9 @@ class Admin_Controllers_Product  extends Core_BaseController
 // get and output the item
     public function edit()
     {
+
+        $_SESSION['history_back']=$_SERVER['HTTP_REFERER'];
+
         $model= new Protected_Models_Product;
         $product = $model->getProduct();
         $current_category_id= $product['cat_id'];
@@ -13,7 +16,7 @@ class Admin_Controllers_Product  extends Core_BaseController
         $manufacturers = $model->getManufacturerForList();
         $images= $model->getProductImages();
 
-        return ['view'=>'getproduct.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'images'=>$images];
+        return ['view'=>'update_product.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'images'=>$images];
     }
 
 
@@ -21,7 +24,7 @@ class Admin_Controllers_Product  extends Core_BaseController
     public function update()
         {
 
-           if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['update_product']) exit();
+          // if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['update_product']) exit();
 
             $model= new Protected_Models_Product;
             $error=$model->checkIfNotEmpty();
@@ -29,25 +32,34 @@ class Admin_Controllers_Product  extends Core_BaseController
             if(!empty($error)){
                 $page =$model->errorTriggerPage();
                 extract($page);
-                return ['view'=>'getproduct.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'error'=> $error ];
+                return ['view'=>'update_product.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'error'=> $error ];
             } else {
                 $result= $model->saveUpdatedProduct();
 
                 if($result){
-                   return ['view'=>'savedproduct.php', 'success'=> "The product ".$_POST['product_id']." is changed and saved successfully"];
+                  // return ['view'=>'savedproduct.php', 'success'=> "The product ".$_POST['product_id']." is changed and saved successfully"];
+
+                    $_SESSION['message'] ='The  product'. $_POST['product_id'].' is changed and saved successfully';
+                    //header('Location: /admin/product/index');
+                    header('Location: '.$_SESSION['history_back']);
+                    unset($_SESSION['history_back']);
+
                 }
             }
         }
 
-//outpu torm for creatin an item
+//outpu torm for creating of an item
     public function create()
         {
+           $_SESSION['history_back']=$_SERVER['HTTP_REFERER'];
+
             $model= new Protected_Models_Product;
             $categories= $model->getAllCategoriesForTree();
             $categories_tree =$model->buildSelectTree($categories, 0, null);
             $manufacturers = $model->getManufacturerForList();
             $images= $model->getProductImages();
-            return ['view'=>'getproduct.php',  'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'images'=>$images];
+
+            return ['view'=>'create_product.php',  'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'images'=>$images];
         }
 
 
@@ -60,12 +72,16 @@ class Admin_Controllers_Product  extends Core_BaseController
             if(!empty($error)){
                 $page =$model->errorTriggerPage();
                 extract($page);
-                return ['view'=>'getproduct.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'error'=> $error ];
+
+                return ['view'=>'create_product.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'error'=> $error ];
             } else {
                 $result= $model->saveAddedProduct();
 
                 if($result){
-                    return ['view'=>'savedproduct.php', 'success'=> "The new product is saved successfully"];
+
+                    $_SESSION['message'] ="The new product is saved";
+                    header('Location: '.$_SESSION['history_back']);
+                    unset($_SESSION['history_back']);
                 }
             }
         }
@@ -88,8 +104,34 @@ class Admin_Controllers_Product  extends Core_BaseController
 
             $manufacturers = $model-> getManufacturers();
 
-            return ['view'=>'productslist.php', 'manufacturers'=>$manufacturers, 'menu'=> $menu, 'pages'=>$pages, 'catalog'=> $catalog, 'nop'=>$nop, 'nomanufacturer'=>$nomanufacturer];
+            $message = $model->getMessage();
+
+
+
+            return ['view'=>'productslist.php', 'manufacturers'=>$manufacturers, 'menu'=> $menu, 'pages'=>$pages, 'catalog'=> $catalog, 'nop'=>$nop, 'nomanufacturer'=>$nomanufacturer, 'message'=>$message];
         }
+
+
+
+    public function destroy()
+        {
+            $model= new Protected_Models_Product;
+            $model->destroyItem();
+            return true;
+        }
+
+
+    public function show()
+    {
+        $model = new Protected_Models_Product();
+        //get informatiom for left vertical menu
+        $product = $model->getProduct();
+
+
+
+        return ['view'=>'product_view.php', 'product'=>$product ];
+    }
+
 
 
 

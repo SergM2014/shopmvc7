@@ -62,6 +62,7 @@ class Protected_Models_Catalog extends Core_DataBase
         foreach ($result as $key=> $value){
             $number =(!isset($number))? ($this->page-1)*$this->amount+1: $number+1;
             $result[$key]['number']= $number;
+
             if(!empty($value['images'])){
 
                 $images= unserialize($value['images']);
@@ -157,6 +158,14 @@ class Protected_Models_Catalog extends Core_DataBase
         $stmt = $this->conn->query($sql);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
+    }
+
+    public function getMessage()
+    {
+        $message = (isset($_SESSION['message']))? $_SESSION['message']: null;
+        unset($_SESSION['message']);
+
+        return $message;
     }
 
 

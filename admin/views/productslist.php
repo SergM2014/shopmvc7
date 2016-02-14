@@ -1,12 +1,16 @@
 <div id="popup_menu" class="invisible">
     <p><a href="/admin/product/review?id=#" id="rewiev_item" >review</a></p>
     <p><a href="/admin/product/update?id=#" id="update_item">edit</a></p>
-    <p><a href="/admin/product/delete?id=#" id="delete_item">delete</a></p>
+    <p><span id="delete_item">delete</span</p>
 </div>
+<!-- message_block -->
+
+
+
 
 <nav class="breadcrumbs">
 
-    <a href="<?php echo URL; ?>">Головна</a> / <span>Каталог</span>
+    <a href="<?php echo URL; ?>admin">Головна</a> / <span>Каталог</span>
 
 </nav>
 
@@ -33,11 +37,6 @@
 
     <section class="main-content right">
 
-        <div id="popup_menu" class="invisible">
-            <a href="#">просмотреть</a>
-            <a href="#">редактировать</a>
-            <a href="#">Удалить</a>
-        </div>
 
         <div class="content-header-width"><a href="/admin/product/create" class="menu_button">+ Add Item</a></div>
 

@@ -7,8 +7,21 @@
 
 <div class="the_content clearfix">
 
+<?php if($product['images']) : ?>
+    <div class="images_preview_area clearfix">
+
+     <?php  foreach($product['images'] as $image ) : ?>
+<img src="/uploads/product_images/<?php echo $image; ?>" class="preview_image">
+
+    <?php endforeach; ?>
+        </div>
+ <?php endif; ?>
+
+
+
+
     <article class="in_details">
-        <h2 class="message"><?php echo $product['product_title']; ?></h2>
+        <h2 class="message"><?php echo $product['title']; ?></h2>
         <p><b>Автор:</b>  <?php echo $product['author']; ?></p><br>
         <p><b>Описание:</b> <?php echo $product['description']; ?></p><br>
         <p><b>Отрывок:</b> <?php echo $product['body']; ?></p><br>

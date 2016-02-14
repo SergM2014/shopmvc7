@@ -9,6 +9,7 @@ class Protected_Controllers_Product  extends Core_BaseController
         $product = $model->getProduct();
         $comments = $model->getComments();
 
+
       return ['view'=>'product.php', 'product'=>$product, 'comments'=>$comments ];
     }
 

@@ -11,8 +11,17 @@
 	<body>
 
 	    <?php if (isset($_SESSION['admin'])): ?>
+
+
+
+        <div id="message_box" <?php if(!isset($message)) { ?> class="invisible" <?php } ?>><img src="/img/close.png" id="message_close">
+            <span><?php if(isset($message)) echo $message; ?></span>
+        </div>
+
+
+
 		<div class="container">
-		   <div id="message" class="message"></div>
+
 		<header class="clearfix">
 	
 			<h1>Добро пожаловать в панель администрирования системы!</h1>

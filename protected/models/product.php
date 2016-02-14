@@ -14,11 +14,14 @@ class Protected_Models_Product extends Core_DataBase
         $stmt->execute();
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($result['images']){
+            $result['images']= unserialize($result['images']);
+        }
 
         return $result;
     }
 
-    public function getProductImages()
+    public function getProductImages( )
     {
         $sql ="SELECT `images` FROM `products` WHERE `id`=?";
         $stmt= $this->conn->prepare($sql);
@@ -26,15 +29,17 @@ class Protected_Models_Product extends Core_DataBase
         $stmt->execute();
 
         $result= $stmt->fetch(PDO::FETCH_ASSOC);
-       // var_dump($result);
+
         if($result)  $images= unserialize($result['images']);
-//die(var_dump($images));
-        if(isset($images)) {
+
+        if(isset($images) ) {
             $_SESSION['product_image'] = $images;
 
             return $images;
         }
     }
+
+
 
     public function getComments($order = null )
     {
@@ -133,10 +138,12 @@ class Protected_Models_Product extends Core_DataBase
     {
         $product= $this->getUpdatedProduct();
 
-        $product['product_id'] = $_POST['product_id'];
+        if(isset($_POST['product_id'])){ $product['product_id'] = $_POST['product_id'];}
+        //$product['product_id'] = $_POST['product_id'];
         $product['manufacturer_id'] = $_POST['manufacturer_id'];
 
         $categories= $this->getAllCategoriesForTree();
+        if(!isset($_POST['category'])){$_POST['category']=null;}
         $categories_tree =$this->buildSelectTree($categories, 0, $_POST['category']);
 
         $manufacturers = $this->getManufacturerForList();
@@ -250,7 +257,7 @@ class Protected_Models_Product extends Core_DataBase
         $result->execute();
 
         // here persist the images
-        if(isset($_SESSION['product_image'])) {
+        if(isset($_SESSION['product_image']) AND $_SESSION['product_image'] != false) {
 
             $serialized = serialize($_SESSION['product_image']);
             $sql="UPDATE `products` SET `images`=? WHERE `id`=?";
@@ -314,6 +321,15 @@ class Protected_Models_Product extends Core_DataBase
         // избегаем повторного сохранения в базу при обновленнии страницы
         unset($_SESSION['_token']['add_product']);
 
+        return true;
+    }
+
+    public function destroyItem()
+    {
+        $sql = "DELETE FROM `products` WHERE `id`=?";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->bindParam(1, $_POST['id'], PDO::PARAM_INT);
+        $stmt->execute();
         return true;
     }
 
