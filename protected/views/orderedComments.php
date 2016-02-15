@@ -1,8 +1,4 @@
-
-
-
-
-    <?php foreach($comments as $comment): ?>
+<?php foreach($comments as $comment): ?>
 
 
         <article class="the_comment">

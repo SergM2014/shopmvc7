@@ -31,7 +31,7 @@
 
 
 			<nav >
-				<a href="<?php echo URL; ?>/" class="left menu_button">Back to site </a>
+				<a href="<?php echo URL; ?>" class="left menu_button">Back to site </a>
 				
 				<a href="/admin" class="left menu_button">back to main admin</a>
 				<a href="/admin/product/index" class="left menu_button">Products</a>

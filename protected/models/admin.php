@@ -4,7 +4,7 @@ class Protected_Models_Admin extends Core_DataBase
 {
     function getAdmin($data)
     {
-        if(isset($_POST['_token']) && $_POST['_token']== $_SESSION['_token']['enterAdmin']){
+        if(isset($_POST['_token']) && $_POST['_token']== $_SESSION['_token']['enter_admin']){
 
             if (!isset($data['login']) OR !isset($data['password'])) return false;
             $sql = "SELECT login, password FROM users";

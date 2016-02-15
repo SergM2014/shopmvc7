@@ -4,7 +4,7 @@ class Protected_Controllers_Contacts extends Core_BaseController
 {
     public function index(){
 
-        if(isset($_POST['_token']) && $_POST['_token']== $_SESSION['_token']['contactform']){
+        if(isset($_POST['_token']) && $_POST['_token']== $_SESSION['_token']['contact_form']){
 
             $model = new Protected_Models_Contacts();
             $error = $model->findErrors();

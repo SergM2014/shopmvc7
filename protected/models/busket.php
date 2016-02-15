@@ -5,7 +5,7 @@ class Protected_Models_Busket extends Core_DataBase
     public function getBigBusket(){
 
         $goods =[];
-//die(var_dump($_SESSION));
+
      
         if(!isset($_SESSION['busket'])) return false;
 
@@ -32,7 +32,7 @@ class Protected_Models_Busket extends Core_DataBase
     //нажатие на клавишу купить  на странице товара
     public function addIntoBusket(){
 
-        if($_SESSION['_token']['addIntoBusket']!= $_POST['_token']) return false;
+        if($_SESSION['_token']['add_into_busket']!= $_POST['_token']) return false;
 
         $price= filter_var($_POST['price'], FILTER_VALIDATE_FLOAT);
 

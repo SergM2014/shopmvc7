@@ -5,14 +5,10 @@ class Admin_Controllers_Product  extends Core_BaseController
 // get and output the item
     public function edit()
     {
-
-        $_SESSION['history_back']=$_SERVER['HTTP_REFERER'];
-
         $model= new Protected_Models_Product;
+        $model->back_button('edit');
         $product = $model->getProduct();
-        $current_category_id= $product['cat_id'];
-        $categories= $model->getAllCategoriesForTree();
-        $categories_tree =$model->buildSelectTree($categories, 0,$current_category_id);
+        $categories_tree = $model->getCategoriesTree(0,$current_category_id=$product['cat_id']);
         $manufacturers = $model->getManufacturerForList();
         $images= $model->getProductImages();
 
@@ -23,8 +19,7 @@ class Admin_Controllers_Product  extends Core_BaseController
     //persist changed product
     public function update()
         {
-
-          // if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['update_product']) exit();
+            Lib_TokenService::check('update_product');
 
             $model= new Protected_Models_Product;
             $error=$model->checkIfNotEmpty();
@@ -37,13 +32,7 @@ class Admin_Controllers_Product  extends Core_BaseController
                 $result= $model->saveUpdatedProduct();
 
                 if($result){
-                  // return ['view'=>'savedproduct.php', 'success'=> "The product ".$_POST['product_id']." is changed and saved successfully"];
-
-                    $_SESSION['message'] ='The  product'. $_POST['product_id'].' is changed and saved successfully';
-                    //header('Location: /admin/product/index');
-                    header('Location: '.$_SESSION['history_back']);
-                    unset($_SESSION['history_back']);
-
+                    $model->successUpdatedRedirectionView();
                 }
             }
         }
@@ -51,9 +40,8 @@ class Admin_Controllers_Product  extends Core_BaseController
 //outpu torm for creating of an item
     public function create()
         {
-           $_SESSION['history_back']=$_SERVER['HTTP_REFERER'];
-
             $model= new Protected_Models_Product;
+            $model->back_button('create');
             $categories= $model->getAllCategoriesForTree();
             $categories_tree =$model->buildSelectTree($categories, 0, null);
             $manufacturers = $model->getManufacturerForList();
@@ -65,7 +53,7 @@ class Admin_Controllers_Product  extends Core_BaseController
 
     public function store()
         {
-           // if(!isset($_POST['_token']['add_product']) OR $_POST['_token']!= $_SESSION['_token']['add_product']) exit();
+            Lib_TokenService::check('add_product');
 
             $model= new Protected_Models_Product;
             $error=$model->checkIfNotEmpty();
@@ -78,10 +66,7 @@ class Admin_Controllers_Product  extends Core_BaseController
                 $result= $model->saveAddedProduct();
 
                 if($result){
-
-                    $_SESSION['message'] ="The new product is saved";
-                    header('Location: '.$_SESSION['history_back']);
-                    unset($_SESSION['history_back']);
+                    $model->successSavedRedirectionView();
                 }
             }
         }
@@ -89,6 +74,9 @@ class Admin_Controllers_Product  extends Core_BaseController
 
     public function index()
         {
+
+            Lib_TokenService::fire();
+
             $nomanufacturer = AppUser::washfromRepetition('manufacturer');
 
             $model = new Protected_Models_Catalog('admin');

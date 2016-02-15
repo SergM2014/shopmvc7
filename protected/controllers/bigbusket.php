@@ -21,7 +21,7 @@ class Protected_Controllers_BigBusket  extends Core_BaseController
 
     function recount(){
 
-        if (isset($_POST['_token']) && $_POST['_token'] == $_SESSION['_token']['updateBusket']) {
+        if (isset($_POST['_token']) && $_POST['_token'] == $_SESSION['_token']['update_busket']) {
 
             $model = new Protected_Models_Busket();
             $model->updateBusket();
@@ -39,7 +39,7 @@ class Protected_Controllers_BigBusket  extends Core_BaseController
     public function updateSmallBusket()
     {
 
-       if (isset($_POST['_token']) && $_POST['_token'] == $_SESSION['_token']['updateSmallBusket']) {
+       if (isset($_POST['_token']) && $_POST['_token'] == $_SESSION['_token']['update_small_busket']) {
 
             return ['view' => 'smallbusket.php', 'ajax' => true];
         } else {
@@ -58,7 +58,7 @@ class Protected_Controllers_BigBusket  extends Core_BaseController
         $model = new Protected_Models_Busket();
         $inputs = $model->decodePost();
 
-        if( isset($inputs['_token']) && $inputs['_token'] == $_SESSION['_token']['orderForm'])
+        if( isset($inputs['_token']) && $inputs['_token'] == $_SESSION['_token']['order_form'])
         {
             $error = $model->makeOrder();
 

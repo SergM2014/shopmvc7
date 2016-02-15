@@ -60,7 +60,7 @@ document.body.onclick = function(e){
 
         document.getElementById('rewiev_item').setAttribute('href', '/admin/product/show?id='+item_id);
         document.getElementById('update_item').setAttribute('href', '/admin/product/edit?id='+item_id);
-     //   document.getElementById('delete_item').setAttribute('href', '/admin/product/delete?id='+item_id);
+        //   document.getElementById('delete_item').setAttribute('href', '/admin/product/delete?id='+item_id);
         document.getElementById('delete_item').setAttribute('data-delete_id', item_id);
 
 
@@ -80,11 +80,11 @@ document.body.onclick = function(e){
 
 
 
-   }//конец клика по тейбл
+    }//конец клика по тейбл
 
     if(e.target.id == 'delete_item'){
 
-       // var confirmed = confirm("Do you really want delete the item?");
+        // var confirmed = confirm("Do you really want delete the item?");
         var confirmed = true;
         //start delet item
         if(confirmed) {
@@ -112,14 +112,15 @@ document.body.onclick = function(e){
 
 
 
+    var close_img= find_closest_heighest_class(e.target,'close_img');
+    var dark_layer_close= find_closest_heighest_class(e.target,'darkLayer');
+
+    if (close_img || dark_layer_close) {
+        document.body.removeChild(document.getElementsByClassName('darkLayer')[0]);
+        document.body.removeChild(document.getElementsByClassName('big_image')[0]);
 
 
-
-    if(e.target.id=='sub_created'){
-       // e.preventDefault();
-        console.log(111);
     }
 
 
 };
-

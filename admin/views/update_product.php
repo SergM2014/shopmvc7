@@ -15,7 +15,7 @@
 
     <form action="/admin/product/update" method="POST">
 
-        <input type="hidden" name="_token" id="update_product_token" value="<?php echo AppUser::_token('update_product') ?>" >
+        <input type="hidden" name="_token" id="update_product_token" value="<?php Lib_TokenService::_token('update_product') ?>" >
         <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
 
         <?php include 'partials/product_area.php'; ?>

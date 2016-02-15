@@ -5,7 +5,7 @@
       function index() 
 	  {  
 
-          if(isset($_POST['_token']) &&  $_POST['_token']==$_SESSION['_token']['enterAdmin']){
+          if(isset($_POST['_token']) &&  $_POST['_token']==$_SESSION['_token']['enter_admin']){
               $data=AppUser::cleanInput($_POST, false);
 
               $model= new Protected_Models_Admin;

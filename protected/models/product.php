@@ -58,7 +58,7 @@ class Protected_Models_Product extends Core_DataBase
 
     }
 
-    public function getAllCategoriesForTree()
+    protected function getAllCategoriesForTree()
     {
         $sql ="SELECT `id`, `title`, `parent_id`, `translit_title` FROM `categories`";
         $res=$this->conn->query($sql);
@@ -74,7 +74,7 @@ class Protected_Models_Product extends Core_DataBase
 
 
 
-    public function buildSelectTree($cats,$parent_id, $current_category)
+    protected function buildSelectTree($cats,$parent_id, $current_category)
     {
         if(is_array($cats) and isset($cats[$parent_id])){
 
@@ -96,6 +96,15 @@ class Protected_Models_Product extends Core_DataBase
             unset($GLOBALS['prefix']);
 
             $tree .= '</select>';
+
+        return $tree;
+    }
+
+    public function getCategoriesTree($parent_id, $current_category)
+    {
+        $cats = $this->getAllCategoriesForTree();
+
+        $tree = $this->buildSelectTree($cats, $parent_id, $current_category);
 
         return $tree;
     }
@@ -332,6 +341,31 @@ class Protected_Models_Product extends Core_DataBase
         $stmt->execute();
         return true;
     }
+
+    public function back_button($action)
+    {
+        $former_action = ($action== 'edit')? 'create': 'edit';
+
+        if(!isset($_SESSION['history_back']) || (isset($_SESSION['history_back']) && $_SESSION['form']== $former_action)) $_SESSION['history_back']=$_SERVER['HTTP_REFERER'];
+        $_SESSION['form']= $action;
+    }
+
+
+    public function successSavedRedirectionView()
+    {
+        $_SESSION['message'] ="The new product is saved";
+        $history_back = Lib_SessionService::getSessionValue('history_back');
+        header('Location: '.$history_back);
+    }
+
+    public function successUpdatedRedirectionView()
+    {
+        $_SESSION['message'] ='The  product  '. $_POST['product_id'].' is changed and saved successfully';
+        $history_back = Lib_SessionService::getSessionValue('history_back');
+        header('Location: '.$history_back);
+    }
+
+
 
 
 

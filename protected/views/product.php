@@ -28,7 +28,7 @@
         <?php if (isset($product['category_title'])) echo '<p> <b>Категория:</b> '.$product['category_translit_title'].'</p><br>'; ?>
         <?php if (isset($product['manufacturer_title'])) echo '<p> <b>Производитель:</b> '.$product['manufacturer_title'].'</p><br>'; ?>
         <p class="red"><b>Цена:</b> <span id="the_price"><?php echo $product['price']; ?></span> грн</p>
-        <button  id="add_item" item="<?php echo $_GET['id']; ?>" class="right" _token="<?php echo AppUser::_token('addIntoBusket'); ?>">  Купить  </button>
+        <button  id="add_item" item="<?php echo $_GET['id']; ?>" class="right" _token="<?php Lib_TokenService::_token('add_into_busket'); ?>">  Купить  </button>
     </article>
 
     <section class="commentsarea">
@@ -45,7 +45,7 @@
                 <p><b>Сортироват по: </b></p>
                 <label><input name="comments_order" type="radio" value="new_first" checked> Сначала новые </label>
                 <label><input name="comments_order" type="radio" value="old_first"> Сначала старые </label>
-                <input type="hidden" id ="comments_order_token" name="comments_order_token" value="<?php echo AppUser::_token('commentsOrder'); ?>" >
+                <input type="hidden" id ="comments_order_token" name="comments_order_token" value="<?php Lib_TokenService::_token('comments_order'); ?>" >
             </form>
             <div id="ordered_comments"
              <?php include 'orderedComments.php'; ?>

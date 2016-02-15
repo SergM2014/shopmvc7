@@ -9,7 +9,7 @@
 
                     <fieldset>
                         <form  method="POST" action="/admin/index">
-                            <input type="hidden" name="_token" value="<?php echo AppUser::_token('enterAdmin') ?>">
+                            <input type="hidden" name="_token" value="<?php Lib_TokenService::_token('enter_admin') ?>">
                            <p><label for="login">Логин</label><br>
                             <input   name="login" id="login" type="text" value="" maxlength="25"> </p>
                             <p><label for="password">Пароль </label><br>

@@ -29,7 +29,7 @@
 
         <p><input type="text" name="keystring" id="keystring" class="input <?php if(isset($error['keystring'])) echo 'error'; ?>" maxlength="10" required ></p>
 
-        <p><input type="hidden" name="_token" id="commentForm_token" value="<?php echo AppUser::_token('commentForm'); ?>"></p>
+        <p><input type="hidden" name="_token" id="commentForm_token" value="<?php Lib_TokenService::_token('comment_form'); ?>"></p>
         <br>
         <p><input type="submit" id="submitComment" value="Отправить"></p>
     </form>

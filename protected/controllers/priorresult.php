@@ -5,7 +5,7 @@ class Protected_Controllers_Priorresult extends Core_BaseController
     public function search()
     {
 
-        if (isset($_POST['_token']) && $_POST['_token'] == $_SESSION['_token']['searchPriorResult']) {
+        if (isset($_POST['_token']) && $_POST['_token'] == $_SESSION['_token']['search_prior_result']) {
 
             $model = new Protected_Models_Search();
             $results = $model->search();

@@ -37,4 +37,7 @@
 					ini_set('error_reporting', E_ALL);
 	}
 	include_once PATH_SITE.'/lib/functions.php';
+	include_once PATH_SITE.'/lib/TokenService.php';
+	include_once PATH_SITE.'/lib/SessionService.php';
+
 ?>

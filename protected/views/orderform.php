@@ -31,7 +31,7 @@
         <label for="keystring">Введите капчу<span class="red">*</span></label>
         <p><input type="text" name="keystring" id="keystring" class="input <?php if(isset($error['keystring'])) echo "error"; ?>" required ></p>
 
-        <input type="hidden" name="_token" id="_token" class="input" value="<?php echo AppUser::_token('orderForm'); ?>">
+        <input type="hidden" name="_token" id="_token" class="input" value="<?php Lib_TokenService::_token('order_form'); ?>">
         <br>
         <p><input type="submit" id="send_order" value="Отправить"></p>
     </form>

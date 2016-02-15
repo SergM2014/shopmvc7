@@ -15,7 +15,7 @@ class Protected_Controllers_Product  extends Core_BaseController
 
     public function comment(){
         //check token
-        if(isset($_POST['_token']) && $_POST['_token']== $_SESSION['_token']['commentForm']) {
+        if(isset($_POST['_token']) && $_POST['_token']== $_SESSION['_token']['comment_form']) {
 
 
             $model = new Protected_Models_Comment();
@@ -39,7 +39,7 @@ class Protected_Controllers_Product  extends Core_BaseController
     }
 
     public function orderComment(){
-        if(isset($_POST['_token']) && $_POST['_token']== $_SESSION['_token']['commentsOrder']) {
+        if(isset($_POST['_token']) && $_POST['_token']== $_SESSION['_token']['comments_order']) {
 
             $model= new Protected_Models_Product();
             $comments= $model->getComments($_POST['order']);

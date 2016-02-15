@@ -89,7 +89,7 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
 
         node.id= id;
         node.className='image_area';
-       var add_image = document.getElementsByClassName('edit_images')[0].appendChild(node);
+        var add_image = document.getElementsByClassName('edit_images')[0].appendChild(node);
         //console.log(node2);
         xhr2 = new XMLHttpRequest();
         xhr2.open('POST', '/admin/image/addsection', true);
@@ -121,35 +121,35 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
 
 
     var submit_btn = find_closest_heighest_class(e.target, 'submit_btn');
-   if(submit_btn){
+    if(submit_btn){
         submit_btn.classList.add('invisible');
 
         image_area= find_closest_heighest_class(e.target, 'image_area');
         var id= image_area.id;
 
         if(document.getElementById('update_product_token'))  var _token= document.getElementById('update_product_token').value;
-       if(document.getElementById('create_product_token')) var _token=document.getElementById('create_product_token').value;
+        if(document.getElementById('create_product_token')) var _token=document.getElementById('create_product_token').value;
 
 
 
-       image_area.querySelector('.progress').classList.remove('invisible');
+        image_area.querySelector('.progress').classList.remove('invisible');
 
-       var file= image_area.querySelector('.FileInput').files[0];
-       var formdata = new FormData();
+        var file= image_area.querySelector('.FileInput').files[0];
+        var formdata = new FormData();
 
-       formdata.append("FileInput", file);
-       formdata.append("id", id);
-       formdata.append("_token", _token);
+        formdata.append("FileInput", file);
+        formdata.append("id", id);
+        formdata.append("_token", _token);
 
-            var ajax = new XMLHttpRequest();
-            ajax.upload.addEventListener("progress", progressHandler, false);
-            ajax.addEventListener("load", completeHandler, false);
-            ajax.addEventListener("error", errorHandler, false);
-            ajax.addEventListener("abort", abortHandler, false);
-            ajax.open("POST", "/admin/image/upload");
-            ajax.send(formdata);
+        var ajax = new XMLHttpRequest();
+        ajax.upload.addEventListener("progress", progressHandler, false);
+        ajax.addEventListener("load", completeHandler, false);
+        ajax.addEventListener("error", errorHandler, false);
+        ajax.addEventListener("abort", abortHandler, false);
+        ajax.open("POST", "/admin/image/upload");
+        ajax.send(formdata);
 
-       image_area.querySelector('.reset_btn').setAttribute('disabled', 'disabled');
+        image_area.querySelector('.reset_btn').setAttribute('disabled', 'disabled');
 
     }
 
@@ -169,33 +169,33 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
 
         if(file_input.classList.contains('invisible')) file_input.classList.remove('invisible');
 
-            xhr2 = new XMLHttpRequest();
-            xhr2.open('POST', '/admin/image/delete', true);
-            xhr2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr2.onreadystatechange = function () {
-                if (xhr2.readyState == 4) {
-                    if (xhr2.status == 200) {
+        xhr2 = new XMLHttpRequest();
+        xhr2.open('POST', '/admin/image/delete', true);
+        xhr2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr2.onreadystatechange = function () {
+            if (xhr2.readyState == 4) {
+                if (xhr2.status == 200) {
 
-                        image_area.querySelector('.output').innerHTML = xhr2.responseText;
-                        image_area.querySelector('.success_tick').classList.add('invisible');
+                    image_area.querySelector('.output').innerHTML = xhr2.responseText;
+                    image_area.querySelector('.success_tick').classList.add('invisible');
 
-                        var images = document.getElementsByClassName('edit_images')[0].querySelectorAll('.image_area');
+                    var images = document.getElementsByClassName('edit_images')[0].querySelectorAll('.image_area');
 
-                        if(images.length>1){
-                            image_area.parentNode.removeChild(image_area)
-                        }
-
+                    if(images.length>1){
+                        image_area.parentNode.removeChild(image_area)
                     }
+
                 }
-            };
-            xhr2.send('id='+id+'&name='+name+'&_token='+_token);
+            }
+        };
+        xhr2.send('id='+id+'&name='+name+'&_token='+_token);
 
         image_area.querySelector('.submit_btn').classList.add('invisible');
         image_area.querySelector('.reset_btn').classList.add('invisible');
         image_area.querySelector('h4').classList.remove('invisible');
         image_area.querySelector('.thumb').classList.remove('uploaded');
 
-        };
+    };
 
     var image_uploaded = find_closest_heighest_class(e.target, 'uploaded');
     if(image_uploaded) {
@@ -230,16 +230,3 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
 
 
 }
-
-document.body.onclick = function (e) {
-
-    var close_img= find_closest_heighest_class(e.target,'close_img');
-    var dark_layer_close= find_closest_heighest_class(e.target,'darkLayer');
-
-    if (close_img || dark_layer_close) {
-        document.body.removeChild(document.getElementsByClassName('darkLayer')[0]);
-        document.body.removeChild(document.getElementsByClassName('big_image')[0]);
-
-
-    }
-};

@@ -5,7 +5,7 @@ class Protected_Controllers_Image extends Core_BaseController
     public function upload()
     {
 
-    if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['commentForm']) exit();
+    if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['comment_form']) exit();
 
         $model = new Protected_Models_Image();
         $message = $model->uploadAvatar();
@@ -19,7 +19,7 @@ class Protected_Controllers_Image extends Core_BaseController
 
     public function delete(){
 
-        if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['commentForm']) exit();
+        if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['comment_form']) exit();
 
         $model = new Protected_Models_Image();
         $message = $model->deleteAvatar();
