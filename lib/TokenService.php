@@ -44,4 +44,9 @@ class Lib_TokenService
             header('Location:'.$_SERVER['HTTP_REFERER']); exit();
         }
     }
+
+    public static function checkAdmin(){
+
+        if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['enter_admin'])  return ['view'=>'index.php'];
+    }
 }

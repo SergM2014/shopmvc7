@@ -39,5 +39,7 @@
 	include_once PATH_SITE.'/lib/functions.php';
 	include_once PATH_SITE.'/lib/TokenService.php';
 	include_once PATH_SITE.'/lib/SessionService.php';
+	include_once PATH_SITE.'/lib/CheckProductFieldsService.php';
+    include_once PATH_SITE.'/lib/HelperService.php';
 
 ?>

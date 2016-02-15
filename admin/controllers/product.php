@@ -5,8 +5,7 @@ class Admin_Controllers_Product  extends Core_BaseController
 // get and output the item
     public function edit()
     {
-        $model= new Protected_Models_Product;
-        $model->back_button('edit');
+        $model= new Protected_Models_Product('edit');
         $product = $model->getProduct();
         $categories_tree = $model->getCategoriesTree(0,$current_category_id=$product['cat_id']);
         $manufacturers = $model->getManufacturerForList();
@@ -21,11 +20,11 @@ class Admin_Controllers_Product  extends Core_BaseController
         {
             Lib_TokenService::check('update_product');
 
-            $model= new Protected_Models_Product;
+           $model= new Protected_Models_Product;
             $error=$model->checkIfNotEmpty();
 
             if(!empty($error)){
-                $page =$model->errorTriggerPage();
+                $page =$model->getPageInfo();
                 extract($page);
                 return ['view'=>'update_product.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'error'=> $error ];
             } else {
@@ -40,10 +39,8 @@ class Admin_Controllers_Product  extends Core_BaseController
 //outpu torm for creating of an item
     public function create()
         {
-            $model= new Protected_Models_Product;
-            $model->back_button('create');
-            $categories= $model->getAllCategoriesForTree();
-            $categories_tree =$model->buildSelectTree($categories, 0, null);
+            $model= new Protected_Models_Product('create');
+            $categories_tree = $model->getCategoriesTree(0, null );
             $manufacturers = $model->getManufacturerForList();
             $images= $model->getProductImages();
 
@@ -58,7 +55,7 @@ class Admin_Controllers_Product  extends Core_BaseController
             $model= new Protected_Models_Product;
             $error=$model->checkIfNotEmpty();
             if(!empty($error)){
-                $page =$model->errorTriggerPage();
+                $page =$model->getPageInfo();
                 extract($page);
 
                 return ['view'=>'create_product.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'error'=> $error ];
@@ -77,13 +74,13 @@ class Admin_Controllers_Product  extends Core_BaseController
 
             Lib_TokenService::fire();
 
-            $nomanufacturer = AppUser::washfromRepetition('manufacturer');
+            $nomanufacturer = Lib_HelperService::washfromRepetition('manufacturer');
 
             $model = new Protected_Models_Catalog('admin');
             $pages = $model->countPages();
             $catalog= $model->getCatalog();
 
-            $nop = AppUser::washfromRepetition('p');
+            $nop = Lib_HelperService::washfromRepetition('p');
 
             $model2 = new Protected_Models_Index();
 
@@ -112,10 +109,7 @@ class Admin_Controllers_Product  extends Core_BaseController
     public function show()
     {
         $model = new Protected_Models_Product();
-        //get informatiom for left vertical menu
         $product = $model->getProduct();
-
-
 
         return ['view'=>'product_view.php', 'product'=>$product ];
     }

@@ -40,7 +40,7 @@
 
         <div class="content-header-width"><a href="/admin/product/create" class="menu_button">+ Add Item</a></div>
 
-        <form action="/admin/product/lists" id="reset_all" class="right">
+        <form action="/admin/product/index" id="reset_all" class="right">
             <button>Сбросить все фильтры</button>
         </form>
 
