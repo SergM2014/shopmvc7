@@ -21,6 +21,17 @@ function find_closest_heighest_id(el, id){
     return elem;
 }
 
+function find_closest_heighest_class(el, cl){
+    var elem = el;
+    //console.log(elem);
+    while (!elem.classList.contains( cl )){
+        if(elem.tagName.toLowerCase() == 'html') return false;
+        elem = elem.parentNode;
+        if(!elem) return false;
+    }
+    return elem;
+}
+
 function output_message(message){
 //var width = document.body.clientWidth;
 //    console.log(width);

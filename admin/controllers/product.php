@@ -85,7 +85,7 @@ class Admin_Controllers_Product  extends Core_BaseController
             $model2 = new Protected_Models_Index();
 
             $categories = $model2->getCategories();
-            $menu = $model->getadminCatMenu($categories, 0);
+            $menu = $model->getAdminDropDownCatMenu($categories, 0);
 
             $manufacturers = $model-> getManufacturers();
 

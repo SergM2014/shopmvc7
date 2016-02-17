@@ -126,9 +126,44 @@ class Protected_Models_Catalog extends Core_DataBase
         return $print;
     }
 
-    public function getAdminCatMenu( $categories, $parent = 0)
+
+    public function getAdminCategoriesTree( $categories, $parent = 0)
     {
         if(!isset($print)){$print='';}
+
+        global $admin_cat_prefix;
+        $admin_cat_prefix.='_';
+
+
+        foreach($categories as $category){
+            if($category['parent_id'] ==$parent ){
+
+                $print.='<li ><span class="r'.$admin_cat_prefix.'" data-id='.$category["id"].' data-parent_id='.$category["parent_id"].'>'.$category['translit_title'].'</span>' ;
+                foreach($categories as $sub_cat){
+                    if($sub_cat['parent_id']==$category['id']){
+                        $flag = TRUE; break;
+                    }
+                }
+
+                if(isset($flag)){
+                    $print.= "<ul>";
+                    $print.= $this->getAdminCategoriesTree( $categories, $category['id']);
+                    $print.= "</ul>";
+                    $print.= "</li>";
+                } else{
+                    $print.="</li>";
+                }
+            }
+        }
+        $admin_cat_prefix= substr( $admin_cat_prefix, 0, -1);
+        return $print;
+    }
+
+
+    public function getAdminDropDownCatMenu( $categories, $parent = 0)
+    {
+        if(!isset($print)){$print='';}
+
         foreach($categories as $category){
             if($category['parent_id'] ==$parent ){
 
@@ -141,7 +176,7 @@ class Protected_Models_Catalog extends Core_DataBase
 
                 if(isset($flag)){
                     $print.= "<ul>";
-                    $print.= $this->getAdminCatMenu( $categories, $category['id']);
+                    $print.= $this->getAdminDropDownCatMenu( $categories, $category['id']);
                     $print.= "</ul>";
                     $print.= "</li>";
                 } else{
@@ -149,6 +184,7 @@ class Protected_Models_Catalog extends Core_DataBase
                 }
             }
         }
+
         return $print;
     }
 

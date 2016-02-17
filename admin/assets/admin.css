@@ -402,6 +402,40 @@ h2{text-align:center;}
 }
 
 
+.admin_categories span{
+    display:block;
+    border:1px solid #000000;
+    width:200px;
+    height:30px;
+    padding:5px;
+    border-radius:3px;
+    margin-top:10px;
+    cursor:pointer;
+}
+
+.admin_categories span:hover{
+    background-color: aquamarine;
+}
+
+.admin_categories li {
+    list-style-type: none;
+}
+
+.r_{
+    background-color: #965746;
+}
+
+.r__{
+    margin-left:25px;
+    background-color: #cc151e;
+}
+
+.r___{
+    margin-left:50px;
+    background-color: #527cee;
+}
+
+
 
 
 

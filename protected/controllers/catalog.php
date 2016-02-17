@@ -6,14 +6,14 @@ class Protected_Controllers_Catalog  extends Core_BaseController
     {
        // $url = AppUser::getUrl();
        // $nocategory = AppUser::washfromRepetition('category');
-        $nomanufacturer = AppUser::washfromRepetition('manufacturer');
+        $nomanufacturer = Lib_HelperService::washfromRepetition('manufacturer');
 
 
         $model = new Protected_Models_Catalog();
         $pages = $model->countPages();
         $catalog= $model->getCatalog();
 
-        $nop = AppUser::washfromRepetition('p');
+        $nop = Lib_HelperService::washfromRepetition('p');
 
         $model2 = new Protected_Models_Index();
         //get informatiom for left vertical menu
