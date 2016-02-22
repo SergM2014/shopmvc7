@@ -12,8 +12,6 @@
 
 	    <?php if (isset($_SESSION['admin'])): ?>
 
-
-
         <div id="message_box" <?php if(!isset($message)) { ?> class="invisible" <?php } ?>><img src="/img/close.png" id="message_close">
             <span><?php if(isset($message)) echo $message; ?></span>
         </div>

@@ -119,9 +119,6 @@ class Protected_Models_Admin extends Core_DataBase
         $parent_id = (isset($_POST['category_id']))? $_POST['category_id']: 0;
         $latin_category_name = Lib_LangService::translite_in_latin($category_name);
         $rus_category_name = Lib_LangService::translite_in_rus($category_name);
-      /*  var_dump($rus_category_name); echo "<br>";
-        var_dump($parent_id); echo "<br>";
-        var_dump($latin_category_name); die();*/
 
         $sql = "INSERT INTO `categories` (`title`,  `parent_id`, `translit_title`) VALUES (?, ?, ? )";
         $stmt = $this->conn->prepare($sql);
@@ -129,7 +126,6 @@ class Protected_Models_Admin extends Core_DataBase
         $stmt -> bindParam(2, $parent_id, PDO::PARAM_INT);
         $stmt -> bindParam(3, $rus_category_name, PDO::PARAM_STR);
         $stmt->execute();
-        //var_dump($stmt->errorInfo()); 
 
         return true;
     }
@@ -180,13 +176,13 @@ class Protected_Models_Admin extends Core_DataBase
         $stmt ->bindParam(1, $_POST['id'], PDO::PARAM_INT);
         $stmt ->execute();
         $res = $stmt ->fetch();
+
         return $res;
     }
 
     public function checkCategoryDeleteErrors()
     {
         $error = "";
-//die(var_dump(Lib_TokenService::check('delete_category')));
         if(!Lib_TokenService::check('delete_category')) $error.= 'Something is wrong';
         if($this->findChildCategory()) $error.= "Present Child Categories. Impossible to delete!";
         if($this->findItemsInCategory()) $error.= "Items in Category. Impossible to delete!";
@@ -194,6 +190,110 @@ class Protected_Models_Admin extends Core_DataBase
         return $error;
     }
 
+
+    public function checkManufacturerInput()
+    {
+
+        $error=[];
+        $add_new_manufacturer = htmlspecialchars($_POST['add_manufacturer_name']);
+        if(empty($add_new_manufacturer))$error['add_manufacturer_name'] = "Нет названия производителя";
+
+        $add_manufacturer_url = htmlspecialchars(($_POST['add_manufacturer_url']));
+        if(empty($add_manufacturer_url)) $error['add_manufacturer_url']= "Введите урл производителя";
+
+        return $error;
+    }
+
+
+    public function getManufacturerPageInfo()
+    {
+        $manufacturer_id = (isset($_GET['id']))? $_GET['id']: false;
+       if(isset($_POST['manufacturer_id']))$manufacturer_id = $_POST['manufacturer_id'];
+
+        $manufacturer_name = htmlspecialchars($_POST['add_manufacturer_name']);
+
+        $manufacturer_url = htmlspecialchars(($_POST['add_manufacturer_url']));
+
+        return compact('manufacturer_name', 'manufacturer_url', 'manufacturer_id');
+
+    }
+
+    public function  saveNewManufacturer(){
+
+        $manufacturer_name = htmlspecialchars($_POST['add_manufacturer_name']);
+        $manufacturer_url = htmlspecialchars(($_POST['add_manufacturer_url']));
+
+        $sql = "INSERT INTO `manufacturer` (`title`,  `url`) VALUES (?, ?)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt -> bindParam(1, $manufacturer_name, PDO::PARAM_STR);
+        $stmt -> bindParam(2, $manufacturer_url, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return true;
+    }
+
+    public function getOneManufacturer()
+    {
+        $sql="SELECT `title`, `url` FROM `manufacturer` WHERE `id`=?";
+        $stmt = $this ->conn ->prepare($sql);
+        $stmt -> bindParam(1, $_GET['id'], PDO::PARAM_INT);
+        $stmt -> execute();
+        $res = $stmt ->fetch(PDO::FETCH_ASSOC);
+        $res['id'] = (int)$_GET['id'];
+
+        return $res;
+
+    }
+
+    public function saveUpdatedManufacturer()
+    {
+        $manufacturer_name = htmlspecialchars($_POST['add_manufacturer_name']);
+        $manufacturer_url = htmlspecialchars(($_POST['add_manufacturer_url']));
+        $manufacturer_id = (int)$_POST['manufacturer_id'];
+
+
+        $sql = "UPDATE `manufacturer` SET `title` =?, `url`= ?  WHERE `id`=?";
+        $stmt = $this -> conn ->prepare($sql);
+        $stmt -> bindParam(1, $manufacturer_name, PDO::PARAM_STR);
+        $stmt -> bindParam(2, $manufacturer_url, PDO::PARAM_STR);
+
+        $stmt -> bindParam(3, $manufacturer_id, PDO::PARAM_INT);
+        $stmt -> execute();
+
+        return true;
+
+    }
+
+    public function checkManufacturerDeleteErrors()
+    {
+        $error = "";
+        if(!Lib_TokenService::check('delete_manufacturer')) $error.= 'Something is wrong';
+
+        if($this->findItemsOfManufacturer()) $error.= "There is Items of the Manufacturer. Impossible to delete!";
+
+        return $error;
+    }
+
+    private function findItemsOfManufacturer()
+    {
+        $sql="SELECT `id` FROM `products` WHERE `manf_id`=?";
+        $stmt = $this ->conn->prepare($sql);
+        $stmt ->bindParam(1, $_POST['id'], PDO::PARAM_INT);
+        $stmt ->execute();
+        $res = $stmt ->fetch();
+
+        return $res;
+    }
+
+
+    public function destroyManufacturer()
+    {
+        $sql = "DELETE FROM `manufacturer` WHERE `id`=?";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->bindParam(1, $_POST['id'], PDO::PARAM_INT);
+        $stmt->execute();
+        return true;
+    }
 
 
 }

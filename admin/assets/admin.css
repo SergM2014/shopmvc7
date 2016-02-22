@@ -404,7 +404,7 @@ h2{text-align:center;}
 }
 
 
-.admin_categories span{
+.admin_categories span, .admin_manufacturers span{
     display:block;
     border:1px solid #000000;
     width:200px;
@@ -415,11 +415,11 @@ h2{text-align:center;}
     cursor:pointer;
 }
 
-.admin_categories span:hover{
+.admin_categories span:hover, .admin_manufacturers span:hover{
     background-color: aquamarine;
 }
 
-.admin_categories li {
+.admin_categories li, .admin_manufacturers li {
     list-style-type: none;
 }
 

@@ -40,6 +40,10 @@ class Lib_TokenService
         $_SESSION['_token']['update_category'] = md5('update_category' . $random);
         $_SESSION['_token']['delete_category'] = md5('delete_category' . $random);
 
+        $_SESSION['_token']['create_new_manufacturer'] = md5('create_new_manufacturer' . $random);
+        $_SESSION['_token']['update_manufacturer'] = md5('update_manufacturer' . $random);
+        $_SESSION['_token']['delete_manufacturer'] = md5('delete_manufacturer' . $random);
+
     }
 
     public static function check($action)
