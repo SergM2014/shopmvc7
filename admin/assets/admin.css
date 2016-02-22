@@ -324,10 +324,12 @@ h2{text-align:center;}
 
 #popup_menu{
     position: absolute;
-    width:100px;
+   /* width:140px;*/
+    min-width:100px;
     height:70px;
     background-color: #9f2023;
     padding:5px;
+    padding-right:0;
     border-radius:5px;
 
 }
@@ -341,7 +343,7 @@ h2{text-align:center;}
     margin:20px auto;
 }
 
-#delete_item{
+#delete_item, #delete_category{
     cursor:pointer;
     text-decoration:underline;
     color: #0000ee;

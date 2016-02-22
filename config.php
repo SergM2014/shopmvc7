@@ -36,10 +36,10 @@
 					ini_set("display_startup_errors","1");
 					ini_set('error_reporting', E_ALL);
 	}
-	include_once PATH_SITE.'/lib/functions.php';
-	include_once PATH_SITE.'/lib/TokenService.php';
-	include_once PATH_SITE.'/lib/SessionService.php';
-	include_once PATH_SITE.'/lib/CheckProductFieldsService.php';
-    include_once PATH_SITE.'/lib/HelperService.php';
+
+    include_once PATH_SITE.'/auto_Lib_Includer.php';
+
+
+
 
 ?>

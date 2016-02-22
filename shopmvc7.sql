@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Янв 02 2016 г., 13:18
--- Версия сервера: 5.5.46-0ubuntu0.14.04.2
+-- Время создания: Фев 22 2016 г., 08:37
+-- Версия сервера: 5.5.47-0ubuntu0.14.04.1
 -- Версия PHP: 5.5.9-1ubuntu4.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `parent_id` int(11) unsigned NOT NULL,
   `translit_title` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- Дамп данных таблицы `categories`
@@ -96,9 +96,11 @@ INSERT INTO `categories` (`id`, `title`, `parent_id`, `translit_title`) VALUES
 (1, 'category-1', 0, 'Категория 1'),
 (2, 'Category-2', 0, 'Категория 2'),
 (3, 'category-3', 0, 'категория 3'),
-(4, 'category-4', 0, 'категория4'),
 (5, 'category-1.1', 1, 'категория 1.1'),
-(6, 'category-1.2', 1, 'категория 1.2');
+(6, 'category-1.2', 1, 'категория 1.2'),
+(7, 'Category1.1.1', 5, 'Категория1.1.1'),
+(8, 'Category1.1.2', 5, 'Категория1.1.2'),
+(9, 'zxcv', 0, 'зxсв');
 
 -- --------------------------------------------------------
 
@@ -202,16 +204,16 @@ CREATE TABLE IF NOT EXISTS `products` (
   PRIMARY KEY (`id`),
   KEY `cat_id` (`cat_id`),
   KEY `manf_id` (`manf_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=38 ;
 
 --
 -- Дамп данных таблицы `products`
 --
 
 INSERT INTO `products` (`id`, `author`, `title`, `description`, `body`, `price`, `cat_id`, `manf_id`, `images`) VALUES
-(1, 'Пушкин', 'Руслан и Людмила', 'бум бум', 'опять бум бум', 100.20, NULL, NULL, NULL),
-(2, 'Лермонтов', 'Фигня на ровном месте', 'описание', 'розширене описание', 99.00, 1, 1, NULL),
-(3, 'онегин', 'ьезценный твор', 'описание', 'развернутое описание', 55.00, 1, 1, NULL),
+(1, 'Пушкин', 'Руслан и Людмила', 'бум бум', 'опять бум бум', 100.20, NULL, NULL, 'a:4:{s:15:"1455375151_6903";s:19:"1455375151_6903.jpg";s:14:"1455375156_770";s:18:"1455375156_770.jpg";s:14:"1455375166_226";s:18:"1455375166_226.jpg";s:14:"1455375171_955";s:18:"1455375171_955.jpg";}'),
+(2, 'Лермонтов', 'Фигня на ровном месте', 'А больше лермонтов написат не миг', 'розширене описание', 99.00, 1, 1, NULL),
+(3, 'онегин', 'bезценный твор updated', 'описание', 'развернутое описание', 55.00, 1, 1, NULL),
 (4, 'Гете', 'Фауст', 'описание', 'разверутое описание', 30.00, 1, 1, NULL),
 (5, 'Гейна', 'Какаято муть', 'описание', 'еще одно оисание', 44.00, 1, 1, NULL),
 (6, 'Жириновский', 'Майн камф с самим собой', 'описание ', 'снова описание', 1.00, 1, 1, NULL),
@@ -219,7 +221,33 @@ INSERT INTO `products` (`id`, `author`, `title`, `description`, `body`, `price`,
 (8, 'Ленин', 'Собрание трудов', 'опис ', 'розширеный опыс ', 10000.00, 1, 1, NULL),
 (9, 'Ленин в. И', 'розширеное собрание трудоа', 'опис', 'розвернутий опыс', 200.00, 1, 1, NULL),
 (10, 'Носов', 'полет на луну', 'опыс', 'ще раз опис', 300.00, 1, 1, NULL),
-(11, 'Чфн дзи минь', 'Китай как дракон', 'опис ', 'розшпреный опис', 100.00, 1, 1, NULL);
+(11, 'Чфн дзи минь', 'Китай как дракон', 'опис ', 'розшпреный опис', 100.00, 1, 1, NULL),
+(12, 'me', 'the new created item', 'Just fo training', 'thats realy true', 2.00, NULL, NULL, NULL),
+(13, 'me again', 'Tarelkw', 'Nothig to describe', 'burumbumbum', 5.00, NULL, NULL, NULL),
+(14, '222', '222', '222', '222', 222.00, NULL, NULL, NULL),
+(15, '434343', '4343', '344334', '3434', 3434.00, NULL, NULL, NULL),
+(16, 'rrr', 'rrr', 'rrr', 'rrr', 5555.00, NULL, NULL, NULL),
+(17, 'dsfh', 'dfh', 'dh', 'xdfh', 7777777.00, NULL, NULL, NULL),
+(18, 'dfh', 'drth', 'dfgj', 'dfgh', 666666666.00, NULL, NULL, NULL),
+(19, 'tyui', 'rtuy', 'tyi', 'tui', 77.00, NULL, NULL, NULL),
+(20, 'hiuo', 'hjil', 'hjil', 'hjil', 999999.00, NULL, NULL, NULL),
+(21, 'dfth', 'dfjh', 'dfyjh', 'dfyj', 9999999999.99, 1, 3, NULL),
+(22, 'e456', 'e456', 'er56', 'e456', 88888888.00, NULL, NULL, NULL),
+(23, '5678', '678', '67', '678', 678.00, NULL, NULL, NULL),
+(24, 'tfryu', 'dtyuupdate', 'fd', 'rtyu', 666666666.00, NULL, NULL, NULL),
+(25, 'rt67', 'r67u', 'r5u76', 'r567', 6666666666.00, NULL, NULL, NULL),
+(26, 'rtyu', 'fty', 'rtuy', 'rtyu', 9999999999.99, NULL, NULL, NULL),
+(27, '22222222', '222222', '22222222222', '222222222', 2222222222.00, NULL, NULL, NULL),
+(28, '888888888', '88888888', '888888888', '888888888', 88888888.00, NULL, NULL, NULL),
+(29, 'yyyyyyy', 'yyyyyyyy', 'yyyyyyyy', 'yyyyyyy', 6666666666.00, NULL, NULL, NULL),
+(30, 'fd', 'cfgjupdated', 'dfh', 'dfh', 77777777.00, NULL, NULL, NULL),
+(31, 'yyyyyyy1', 'yyyyyy1', 'yyyyyy1', 'yyyyyyy1', 444444.00, NULL, NULL, NULL),
+(32, 'dfh', 'xh', 'dfgh', 'dfgh', 55555.00, NULL, NULL, NULL),
+(33, 'ddddddddddd', 'dddddd', 'ddddddddddd', 'dddddddddddd', 111111111.00, NULL, NULL, NULL),
+(34, 'llllllllll', 'llll', 'lllllll', 'lllllllllll', 9999999999.99, 6, NULL, NULL),
+(35, 'hhhhhhhh', 'ggggggg', 'hhhhhh', 'hhhhhh', 77.00, NULL, NULL, NULL),
+(36, 'uuuuuuuu', 'uuuuuuu', 'uuuuuuuuuuu', 'uuuuuuuuu', 77777777.00, NULL, NULL, NULL),
+(37, 'xxxxxxxxxx', 'X_updated', 'xxxxxxxxxx', 'xxxxxxxxxxx', 2222222222.00, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -257,7 +285,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(50) NOT NULL,
   `role` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Дамп данных таблицы `users`
+--
+
+INSERT INTO `users` (`id`, `login`, `password`, `role`) VALUES
+(2, 'admin', '21232f297a57a5a743894a0e4a801fc3', '');
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

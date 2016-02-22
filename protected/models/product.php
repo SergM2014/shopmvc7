@@ -92,15 +92,20 @@ class Protected_Models_Product extends Core_DataBase
 
 
 
-    protected function buildSelectTree($cats,$parent_id, $current_category)
+    protected function buildSelectTree($cats,$parent_id, $current_category, $manage_category)
     {
+        //die(var_dump($current_category));
         if(is_array($cats) and isset($cats[$parent_id])){
 
             if($parent_id==0){
-                $tree = '<select name="category_id">';
+                $tree = '<select id="category_id" name="category_id">';
                 global $prefix;
                 $prefix='';
+                if($manage_category){
+                    $tree .= '<option value="0">Сделать стартовой</option>';
+                } else {
                 $tree .= '<option value="">Без категории</option>';}
+            }
 
                 foreach($cats[$parent_id] as $cat){
 
@@ -118,11 +123,11 @@ class Protected_Models_Product extends Core_DataBase
         return $tree;
     }
 
-    public function getCategoriesTree($parent_id, $current_category)
+    public function getCategoriesTree($parent_id, $current_category, $manage_category= false )
     {
-        $cats = $this->getAllCategoriesForTree();
 
-        $tree = $this->buildSelectTree($cats, $parent_id, $current_category);
+        $cats = $this->getAllCategoriesForTree();
+        $tree = $this->buildSelectTree($cats, $parent_id, $current_category, $manage_category);
 
         return $tree;
     }

@@ -16,6 +16,14 @@ class Core_DataBase {
        // die(var_dump($this->conn));
     }
 
+    public function getMessage()
+    {
+        $message = (isset($_SESSION['message']))? $_SESSION['message']: null;
+        unset($_SESSION['message']);
+
+        return $message;
+    }
+
 }
 
 ?>

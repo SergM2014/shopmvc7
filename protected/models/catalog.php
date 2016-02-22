@@ -138,7 +138,7 @@ class Protected_Models_Catalog extends Core_DataBase
         foreach($categories as $category){
             if($category['parent_id'] ==$parent ){
 
-                $print.='<li ><span class="r'.$admin_cat_prefix.'" data-id='.$category["id"].' data-parent_id='.$category["parent_id"].'>'.$category['translit_title'].'</span>' ;
+                $print.='<li ><span class=" admin_categories_item r'.$admin_cat_prefix.'" data-id='.$category["id"].' data-parent_id='.$category["parent_id"].'>'.$category['translit_title'].'</span>' ;
                 foreach($categories as $sub_cat){
                     if($sub_cat['parent_id']==$category['id']){
                         $flag = TRUE; break;
@@ -196,12 +196,18 @@ class Protected_Models_Catalog extends Core_DataBase
         return $result;
     }
 
-    public function getMessage()
+    public function getCategoryName()
     {
-        $message = (isset($_SESSION['message']))? $_SESSION['message']: null;
-        unset($_SESSION['message']);
+        $id = (isset($_GET['id']))? $_GET['id']: $_POST['product_id'];
 
-        return $message;
+        $sql = "SELECT `translit_title` FROM `categories` WHERE `id`=?";
+        $stmt = $this -> conn ->prepare($sql);
+        $stmt -> bindParam(1, $id, PDO::PARAM_INT);
+        $stmt -> execute();
+        $category['name'] = $stmt->fetchColumn();
+        $category['id'] = (int)($id);
+
+        return $category;
     }
 
 
