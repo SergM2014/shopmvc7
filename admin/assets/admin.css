@@ -293,31 +293,31 @@ h2{text-align:center;}
 
 }
 
-.articles_good{
+.articles_good, .comments_area{
     margin:30px 0 30px 0;
 }
 
-.articles_good tr{
+.articles_good tr, .comments_area tr{
     height:35px;
     text-align:center;
 }
 
 
 
-.articles_good tr:first-child{
+.articles_good tr:first-child, .comments_area tr:first-child{
     background-color: #c55b5c!important;
     cursor:default!important;
 }
 
-.articles_good tr:nth-child(odd){
+.articles_good tr:nth-child(odd), .comments_area tr:nth-child(odd){
     background-color: #5bcc82;
 }
 
-.articles_good tr:nth-child(even){
+.articles_good tr:nth-child(even), .comments_area tr:nth-child(even){
     background-color: #7eafcc;
 }
 
-.articles_good tr:hover{
+.articles_good tr:hover, .comments_area tr:hover{
     cursor:pointer;
     background-color: #999999;
 }
@@ -435,6 +435,19 @@ h2{text-align:center;}
 .r___{
     margin-left:50px;
     background-color: #527cee;
+}
+
+.select_submit_button{
+    margin-top:20px;
+    margin-left:40px;
+    width:40px;
+    height:40px;
+
+}
+
+.checkbox_area{
+    margin-left:60px;
+    margin-top:20px;
 }
 
 

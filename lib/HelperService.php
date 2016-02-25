@@ -44,4 +44,15 @@ class Lib_HelperService {
         return $url;
 
     }
+
+    public static function ifChecked($key, $value)
+    {
+        if(isset($_GET[$key]) AND $_GET[$key]==$value) echo "checked";
+    }
+
+    public static function ifSelected($key, $value)
+    {
+        if(isset($_GET[$key]) AND $_GET[$key]==$value) echo "selected";
+    }
+
 }
