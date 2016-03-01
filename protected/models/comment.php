@@ -124,7 +124,7 @@ class Protected_Models_Comment extends Core_DataBase
 
 
 
-        $sql="SELECT `c`.`id`, `c`.`product_id`, `c`.`avatar`, `c`.`name`, `c`.`email`, `c`.`comment`, `c`.`created_at`, `c`.`changed`, `c`.`published`,`p`.`title`, `p`.`id`
+        $sql="SELECT `c`.`id`, `c`.`product_id`, `c`.`avatar`, `c`.`name`, `c`.`email`, `c`.`comment`, `c`.`created_at`, `c`.`changed`, `c`.`published`,`p`.`title`
               FROM `comments` `c`
               LEFT JOIN `products` `p` ON `c`.`product_id` = `p`.`id` $condition  $order LIMIT ?,".NUMBERONPAGEADMIN;
         $stmt = $this->conn->prepare($sql);
@@ -138,8 +138,11 @@ class Protected_Models_Comment extends Core_DataBase
             $number = (!isset($number)) ? ($page + 1) : $number + 1;
             $comments[$key]['number'] = $number;
         }
+
         return $comments;
     }
+
+
 
     public function countPages()
     {
@@ -151,6 +154,125 @@ class Protected_Models_Comment extends Core_DataBase
 
         return $pages;
 
+    }
+
+
+    public function selectOneComment()
+    {
+        if(isset($_GET['id'])) $id= $_GET['id'];
+        if(isset($_POST['id'])) $id= $_POST['id'];
+
+        $sql = "SELECT `id`, `product_id`, `avatar`, `name`, `email`, `comment`, `created_at`, `changed`, `published`
+                FROM  `comments` WHERE `id`=?";
+        $stmt = $this->conn ->prepare($sql);
+        $stmt->bindParam(1, $id, PDO::PARAM_INT);
+        $stmt -> execute();
+        $comment = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $_SESSION['admin_avatar_change'][$id]= (!is_null($comment['avatar']))? $comment['avatar']: NULL;
+
+        return $comment;
+    }
+
+
+    protected function getCommentInputs()
+    {
+        $comment =[];
+        $comment['name']= htmlspecialchars($_POST['name']);
+        $comment['email']= htmlspecialchars($_POST['email']);
+        $comment['comment']= htmlspecialchars($_POST['message']);
+        if(isset($_POST['id'])) $comment['id']= (int)$_POST['id'];
+
+        return $comment;
+    }
+
+    public function checkAdminCommentFields()
+    {
+        $inputs = $this->getCommentInputs();
+;
+        $error = array();
+
+        if (strlen($inputs['name']) < 3) {
+            $error['name'] = 'Имя должно состоять больше чем из 3 букв';
+        }
+
+        if(!filter_var($inputs['email'], FILTER_VALIDATE_EMAIL)){$error['email']='Неверный email';}
+        if(empty($inputs['email'])){$error['email']='Пустое поле';}
+
+        if(empty($inputs['comment'])){
+            $error['message']= 'Пустое поле';
+        }
+
+        return $error;
+
+    }
+
+    public function getCommentPageInfo()
+    {
+        $comment = $this->getCommentInputs();
+
+        return compact ('comment');
+    }
+
+
+
+
+
+    public function saveUpdatedComment()
+    {
+         $inputs = $this->getCommentInputs();
+         $sql= "UPDATE `comments` SET `avatar`=? ,`name`=?, `email`=?, `comment`=?, `changed`='1', `published`=?  WHERE `id`=?";
+         $stmt = $this->conn->prepare($sql);
+         $stmt->bindParam(1, $_SESSION['admin_avatar_change'][$_POST['id']], PDO::PARAM_STR);
+         $stmt->bindParam(2, $inputs['name'], PDO::PARAM_STR);
+         $stmt->bindParam(3, $inputs['email'], PDO::PARAM_STR);
+         $stmt->bindParam(4, $inputs['comment'], PDO::PARAM_STR);
+         $stmt->bindParam(5, $_POST['published'], PDO::PARAM_STR);
+
+         $stmt->bindParam(6, $_POST['id'], PDO::PARAM_INT);
+
+         $stmt->execute();
+
+         return true;
+    }
+
+    public function destroyComment()
+    {
+        Lib_TokenService::check('delete_comment');
+       /* $sql="DELETE FROM `comments` WHERE `id`=?";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->bindParam(1, $_POST['id'], PDO::PARAM_INT);
+        $stmt->execute();*/
+        $response=["message"=>"The comment# {$_POST['id']} deleted!", "success"=> true ];
+        return $response;
+    }
+
+
+    public function unpublishComment()
+    {
+        Lib_TokenService::check('delete_comment');
+
+        $sql="UPDATE `comments` SET `published`='0' WHERE `id` =?";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->bindParam(1, $_POST['id'], PDO::PARAM_INT);
+        $stmt->execute();
+
+        $response=['message'=>"The comment# {$_POST['id']} is unpublished!", "success"=> true];
+        return $response;
+    }
+
+
+    public function publishComment()
+    {
+        Lib_TokenService::check('delete_comment');
+
+        $sql="UPDATE `comments` SET `published`='1' WHERE `id` =?";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->bindParam(1, $_POST['id'], PDO::PARAM_INT);
+        $stmt->execute();
+
+        $response=['message'=>"The comment# {$_POST['id']} is published!", "success"=> true];
+        return $response;
     }
 
 

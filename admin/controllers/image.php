@@ -33,5 +33,27 @@ class Admin_Controllers_Image extends Core_BaseController
          return ['view'=>'productImageUpload.php', 'ajax'=>1];
      }
 
+
+
+    //update avatar section
+     public function updateAvatar()
+     {
+        Lib_TokenService::check('update_comment');
+        $model = new Protected_Models_Image();
+        $response = $model->uploadAvatar( true );
+
+        echo json_encode($response);
+        exit();
+     }
+
+     public function deleteAvatar()
+     {
+         Lib_TokenService::check('update_comment');
+         $model = new Protected_Models_Image();
+         $response = $model->deleteAdminAvatar();
+         echo json_encode($response);
+         exit();
+     }
+
 }
 ?>

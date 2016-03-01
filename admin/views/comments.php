@@ -10,10 +10,12 @@
 
         <h2>Comments edit area</h2>
 
-
+        <input type="hidden" name="_token" value="<?php Lib_TokenService::_token('general_purpose_comment') ?>" >
 
             <div class="select_area clearfix">
                 <form  method="GET" action="/admin/comment">
+
+
 
                     <div class="left">
                         <label for="select">Сортировать по: </label>
@@ -52,6 +54,8 @@
 
 
         <?php if(!empty($comments)) : ?>
+
+
          <!-- <div class="articles_good">-->
             <div class="comments_area">
                 <table>
@@ -60,15 +64,16 @@
 
                         <tr>
 
-                            <td data-id="<?php echo $one['id']; ?>"> <?php echo $one['number'] ?></td>
+                            <td comment-id="<?php echo $one['id']; ?>"> <?php echo $one['number'] ?></td>
                             <td><?php echo $one['title'].' ( '.$one['product_id'].')'; ?></td>
                             <td><?php if(!empty($one['avatar'])){   ?> <img src="/uploads/avatars/<?php echo $one['avatar']; ?>" > <?php } ?></td>
                             <td><?php echo $one['name']; ?></td>
                             <td><?php echo $one['email']; ?></td>
                             <td><?php echo $one['comment']; ?></td>
                             <td><?php echo $one['created_at']; ?></td>
-                            <td><?php echo $one['changed']; ?></td>
-                            <td><?php echo $one['published']; ?></td>
+
+                            <td class=" <?php if($one['changed']=='1') { echo "unchanged"; } else {echo "changed";} ?>"><?php if ($one['changed']=='1') { echo 'YES';} else { echo "NO";} ?></td>
+                            <td class="published_status <?php if($one['published']=='1') { echo "published"; } else {echo "unpublished";} ?>"><?php if ($one['published']=='1') { echo 'YES';} else { echo "NO";} ?></td>
                         </tr>
 
                     <?php endforeach; ?>

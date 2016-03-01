@@ -47,8 +47,8 @@
 		</header>
 
 			<div id="popup_menu" class="invisible">
-				<p><a href="/admin/product/review?id=#" id="rewiev_item">review</a></p>
-				<p><a href="/admin/product/update?id=#" id="update_item">edit</a></p>
+				<p><a id="rewiev_item">review</a></p>
+				<p><a id="update_item">edit</a></p>
 				<p><span id="delete_item">delete</span</p>
 			</div>
 

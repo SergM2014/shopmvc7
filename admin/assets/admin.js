@@ -65,29 +65,71 @@ document.body.onclick = function(e){
         var border_right= Math.round(main_content.right);
         var body_bottom = Math.round(body.bottom);
 
+//dealing with product
+        if(table.querySelector('[data-id]')) {
 
-        var item_id= table.querySelector('[data-id]').getAttribute('data-id');
+            var item_id = table.querySelector('[data-id]').getAttribute('data-id');
 
-        document.getElementById('rewiev_item').setAttribute('href', '/admin/product/show?id='+item_id);
-        document.getElementById('update_item').setAttribute('href', '/admin/product/edit?id='+item_id);
-        //   document.getElementById('delete_item').setAttribute('href', '/admin/product/delete?id='+item_id);
-        document.getElementById('delete_item').setAttribute('data-delete_id', item_id);
-        document.getElementById('delete_item').className="delete_item";
+            document.getElementById('rewiev_item').setAttribute('href', '/admin/product/show?id=' + item_id);
+            document.getElementById('update_item').setAttribute('href', '/admin/product/edit?id=' + item_id);
+            //   document.getElementById('delete_item').setAttribute('href', '/admin/product/delete?id='+item_id);
+            document.getElementById('delete_item').setAttribute('data-delete_id', item_id);
+            document.getElementById('delete_item').className = "delete_item";
+
+        }
+        //dealing with comments
+        if(table.querySelector('[comment-id]')){
+
+            var item_id = table.querySelector('[comment-id]').getAttribute('comment-id');
+
+            var published_status = table.querySelector('.published_status').classList.contains('published');
+          //  console.log(published_status)
 
 
-        popup_menu.className = "";
+            if(published_status) {
+//console.log(1)
+                document.getElementById('rewiev_item').setAttribute('comment_unpublish_id',  item_id);
+                document.getElementById('rewiev_item').innerText = 'unpublish comment';
+            }
 
-        var x = e.clientX;
-        var y = e.clientY;
+            if(!published_status) {
+// console.log(0)
+                document.getElementById('rewiev_item').setAttribute('comment_publish_id',  item_id);
+                document.getElementById('rewiev_item').innerText = 'publish comment';
+            }
 
 
-        if((x+101)>border_right) { x= (x-101)+(border_right-x); }
+            document.getElementById('update_item').setAttribute('href', '/admin/comment/edit?id='+item_id);
+            document.getElementById('update_item').innerText='edit comment';
+
+            var delete_comment = document.getElementById('delete_item');
+            delete_comment.setAttribute('comment-delete_id', item_id);
+            delete_comment.className ="delete_comment";
 
 
-        if((y+71)>body_bottom){ y = (y-71)+(body_bottom-y);}
 
-        popup_menu.style.left = x+"px";
-        popup_menu.style.top = y+"px";
+        }
+
+
+
+
+
+            popup_menu.className = "";
+
+            var x = e.clientX;
+            var y = e.clientY;
+
+
+            if((x+101)>border_right) { x= (x-101)+(border_right-x); }
+
+
+            if((y+71)>body_bottom){ y = (y-71)+(body_bottom-y);}
+
+            popup_menu.style.left = x+"px";
+            popup_menu.style.top = y+"px";
+
+
+
 
 
 
@@ -303,6 +345,125 @@ if(e.target.className == 'delete_category'){
         }
     }//конец удаления категорий
 
+
+
+    if(e.target.className == 'delete_comment'){
+
+        var confirmed = confirm("Do you really want delete the comment?");
+        // var confirmed = true;
+        //start delet item
+        if(confirmed) {
+
+            var id = document.getElementById('delete_item').getAttribute('comment-delete_id');
+            var item_to_del = document.getElementsByClassName('comments_area')[0].querySelector('td[comment-id="'+id+'"]').parentNode;
+            var _token = document.getElementsByName("_token")[0].value;
+            // console.log(_token);
+           // console.log(item_to_del); return;
+
+
+            xhr= new XMLHttpRequest();
+            xhr.open('POST', '/admin/comment/destroy', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        popup_menu.className="invisible";
+                        var response = JSON.parse(xhr.responseText);
+                       // console.log(response);
+
+                        if(response.error) {
+                            document.getElementById('message_box').className = "";
+                            document.getElementById('message_box').querySelector('span').innerText = response.error;
+                        }
+
+                        if(response.success){
+                            document.getElementById('message_box').className = "";
+                            document.getElementById('message_box').querySelector('span').innerText = response.message;
+                            item_to_del.parentNode.removeChild(item_to_del);
+                        }
+                    }
+                }
+            };
+            xhr.send('id='+id+'&ajax=1&_token='+_token);
+        }
+    }//конец удаления категорий
+
+//нажимаем на unpublish comment
+    if(e.target.hasAttribute('comment_unpublish_id')){
+
+
+        var id = e.target.getAttribute('comment_unpublish_id');
+        e.target.removeAttribute('comment_unpublish_id');
+        var item_to_unpublish = document.getElementsByClassName('comments_area')[0].querySelector('td[comment-id="'+id+'"]').parentNode.querySelector('.published_status');
+        var _token = document.getElementsByName("_token")[0].value;
+
+
+        xhr= new XMLHttpRequest();
+        xhr.open('POST', '/admin/comment/unpublish', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    popup_menu.className="invisible";
+                    var response = JSON.parse(xhr.responseText);
+                    // console.log(response);
+
+                    if(response.error) {
+                        document.getElementById('message_box').className = "";
+                        document.getElementById('message_box').querySelector('span').innerText = response.error;
+                    }
+
+                    if(response.success){
+                        document.getElementById('message_box').className = "";
+                        document.getElementById('message_box').querySelector('span').innerText = response.message;
+                        item_to_unpublish.innerText="NO";
+                        item_to_unpublish.classList.remove('published');
+                        item_to_unpublish.classList.add('unpublished');
+                    }
+                }
+            }
+        };
+        xhr.send('id='+id+'&ajax=1&_token='+_token);
+
+    }
+
+    //нажимаем на publish comment
+    if(e.target.hasAttribute('comment_publish_id')){
+
+
+        var id = e.target.getAttribute('comment_publish_id');
+        e.target.removeAttribute('comment_publish_id');
+        var item_to_publish = document.getElementsByClassName('comments_area')[0].querySelector('td[comment-id="'+id+'"]').parentNode.querySelector('.published_status');
+        var _token = document.getElementsByName("_token")[0].value;
+
+        xhr= new XMLHttpRequest();
+        xhr.open('POST', '/admin/comment/publish', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    popup_menu.className="invisible";
+                    var response = JSON.parse(xhr.responseText);
+                    // console.log(response);
+
+                    if(response.error) {
+                        document.getElementById('message_box').className = "";
+                        document.getElementById('message_box').querySelector('span').innerText = response.error;
+                    }
+
+                    if(response.success){
+                        document.getElementById('message_box').className = "";
+                        document.getElementById('message_box').querySelector('span').innerText = response.message;
+                        item_to_publish.innerText="YES";
+                        item_to_publish.classList.remove('unpublished')
+                        item_to_publish.classList.add('published')
+                    }
+                }
+            }
+        };
+        xhr.send('id='+id+'&ajax=1&_token='+_token);
+
+    }
 
 
 };

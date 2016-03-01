@@ -92,7 +92,7 @@ class Protected_Models_Admin extends Core_DataBase
     public function getCategoryPageInfo()
     {
         $entry_category = (isset($_POST['create_new_category']))? $_POST['create_new_category']: $_POST['update_category'];
-        $category_name = htmlentities($entry_category);
+        $category_name = htmlspecialchars($entry_category);
 
 
         $parent_id = (isset($_POST['category_id']))? $_POST['category_id']: 0;

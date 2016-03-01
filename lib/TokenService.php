@@ -44,6 +44,9 @@ class Lib_TokenService
         $_SESSION['_token']['update_manufacturer'] = md5('update_manufacturer' . $random);
         $_SESSION['_token']['delete_manufacturer'] = md5('delete_manufacturer' . $random);
 
+        $_SESSION['_token']['update_comment'] = md5('update_comment' . $random);
+        $_SESSION['_token']['general_purpose_comment'] = md5('general_purpose_comment' . $random);
+
     }
 
     public static function check($action)
@@ -51,7 +54,7 @@ class Lib_TokenService
 
         if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token'][$action]) {
 
-            if(isset($_POST['ajax'])) { return true; }
+            if(isset($_POST['ajax'])) { return true;}
 
             header('Location:'.$_SERVER['HTTP_REFERER']); exit();
         } else {

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Фев 22 2016 г., 08:37
+-- Время создания: Фев 26 2016 г., 19:50
 -- Версия сервера: 5.5.47-0ubuntu0.14.04.1
 -- Версия PHP: 5.5.9-1ubuntu4.14
 
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `parent_id` int(11) unsigned NOT NULL,
   `translit_title` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
 -- Дамп данных таблицы `categories`
@@ -100,7 +100,8 @@ INSERT INTO `categories` (`id`, `title`, `parent_id`, `translit_title`) VALUES
 (6, 'category-1.2', 1, 'категория 1.2'),
 (7, 'Category1.1.1', 5, 'Категория1.1.1'),
 (8, 'Category1.1.2', 5, 'Категория1.1.2'),
-(9, 'zxcv', 0, 'зxсв');
+(9, 'zxcv', 0, 'зxсв'),
+(10, 'yyyyyyyyyy', 9, 'уууууууууу');
 
 -- --------------------------------------------------------
 
@@ -120,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `published` enum('0','1') NOT NULL,
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
 -- Дамп данных таблицы `comments`
@@ -132,7 +133,8 @@ INSERT INTO `comments` (`id`, `product_id`, `avatar`, `name`, `email`, `comment`
 (3, 1, NULL, 'кремлевский троль', 'weisse@ukr.net', 'а мне нравится', '2015-12-18 14:45:13', '0', '1'),
 (4, 1, NULL, 'ворошиловский стрелок', 'weisse@ukr.net', 'бум бум це я шляпа выд ', '2015-12-18 14:53:31', '0', '1'),
 (10, 1, 'p1010001.jpg', 'test', 'weisse@ukr.net', 'asasasasasasas', '2015-12-24 11:08:56', '0', '1'),
-(11, 1, 'p1010002.jpg', 'test2', 'weisse@ukr.net', 'Є, звичайно, й інші закони... Стверджують, що "наркотик вже не вставляє", і необхідно щось надпотужне, щоб напівбожевільний від реальної кризи глядач раптом "вштирився" і "закайфував". Мовляв, українська ейфорія вже розсіялася, а Сирія — далека і не настільки приваблива як "мрія про возз''єднання з Кримом та Україною". І можна не сумніватися, що наркотичну речовину, здатну затьмарити ефект попереднього, вже знайшли. Це — глобальна війна,\n— пише Саша Сотник.', '2015-12-24 11:19:09', '0', '1');
+(11, 1, 'p1010002.jpg', 'test2', 'weisse@ukr.net', 'Є, звичайно, й інші закони... Стверджують, що "наркотик вже не вставляє", і необхідно щось надпотужне, щоб напівбожевільний від реальної кризи глядач раптом "вштирився" і "закайфував". Мовляв, українська ейфорія вже розсіялася, а Сирія — далека і не настільки приваблива як "мрія про возз''єднання з Кримом та Україною". І можна не сумніватися, що наркотичну речовину, здатну затьмарити ефект попереднього, вже знайшли. Це — глобальна війна,\n— пише Саша Сотник.', '2015-12-24 11:19:09', '0', '1'),
+(12, 1, NULL, 'qwerty', 'weisse@ukr.net', 'bub bum bum bum', '2016-02-23 09:28:23', '0', '1');
 
 -- --------------------------------------------------------
 
@@ -145,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `manufacturer` (
   `title` varchar(50) NOT NULL,
   `url` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
 -- Дамп данных таблицы `manufacturer`
@@ -155,7 +157,8 @@ INSERT INTO `manufacturer` (`id`, `title`, `url`) VALUES
 (1, 'siemens', '/'),
 (2, 'sumsung', '/'),
 (3, 'henkel', '/'),
-(4, 'bauchemie', '/');
+(4, 'bauchemie', '/'),
+(10, 'hhhhhh', 'hhhhhhhh');
 
 -- --------------------------------------------------------
 

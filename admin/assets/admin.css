@@ -343,7 +343,7 @@ h2{text-align:center;}
     margin:20px auto;
 }
 
-#delete_item, #delete_category{
+#delete_item, #delete_category, #rewiev_item{
     cursor:pointer;
     text-decoration:underline;
     color: #0000ee;
@@ -450,6 +450,19 @@ h2{text-align:center;}
     margin-top:20px;
 }
 
+.edit_avatar_block, .comment_block{
+    max-width:800px;
+    margin: 20px auto;
+    position:relative;
+}
+
+.published, .changed{
+    background-color: #0acc47;
+}
+
+.unpublished, .unchanged{
+    background-color:#cc151e;
+}
 
 
 

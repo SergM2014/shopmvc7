@@ -2,7 +2,7 @@
 
 class Protected_Models_Image extends Core_DataBase
 {
-    public function uploadAvatar(){
+    public function uploadAvatar($admin=false){
 // Пути загрузки файлов
         $path = PATH_SITE.UPLOAD_FILE.'avatars/';
         $tmp_path= PATH_SITE.UPLOAD_FILE.'tmp/';
@@ -16,7 +16,8 @@ class Protected_Models_Image extends Core_DataBase
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Проверяем тип файла
             if (!in_array($_FILES['FileInput']['type'], $types))
-                die('<p>Запрещённый тип файла.</p>');
+                
+            return $response =['message'=>'Запрещённый тип файла', 'failure'=>true];
 
             // Проверяем размер файла
             if ($_FILES['FileInput']['size'] > $size)
@@ -26,20 +27,25 @@ class Protected_Models_Image extends Core_DataBase
 
             // Загрузка файла и вывод сообщения
             if(!@copy($tmp_path.$name, $path.$name)) {
-                $message='<p>Что-то пошло не так.</p>';
+                $response =['message'=>'<p>Что-то пошло не так.</p>', 'failure'=>true];
             }
             else {
 
-                $_SESSION['avatar']= $name;
+                if($admin){
+                    $_SESSION['admin_avatar_change'][$_POST['id']]= $name;
+                } else {
+                    $_SESSION['avatar']= $name;
+                }
 
-                $message='Загрузка прошла удачно.';
+
+                $response=['message'=>'Загрузка прошла удачно.', 'success'=>true];
                 chmod ($path.$name , 0777);
             }
             // Удаляем временный файл
             unlink(PATH_SITE.UPLOAD_FILE.'tmp/' . $name);
         }
 
-        return $message;
+        return $response;
     }
 
 
@@ -216,6 +222,15 @@ class Protected_Models_Image extends Core_DataBase
         unset ($_SESSION['product_image'][$_POST['id']]);
 
         return $message;
+    }
+
+    public function deleteAdminAvatar(){
+
+       // unlink(PATH_SITE.'/uploads/avatars/'.$_SESSION['admin_avatar_change'][$_POST['id']]);
+        $response=['message'=>'Изображение удаленно.', 'success'=>true ];
+        unset ($_SESSION['admin_avatar_change'][$_POST['id']]);
+
+        return $response;
     }
 
 }
