@@ -23,6 +23,7 @@
             <input type="button"  id="submit_btn" class=" invisible" value="Загрузить"  />
 
         </form>
+
         <button  id="image_reset_btn"  class=" <?php if(is_null($comment['avatar'])) echo 'invisible'; ?>" > Удалить</button>
 
 

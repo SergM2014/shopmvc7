@@ -464,6 +464,9 @@ h2{text-align:center;}
     background-color:#cc151e;
 }
 
+#image_reset_btn{
+    margin-top:10px;
+}
 
 
 
@@ -514,5 +517,18 @@ h2{text-align:center;}
     }
     .preview_image{
         margin-left:0;
+    }
+    .leftmenu{
+        width:100%;
+    }
+    .catalog-menu{
+        margin-left:30px;
+        float:left;
+    }
+    .main-content{
+        width:100%;
+    }
+    .articles_good, .comments_area{
+        overflow:scroll;
     }
 }

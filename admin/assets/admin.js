@@ -63,16 +63,13 @@ document.body.onclick = function(e){
         var body = document.body.getBoundingClientRect();
 
         var border_right= Math.round(main_content.right);
-        var body_bottom = Math.round(body.bottom);
-
-//dealing with product
+        var body_bottom = Math.round(window.scrollY + window.innerHeight);
         if(table.querySelector('[data-id]')) {
 
             var item_id = table.querySelector('[data-id]').getAttribute('data-id');
 
             document.getElementById('rewiev_item').setAttribute('href', '/admin/product/show?id=' + item_id);
             document.getElementById('update_item').setAttribute('href', '/admin/product/edit?id=' + item_id);
-            //   document.getElementById('delete_item').setAttribute('href', '/admin/product/delete?id='+item_id);
             document.getElementById('delete_item').setAttribute('data-delete_id', item_id);
             document.getElementById('delete_item').className = "delete_item";
 
@@ -83,21 +80,16 @@ document.body.onclick = function(e){
             var item_id = table.querySelector('[comment-id]').getAttribute('comment-id');
 
             var published_status = table.querySelector('.published_status').classList.contains('published');
-          //  console.log(published_status)
-
 
             if(published_status) {
-//console.log(1)
                 document.getElementById('rewiev_item').setAttribute('comment_unpublish_id',  item_id);
                 document.getElementById('rewiev_item').innerText = 'unpublish comment';
             }
 
             if(!published_status) {
-// console.log(0)
                 document.getElementById('rewiev_item').setAttribute('comment_publish_id',  item_id);
                 document.getElementById('rewiev_item').innerText = 'publish comment';
             }
-
 
             document.getElementById('update_item').setAttribute('href', '/admin/comment/edit?id='+item_id);
             document.getElementById('update_item').innerText='edit comment';
@@ -105,32 +97,18 @@ document.body.onclick = function(e){
             var delete_comment = document.getElementById('delete_item');
             delete_comment.setAttribute('comment-delete_id', item_id);
             delete_comment.className ="delete_comment";
-
-
-
         }
-
-
-
-
 
             popup_menu.className = "";
 
-            var x = e.clientX;
-            var y = e.clientY;
-
+            var x = e.pageX;
+            var y = e.pageY;
 
             if((x+101)>border_right) { x= (x-101)+(border_right-x); }
-
-
             if((y+71)>body_bottom){ y = (y-71)+(body_bottom-y);}
 
             popup_menu.style.left = x+"px";
             popup_menu.style.top = y+"px";
-
-
-
-
 
 
     }//конец клика по тейбл
@@ -275,9 +253,6 @@ if(e.target.className == 'delete_category'){
 
 
         var item_id = e.target.getAttribute('data-id');
-
-       // console.log(e.target);
-       // console.log(item_id);
 
         document.getElementById('rewiev_item').setAttribute('href', '/admin/manufacturer/create');
         document.getElementById('rewiev_item').innerText='add manufacturer';

@@ -38,11 +38,8 @@ class Admin_Controllers_Comment extends Core_BaseController{
             return ['view' => 'edit_comment.php', 'comment'=>$comment, 'error'=>$error];
         } else {
             $result= $model->saveUpdatedComment();
-
             if ($result) {
-
-                $_SESSION['message'] ="The comment#{$_POST['id']} was successfull updated";
-
+                $_SESSION['message'] ="The comment #{$_POST['id']} was successfull updated";
                 header('Location: /admin/comment');
             }
         }
