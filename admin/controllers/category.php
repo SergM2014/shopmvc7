@@ -20,7 +20,6 @@ class Admin_Controllers_Category extends Core_BaseController
     //выищд формы дя створення новой категории
     public function create()
     {
-
         $model = new Protected_Models_Product();
         $categories_tree = $model->getCategoriesTree(0, null, true);
         return ['view' => 'create_new_category.php', 'categories_tree' => $categories_tree];
@@ -98,7 +97,7 @@ class Admin_Controllers_Category extends Core_BaseController
                 exit();
             }
 
-            $deleted_category = $model->destroyItem();
+            $model->destroyItem();
 
              echo json_encode(array("success"=>"the Item {$_POST['id']} was successfully deleted"));
              exit();

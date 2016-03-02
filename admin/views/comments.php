@@ -62,9 +62,9 @@
                     <tr><th>№</th><th>Title(id)</th><th>Avatar</th><th>Name</th><th>Email</th><th>Comment</th><th>Created</th><th>Changed</th><th>Published</th></tr>
                     <?php foreach($comments as $one): ?>
 
-                        <tr>
+                        <tr data-comment_id="<?php echo $one['id']; ?>">
 
-                            <td comment-id="<?php echo $one['id']; ?>"> <?php echo $one['number'] ?></td>
+                            <td> <?php echo $one['number'] ?></td>
                             <td><?php echo $one['title'].' ( '.$one['product_id'].')'; ?></td>
                             <td><?php if(!empty($one['avatar'])){   ?> <img src="/uploads/avatars/<?php echo $one['avatar']; ?>" > <?php } ?></td>
                             <td><?php echo $one['name']; ?></td>

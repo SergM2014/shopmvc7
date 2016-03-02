@@ -23,7 +23,7 @@ function find_closest_heighest_id(el, id){
 
 function find_closest_heighest_class(el, cl){
     var elem = el;
-    //console.log(elem);
+//console.log(elem);
     while (!elem.classList.contains( cl )){
         if(elem.tagName.toLowerCase() == 'html') return false;
         elem = elem.parentNode;
@@ -41,7 +41,55 @@ function output_message(message){
 
 }
 
+var popup_menu= document.getElementById('popup_menu');
 
+var popup_menu_object = {
+    get_x: function(e){
+        var main_content = document.getElementsByClassName('main-content')[0].getBoundingClientRect();
+        var border_right= Math.round(main_content.right);
+        var x = e.pageX;
+        if((x+101)>border_right) { x= (x-101)+(border_right-x); }
+
+        return x;
+    },
+
+    get_y: function(e){
+        var body_bottom = Math.round(window.scrollY + window.innerHeight);
+
+        var y = e.pageY;
+        if((y+71)>body_bottom){ y = (y-71)+(body_bottom-y);}
+
+        return y;
+    },
+
+    z_index: function(){
+        return 100;
+    },
+
+    item_id: function(attr, elem){
+        return elem.getAttribute(attr)
+    },
+
+    show: function(allias, elem, e){
+
+        var item_id = this.item_id('data-'+allias+'_id', elem);
+        document.getElementById('rewiev_item').setAttribute('href', '/admin/'+allias+'/create');
+        document.getElementById('rewiev_item').innerText='add '+allias;
+        document.getElementById('update_item').setAttribute('href', '/admin/'+allias+'/edit?id='+item_id);
+        document.getElementById('update_item').innerText='edit '+allias;
+
+        var delete_item = document.getElementById('delete_item');
+        delete_item.setAttribute('data-'+allias+'_delete_id', item_id);
+        delete_item.className ='delete_'+allias+'';
+
+        popup_menu.className = "";
+
+        popup_menu.style.left = this.get_x(e)+"px";
+        popup_menu.style.top = this.get_y(e)+"px";
+        popup_menu.style.zIndex = this.z_index();
+    }
+
+};
 
 
 document.body.onclick = function(e){
@@ -49,7 +97,7 @@ document.body.onclick = function(e){
     if(e.target.id== 'message_close') document.getElementById('message_box').className="invisible";
 
 //dealing with popup menu
-    var popup_menu= document.getElementById('popup_menu');
+
 
     if( popup_menu && popup_menu.className=='' && e.target.id != 'delete_item'){
 
@@ -57,74 +105,48 @@ document.body.onclick = function(e){
     }
 
     var table =find_closest_table_tr(e.target);
+
     if(table && e.target.id != 'delete_item') {
-
-        var main_content = document.getElementsByClassName('main-content')[0].getBoundingClientRect();
-        var body = document.body.getBoundingClientRect();
-
-        var border_right= Math.round(main_content.right);
-        var body_bottom = Math.round(window.scrollY + window.innerHeight);
-        if(table.querySelector('[data-id]')) {
-
-            var item_id = table.querySelector('[data-id]').getAttribute('data-id');
-
-            document.getElementById('rewiev_item').setAttribute('href', '/admin/product/show?id=' + item_id);
-            document.getElementById('update_item').setAttribute('href', '/admin/product/edit?id=' + item_id);
-            document.getElementById('delete_item').setAttribute('data-delete_id', item_id);
-            document.getElementById('delete_item').className = "delete_item";
-
-        }
-        //dealing with comments
-        if(table.querySelector('[comment-id]')){
-
-            var item_id = table.querySelector('[comment-id]').getAttribute('comment-id');
+        if(table.hasAttribute('data-product_id')) {
+            popup_menu_object.show('product', table, e);
+             }
+        if(table.hasAttribute('data-comment_id')) {
+            popup_menu_object.show('comment', table, e);
+            document.getElementById('rewiev_item').removeAttribute('href');
 
             var published_status = table.querySelector('.published_status').classList.contains('published');
 
-            if(published_status) {
-                document.getElementById('rewiev_item').setAttribute('comment_unpublish_id',  item_id);
+            if (published_status) {
+                document.getElementById('rewiev_item').removeAttribute('comment_publish_id');
+                document.getElementById('rewiev_item').setAttribute('comment_unpublish_id', popup_menu_object.item_id('data-comment_id', table));
                 document.getElementById('rewiev_item').innerText = 'unpublish comment';
             }
 
-            if(!published_status) {
-                document.getElementById('rewiev_item').setAttribute('comment_publish_id',  item_id);
+            if (!published_status) {
+                document.getElementById('rewiev_item').removeAttribute('comment_unpublish_id');
+                document.getElementById('rewiev_item').setAttribute('comment_publish_id', popup_menu_object.item_id('data-comment_id', table));
                 document.getElementById('rewiev_item').innerText = 'publish comment';
             }
 
-            document.getElementById('update_item').setAttribute('href', '/admin/comment/edit?id='+item_id);
-            document.getElementById('update_item').innerText='edit comment';
-
-            var delete_comment = document.getElementById('delete_item');
-            delete_comment.setAttribute('comment-delete_id', item_id);
-            delete_comment.className ="delete_comment";
+            }
         }
 
-            popup_menu.className = "";
-
-            var x = e.pageX;
-            var y = e.pageY;
-
-            if((x+101)>border_right) { x= (x-101)+(border_right-x); }
-            if((y+71)>body_bottom){ y = (y-71)+(body_bottom-y);}
-
-            popup_menu.style.left = x+"px";
-            popup_menu.style.top = y+"px";
 
 
-    }//конец клика по тейбл
+//console.log(e.target.className);
 
-
-
-
-    if(e.target.className == 'delete_item'){
+    if(e.target.className == 'delete_product'){
 
          var confirmed = confirm("Do you really want delete the item?");
        // var confirmed = true;
         //start delet item
         if(confirmed) {
 
-            var id = document.getElementById('delete_item').getAttribute('data-delete_id');
-            var item_to_del = document.getElementsByClassName('articles_good')[0].querySelector('td[data-id="'+id+'"]').parentNode;
+            var id = document.getElementById('delete_item').getAttribute('data-product_delete_id');
+//console.log(id);
+            var item_to_del = document.getElementsByClassName('articles_good')[0].querySelector('tr[data-product_id="'+id+'"]');
+
+//console.log(item_to_del);
 
             xhr= new XMLHttpRequest();
             xhr.open('POST', '/admin/product/destroy', true);
@@ -141,8 +163,6 @@ document.body.onclick = function(e){
             xhr.send('id='+id);
         }//end of the deletion of an item
     }
-    //console.log(e.target);
-
 
 
 
@@ -152,48 +172,18 @@ document.body.onclick = function(e){
     if (close_img || dark_layer_close) {
         document.body.removeChild(document.getElementsByClassName('darkLayer')[0]);
         document.body.removeChild(document.getElementsByClassName('big_image')[0]);
-
-
     }
+
+
+
+
 
     //если кликнули по дереве категорий в админке
     if (e.target.classList.contains('admin_categories_item')) {
 
-        var main_content = document.getElementsByClassName('main-content')[0].getBoundingClientRect();
-        var body = document.body.getBoundingClientRect();
+        var category = e.target;
 
-        var border_right= Math.round(main_content.right);
-        var body_bottom = Math.round(body.bottom);
-
-
-
-
-        var item_id = e.target.getAttribute('data-id');
-       // console.log(item_id);
-
-        document.getElementById('rewiev_item').setAttribute('href', '/admin/category/create');
-        document.getElementById('rewiev_item').innerText='add category';
-        document.getElementById('update_item').setAttribute('href', '/admin/category/edit?id='+item_id);
-        document.getElementById('update_item').innerText='rename category';
-
-        var delete_category = document.getElementById('delete_item');
-        delete_category.setAttribute('data-delete_id', item_id);
-        delete_category.className ="delete_category";
-
-
-        popup_menu.className = "";
-
-        var x = e.clientX;
-        var y = e.clientY;
-
-
-        if((x+101)>border_right) { x= (x-101)+(border_right-x); }
-
-
-        if((y+71)>body_bottom){ y = (y-71)+(body_bottom-y);}
-
-        popup_menu.style.left = x+"px";
-        popup_menu.style.top = y+"px";
+        popup_menu_object.show('category', category, e);
 
     }
 //конец кликания подереву категорий в админке
@@ -207,8 +197,10 @@ if(e.target.className == 'delete_category'){
         //start delet item
         if(confirmed) {
 
-            var id = document.getElementById('delete_item').getAttribute('data-delete_id');
-            var item_to_del = document.getElementsByClassName('admin_categories')[0].querySelector('span[data-id="'+id+'"]').parentNode;
+            var id = document.getElementById('delete_item').getAttribute('data-category_delete_id');
+//console.log(id);
+            var item_to_del = document.getElementsByClassName('admin_categories')[0].querySelector('span[data-category_id="'+id+'"]');
+//console.log(item_to_del); return
             var _token = document.getElementById("delete_category_token").value;
             //console.log(_token);
 
@@ -243,40 +235,10 @@ if(e.target.className == 'delete_category'){
 //кликаем по производителям
     if (e.target.classList.contains('admin_manufacturers_item')) {
 
-        var main_content = document.getElementsByClassName('main-content')[0].getBoundingClientRect();
-        var body = document.body.getBoundingClientRect();
+        manufacturer= e.target;
 
-        var border_right= Math.round(main_content.right);
-        var body_bottom = Math.round(body.bottom);
+        popup_menu_object.show('manufacturer', manufacturer, e);
 
-
-
-
-        var item_id = e.target.getAttribute('data-id');
-
-        document.getElementById('rewiev_item').setAttribute('href', '/admin/manufacturer/create');
-        document.getElementById('rewiev_item').innerText='add manufacturer';
-        document.getElementById('update_item').setAttribute('href', '/admin/manufacturer/edit?id='+item_id);
-        document.getElementById('update_item').innerText='edit manufacturer';
-
-        var delete_manufacturer = document.getElementById('delete_item');
-        delete_manufacturer.setAttribute('manufacturer-delete_id', item_id);
-        delete_manufacturer.className ="delete_manufacturer";
-
-
-        popup_menu.className = "";
-
-        var x = e.clientX;
-        var y = e.clientY;
-
-
-        if((x+101)>border_right) { x= (x-101)+(border_right-x); }
-
-
-        if((y+71)>body_bottom){ y = (y-71)+(body_bottom-y);}
-
-        popup_menu.style.left = x+"px";
-        popup_menu.style.top = y+"px";
     }//конец кликания по производителям
 
 
@@ -287,11 +249,10 @@ if(e.target.className == 'delete_category'){
         //start delet item
         if(confirmed) {
 
-            var id = document.getElementById('delete_item').getAttribute('manufacturer-delete_id');
-            var item_to_del = document.getElementsByClassName('admin_manufacturers')[0].querySelector('span[data-id="'+id+'"]').parentNode;
+            var id = document.getElementById('delete_item').getAttribute('data-manufacturer_delete_id');
+            var item_to_del = document.getElementsByClassName('admin_manufacturers')[0].querySelector('span[data-manufacturer_id="'+id+'"]');
             var _token = document.getElementById("delete_manufacturer_token").value;
-          // console.log(_token);
-            //console.log(item_to_del);
+
 
 
             xhr= new XMLHttpRequest();
@@ -329,11 +290,10 @@ if(e.target.className == 'delete_category'){
         //start delet item
         if(confirmed) {
 
-            var id = document.getElementById('delete_item').getAttribute('comment-delete_id');
-            var item_to_del = document.getElementsByClassName('comments_area')[0].querySelector('td[comment-id="'+id+'"]').parentNode;
+            var id = document.getElementById('delete_item').getAttribute('data-comment_delete_id');
+            var item_to_del = document.getElementsByClassName('comments_area')[0].querySelector('tr[data-comment_id="'+id+'"]');
             var _token = document.getElementsByName("_token")[0].value;
-            // console.log(_token);
-           // console.log(item_to_del); return;
+
 
 
             xhr= new XMLHttpRequest();
@@ -369,7 +329,7 @@ if(e.target.className == 'delete_category'){
 
         var id = e.target.getAttribute('comment_unpublish_id');
         e.target.removeAttribute('comment_unpublish_id');
-        var item_to_unpublish = document.getElementsByClassName('comments_area')[0].querySelector('td[comment-id="'+id+'"]').parentNode.querySelector('.published_status');
+        var item_to_unpublish = document.getElementsByClassName('comments_area')[0].querySelector('tr[data-comment_id="'+id+'"]').querySelector('.published_status');
         var _token = document.getElementsByName("_token")[0].value;
 
 
@@ -408,7 +368,7 @@ if(e.target.className == 'delete_category'){
 
         var id = e.target.getAttribute('comment_publish_id');
         e.target.removeAttribute('comment_publish_id');
-        var item_to_publish = document.getElementsByClassName('comments_area')[0].querySelector('td[comment-id="'+id+'"]').parentNode.querySelector('.published_status');
+        var item_to_publish = document.getElementsByClassName('comments_area')[0].querySelector('tr[data-comment_id="'+id+'"]').querySelector('.published_status');
         var _token = document.getElementsByName("_token")[0].value;
 
         xhr= new XMLHttpRequest();
@@ -441,4 +401,14 @@ if(e.target.className == 'delete_category'){
     }
 
 
+    var slider =find_closest_heighest_class(e.target, 'slider');
+    if(slider){
+
+        popup_menu_object.show('slider', slider, e);
+
+    }
+
+
 };
+
+

@@ -468,8 +468,28 @@ h2{text-align:center;}
     margin-top:10px;
 }
 
+.slider{
+    position:relative;
+    max-width:800px;
+    border-bottom: 2px solid #000000;
+    margin:0 auto;
+}
 
 
+
+.slider img{
+    width:100%;
+    border:2px solid #0acc47;
+    border-radius:20px;
+}
+
+.slider-url{
+    position:absolute;
+    left:10px;
+    top:10px;
+    background-color: #f1ffff;
+    min-width:100px;
+}
 
 
 

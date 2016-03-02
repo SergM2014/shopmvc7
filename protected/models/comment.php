@@ -238,7 +238,7 @@ class Protected_Models_Comment extends Core_DataBase
 
     public function destroyComment()
     {
-        Lib_TokenService::check('delete_comment');
+        Lib_TokenService::check('general_purpose_comment');
        /* $sql="DELETE FROM `comments` WHERE `id`=?";
         $stmt= $this->conn->prepare($sql);
         $stmt->bindParam(1, $_POST['id'], PDO::PARAM_INT);
@@ -250,7 +250,7 @@ class Protected_Models_Comment extends Core_DataBase
 
     public function unpublishComment()
     {
-        Lib_TokenService::check('delete_comment');
+        Lib_TokenService::check('general_purpose_comment');
 
         $sql="UPDATE `comments` SET `published`='0' WHERE `id` =?";
         $stmt= $this->conn->prepare($sql);
@@ -264,7 +264,7 @@ class Protected_Models_Comment extends Core_DataBase
 
     public function publishComment()
     {
-        Lib_TokenService::check('delete_comment');
+        Lib_TokenService::check('general_purpose_comment');
 
         $sql="UPDATE `comments` SET `published`='1' WHERE `id` =?";
         $stmt= $this->conn->prepare($sql);

@@ -62,8 +62,8 @@
                 <tr><th>№</th><th>Picture</th><th>Author</th><th>Title</th><th>Category</th><th>Manufacturer</th><th>Description</th><th>Price</th></tr>
                  <?php foreach($catalog as $one): ?>
 
-                <tr>
-                    <td data-id="<?php echo $one['product_id']; ?>"><?php echo $one['number']; ?></td>
+                <tr data-product_id="<?php echo $one['product_id']; ?>">
+                    <td ><?php echo $one['number']; ?></td>
                     <td><?php if(!empty($one['images'])){   ?> <img src="/uploads/product_images/thumbs/<?php echo $one['images'][0]; ?>" > <?php } ?></td>
                     <td><?php echo $one['author']; ?></td>
                     <td><?php echo $one['product_title']; ?></td>

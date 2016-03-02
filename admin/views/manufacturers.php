@@ -15,7 +15,7 @@
         <?php foreach ($manufacturers as $manufacturer){ ?>
 
 
-            <li><span class="admin_manufacturers_item" data-id=<?php echo $manufacturer['id']; ?>> <?php echo $manufacturer['title']; ?></span></li>
+            <li><span class="admin_manufacturers_item" data-manufacturer_id=<?php echo $manufacturer['id']; ?>> <?php echo $manufacturer['title']; ?></span></li>
 <?php
         }
         ?>

@@ -138,7 +138,7 @@ class Protected_Models_Catalog extends Core_DataBase
         foreach($categories as $category){
             if($category['parent_id'] ==$parent ){
 
-                $print.='<li ><span class=" admin_categories_item r'.$admin_cat_prefix.'" data-id='.$category["id"].' data-parent_id='.$category["parent_id"].'>'.$category['translit_title'].'</span>' ;
+                $print.='<li ><span class=" admin_categories_item r'.$admin_cat_prefix.'" data-category_id='.$category["id"].' data-parent_id='.$category["parent_id"].'>'.$category['translit_title'].'</span>' ;
                 foreach($categories as $sub_cat){
                     if($sub_cat['parent_id']==$category['id']){
                         $flag = TRUE; break;

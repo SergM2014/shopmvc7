@@ -28,20 +28,20 @@
 
 
 
-			<nav >
+			<nav>
+
 				<a href="<?php echo URL; ?>" class="left menu_button">Back to site </a>
-				
 				<a href="/admin" class="left menu_button">back to main admin</a>
 				<a href="/admin/product/index" class="left menu_button">Products</a>
                 <a href="/admin/category/index" class="left menu_button">Categories</a>
                 <a href="/admin/manufacturer/index" class="left menu_button">Manufacturers</a>
-
                 <a href="/admin/comment/index" class="left menu_button">Comments</a>
+                <a href="/admin/slider/index" class="left menu_button">Slider</a>
+                <a href="/admin/carousel/index" class="left menu_button">Carousel</a>
                 <a href="/admin/aboutus" class="left menu_button">About Us</a>
                 <a href="/admin/contact" class="left menu_button">Contacts</a>
 				
 				<div id="admin_exit_btn" class="right menu_button"> <?php echo $_SESSION['login']; ?> (<a href="/admin/exit">Выход</a>)</div>
-					
 
 			</nav>
 		</header>

@@ -94,7 +94,7 @@ class Admin_Controllers_Manufacturer extends Core_BaseController{
             exit();
         }
 
-        $deleted_category = $model->destroyManufacturer();
+        $model->destroyManufacturer();
 
         echo json_encode(array("success"=>"the Manufacturer# {$_POST['id']} was successfully deleted"));
         exit();
