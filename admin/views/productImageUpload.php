@@ -1,6 +1,4 @@
 
-
-
     <h4 <?php if(isset($image)) echo ' class="invisible"'; ?> > Додать изображение</h4>
 
     <form enctype="multipart/form-data" method="post" class=" MyUploadForm clearfix" >

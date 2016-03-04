@@ -233,4 +233,57 @@ class Protected_Models_Image extends Core_DataBase
         return $response;
     }
 
+    public function uploadSlider(){
+
+
+        $path = PATH_SITE.UPLOAD_FILE.'slider/';
+
+
+// Массив допустимых значений типа файла
+        $types = array('image/gif', 'image/png', 'image/jpeg');
+
+// Максимальный размер файла 2mb
+        $size = 2048000;
+
+// Обработка запроса
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Проверяем тип файла
+            if (!in_array(strtolower($_FILES['FileInput']['type']), $types)) return $response['message']='Запрещённый тип файла.';
+
+            // Проверяем размер файла
+            if ($_FILES['FileInput']['size'] > $size)  return $response['message']='Слишком большой размер файла.'.$_FILES['FileInput']['size'];
+
+
+
+           // $name = $this->thumbImage($_FILES['FileInput'], $thumb_path);
+            $name = strtolower($_FILES['FileInput']['name']);
+
+            move_uploaded_file($_FILES['FileInput']['tmp_name'], $path.$name);
+            if(!file_exists($path.$name)){
+                $response['message']='Что-то пошло не так.';
+            } else {
+                $response['message']='Загрузка прошла удачно.';
+                chmod ($path.$name , 0777);
+
+                $_SESSION['slider'] = $name;
+
+                $response['name']= $name;
+            }
+
+        }
+
+        return $response;
+
+    }
+
+
+    public function deleteSlider(){
+
+        // unlink(PATH_SITE.'/uploads/slider/'.$_SESSION['slider']);
+        $response=['message'=>'Изображение удаленно.', 'success'=>true ];
+        unset ($_SESSION['slider']);
+
+        return $response;
+    }
+
 }

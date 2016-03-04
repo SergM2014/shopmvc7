@@ -7,7 +7,7 @@
 <div class="content clearfix">
 
     <div class="main-content">
-
+<input type="hidden" name="_token" value="<?php Lib_TokenService::_token('delete_slider'); ?>" >
         <?php foreach ($sliders as $slider) :?>
             <article class="slider" data-slider_id="<?php echo $slider['id']; ?>">
 

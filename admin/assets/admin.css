@@ -362,6 +362,7 @@ h2{text-align:center;}
     /*центрирование текста погоризонтали и вертикали*/
     text-align: center;
     line-height: 150px;
+    z-index: 100;
 
 }
 
@@ -491,6 +492,15 @@ h2{text-align:center;}
     min-width:100px;
 }
 
+.slider_image_area{
+    max-width:800px;
+    margin:0 auto;
+}
+
+.slider_input{
+    max-width:800px;
+    margin: 30px auto;
+}
 
 
 

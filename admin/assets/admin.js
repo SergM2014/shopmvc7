@@ -390,7 +390,7 @@ if(e.target.className == 'delete_category'){
                         document.getElementById('message_box').className = "";
                         document.getElementById('message_box').querySelector('span').innerText = response.message;
                         item_to_publish.innerText="YES";
-                        item_to_publish.classList.remove('unpublished')
+                        item_to_publish.classList.remove('unpublished');
                         item_to_publish.classList.add('published')
                     }
                 }
@@ -406,6 +406,46 @@ if(e.target.className == 'delete_category'){
 
         popup_menu_object.show('slider', slider, e);
 
+    }
+
+    if(e.target.className == 'delete_slider'){
+
+        var confirmed = confirm("Do you really want delete the slider?");
+        // var confirmed = true;
+        //start delet item
+        if(confirmed) {
+            var id = document.getElementById('delete_item').getAttribute('data-slider_delete_id');
+            var item_to_del = document.getElementsByClassName('main-content')[0].querySelector('article[data-slider_id="'+id+'"]');
+            var _token = document.getElementsByName("_token")[0].value;
+            //console.log(item_to_del);
+
+            xhr= new XMLHttpRequest();
+            xhr.open('POST', '/admin/slider/destroy', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        popup_menu.className="invisible";
+                        var response = JSON.parse(xhr.responseText);
+                        // console.log(response);
+
+                        if(response.error) {
+                            document.getElementById('message_box').className = "";
+                            document.getElementById('message_box').querySelector('span').innerText = response.error;
+                        }
+
+                        if(response.success){
+                            document.getElementById('message_box').className = "";
+                            document.getElementById('message_box').querySelector('span').innerText = response.message;
+                            item_to_del.parentNode.removeChild(item_to_del);
+                        }
+                    }
+                }
+            };
+            xhr.send('id='+id+'&ajax=1&_token='+_token);
+
+
+        }
     }
 
 

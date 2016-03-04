@@ -55,5 +55,23 @@ class Admin_Controllers_Image extends Core_BaseController
          exit();
      }
 
+    public function uploadSlider()
+    {
+        $model = new Protected_Models_Image();
+        $response = $model->uploadSlider();
+
+        echo json_encode($response);
+        exit();
+    }
+
+    public function deleteSlider()
+    {
+        $model = new Protected_Models_Image();
+        $response = $model->deleteSlider();
+
+        echo json_encode($response);
+        exit();
+    }
+
 }
 ?>

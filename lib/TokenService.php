@@ -47,6 +47,10 @@ class Lib_TokenService
         $_SESSION['_token']['update_comment'] = md5('update_comment' . $random);
         $_SESSION['_token']['general_purpose_comment'] = md5('general_purpose_comment' . $random);
 
+        $_SESSION['_token']['create_new_slider'] = md5('create_new_slider' . $random);
+        $_SESSION['_token']['update_slider'] = md5('update_slider' . $random);
+        $_SESSION['_token']['delete_slider'] = md5('delete_slider' . $random);
+
     }
 
     public static function check($action)
