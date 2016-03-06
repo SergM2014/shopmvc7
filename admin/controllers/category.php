@@ -14,7 +14,7 @@ class Admin_Controllers_Category extends Core_BaseController
         $categories_tree = $model->getAdminCategoriesTree($categories);
         $message = $model->getMessage();
 
-        return ['view' => 'categories.php', 'categories_tree' => $categories_tree, 'message'=>$message];
+        return ['view' => 'categories/categories.php', 'categories_tree' => $categories_tree, 'message'=>$message];
     }
 
     //выищд формы дя створення новой категории
@@ -22,7 +22,7 @@ class Admin_Controllers_Category extends Core_BaseController
     {
         $model = new Protected_Models_Product();
         $categories_tree = $model->getCategoriesTree(0, null, true);
-        return ['view' => 'create_new_category.php', 'categories_tree' => $categories_tree];
+        return ['view' => 'categories/create_new_category.php', 'categories_tree' => $categories_tree];
     }
 
     public function store()
@@ -37,7 +37,7 @@ class Admin_Controllers_Category extends Core_BaseController
             $page = $model->getCategoryPageInfo();
             extract($page);
 
-            return ['view' => 'create_new_category.php', 'category_name' => $category_name, 'categories_tree' => $categories_tree, 'error' => $error];
+            return ['view' => 'categories/create_new_category.php', 'category_name' => $category_name, 'categories_tree' => $categories_tree, 'error' => $error];
         } else {
              $result= $model->saveNewCategory();
 
@@ -45,7 +45,7 @@ class Admin_Controllers_Category extends Core_BaseController
                 
                 $_SESSION['message'] ="The new category is created";
        
-               header('Location: /admin/category'); 
+               $this->redirect('index');
             }
         }
     }
@@ -55,15 +55,13 @@ class Admin_Controllers_Category extends Core_BaseController
         $model = new Protected_Models_Catalog();
         $category = $model->getCategoryName();
 
-      return ['view' => 'update_category.php', 'category'=>$category, 'product_id'=>$_GET['id']];
+      return ['view' => 'categories/update_category.php', 'category'=>$category, 'product_id'=>$_GET['id']];
     }
 
 
     public function update()
     {
          Lib_TokenService::check('update_category');
-
-
         $model = new Protected_Models_Admin;
         $error = $model->checkCategoryName();
      
@@ -71,7 +69,7 @@ class Admin_Controllers_Category extends Core_BaseController
             $page = $model->getCategoryPageInfo();
             extract($page);
 
-            return ['view' => 'update_category.php', 'category'=>$category, 'error' => $error];
+            return ['view' => 'categories/update_category.php', 'category'=>$category, 'error' => $error];
         } else {
              $result= $model->saveUpdatedCategory();
 
@@ -79,7 +77,7 @@ class Admin_Controllers_Category extends Core_BaseController
                 
                 $_SESSION['message'] ="The category#{$_POST['product_id']} was successfull updated";
        
-               header('Location: /admin/category'); 
+              $this->redirect('index');
             }
         }
     }
@@ -97,9 +95,9 @@ class Admin_Controllers_Category extends Core_BaseController
                 exit();
             }
 
-            $model->destroyCategory();
+            $response=$model->destroyCategory();
 
-             echo json_encode(array("message"=>"the category {$_POST['id']} was successfully deleted", "success"=>true));
+             echo json_encode($response);
              exit();
 
             

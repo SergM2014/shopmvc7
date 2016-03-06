@@ -291,17 +291,9 @@ class Protected_Models_Product extends Core_DataBase
 
 
 
-
-    public function successSavedRedirectionView()
+    public function successedHandleRedirectionView()
     {
-        $_SESSION['message'] ="The new product is saved";
-        $history_back = Lib_SessionService::getSessionValue('history_back');
-        header('Location: '.$history_back);
-    }
 
-    public function successUpdatedRedirectionView()
-    {
-        $_SESSION['message'] ='The  product  '. $_POST['product_id'].' is changed and saved successfully';
         $history_back = Lib_SessionService::getSessionValue('history_back');
         header('Location: '.$history_back);
     }

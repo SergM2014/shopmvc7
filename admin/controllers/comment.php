@@ -13,7 +13,7 @@ class Admin_Controllers_Comment extends Core_BaseController{
 
         $message = $model->getMessage();
 
-        return ['view'=>'comments.php', 'comments'=>$comments, 'message'=> $message, 'nop'=>$nop, 'pages'=>$pages];
+        return ['view'=>'comments/comments.php', 'comments'=>$comments, 'message'=> $message, 'nop'=>$nop, 'pages'=>$pages];
     }
 
 
@@ -21,7 +21,7 @@ class Admin_Controllers_Comment extends Core_BaseController{
     {
         $model = new Protected_Models_Comment();
         $comment= $model ->selectOneComment();
-        return ['view'=> 'edit_comment.php', 'comment'=>$comment];
+        return ['view'=> 'comments/edit_comment.php', 'comment'=>$comment];
     }
 
     public function update()
@@ -35,12 +35,12 @@ class Admin_Controllers_Comment extends Core_BaseController{
             $page = $model->getCommentPageInfo();
             extract($page);
 
-            return ['view' => 'edit_comment.php', 'comment'=>$comment, 'error'=>$error];
+            return ['view' => 'comments/edit_comment.php', 'comment'=>$comment, 'error'=>$error];
         } else {
             $result= $model->saveUpdatedComment();
             if ($result) {
                 $_SESSION['message'] ="The comment #{$_POST['id']} was successfull updated";
-                header('Location: /admin/comment');
+                $this->redirect('index');
             }
         }
     }

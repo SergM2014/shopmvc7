@@ -6,14 +6,15 @@
 
 </div>
 
-<?php include 'partials/images.php'; ?>
+<?php include PATH_SITE.'/admin/views/partials/images.php'; ?>
+
 
 <div class="product_form">
 
         <form action="/admin/product/store" method="POST">
             <input type="hidden" name="_token" id="create_product_token" value="<?php Lib_TokenService::_token('add_product') ?>" >
 
-            <?php include 'partials/product_area.php'; ?>
+            <?php include PATH_SITE.'/admin/views/partials/product_area.php'; ?>
 
             <input type="submit" id="sub_created" value="Add product" >
 

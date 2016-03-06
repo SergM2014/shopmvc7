@@ -7,7 +7,7 @@
 </div>
 
 
-<?php include 'partials/images.php'; ?>
+<?php include PATH_SITE.'/admin/views/partials/images.php'; ?>
 
 
 
@@ -18,7 +18,7 @@
         <input type="hidden" name="_token" id="update_product_token" value="<?php Lib_TokenService::_token('update_product') ?>" >
         <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
 
-        <?php include 'partials/product_area.php'; ?>
+        <?php include PATH_SITE.'/admin/views/partials/product_area.php'; ?>
 
         <input type="submit" id="sub_edited" value="Update product" >
 

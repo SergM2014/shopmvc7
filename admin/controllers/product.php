@@ -11,7 +11,7 @@ class Admin_Controllers_Product  extends Core_BaseController
         $manufacturers = $model->getManufacturerForList();
         $images= $model->getProductImages();
 
-        return ['view'=>'update_product.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'images'=>$images];
+        return ['view'=>'products/update_product.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'images'=>$images];
     }
 
 
@@ -26,12 +26,13 @@ class Admin_Controllers_Product  extends Core_BaseController
             if(!empty($error)){
                 $page =$model->getPageInfo();
                 extract($page);
-                return ['view'=>'update_product.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'error'=> $error ];
+                return ['view'=>'products/update_product.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'error'=> $error ];
             } else {
                 $result= $model->saveUpdatedProduct();
 
                 if($result){
-                    $model->successUpdatedRedirectionView();
+                    $_SESSION['message'] ='The  product  '. $_POST['product_id'].' is changed and saved successfully';
+                    $model->successedHandleRedirectionView();
                 }
             }
         }
@@ -44,7 +45,7 @@ class Admin_Controllers_Product  extends Core_BaseController
             $manufacturers = $model->getManufacturerForList();
             $images= $model->getProductImages();
 
-            return ['view'=>'create_product.php',  'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'images'=>$images];
+            return ['view'=>'products/create_product.php',  'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'images'=>$images];
         }
 
 
@@ -58,12 +59,15 @@ class Admin_Controllers_Product  extends Core_BaseController
                 $page =$model->getPageInfo();
                 extract($page);
 
-                return ['view'=>'create_product.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'error'=> $error ];
+                return ['view'=>'products/create_product.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'error'=> $error ];
             } else {
                 $result= $model->saveAddedProduct();
 
                 if($result){
-                    $model->successSavedRedirectionView();
+
+                    $_SESSION['message'] ="The new product is saved";
+                    // возвращаемся на ту же страницу откуда начинали
+                    $model->successedHandleRedirectionView();
                 }
             }
         }
@@ -93,7 +97,7 @@ class Admin_Controllers_Product  extends Core_BaseController
 
 
 
-            return ['view'=>'productslist.php', 'manufacturers'=>$manufacturers, 'menu'=> $menu, 'pages'=>$pages, 'catalog'=> $catalog, 'nop'=>$nop, 'nomanufacturer'=>$nomanufacturer, 'message'=>$message];
+            return ['view'=>'products/products.php', 'manufacturers'=>$manufacturers, 'menu'=> $menu, 'pages'=>$pages, 'catalog'=> $catalog, 'nop'=>$nop, 'nomanufacturer'=>$nomanufacturer, 'message'=>$message];
         }
 
 
@@ -113,7 +117,7 @@ class Admin_Controllers_Product  extends Core_BaseController
         $model = new Protected_Models_Product();
         $product = $model->getProduct();
 
-        return ['view'=>'product_view.php', 'product'=>$product ];
+        return ['view'=>'products/product_view.php', 'product'=>$product ];
     }
 
 

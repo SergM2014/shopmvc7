@@ -152,8 +152,12 @@ class Protected_Models_Admin extends Core_DataBase
         $sql = "DELETE FROM `categories` WHERE `id`=?";
         $stmt= $this->conn->prepare($sql);
         $stmt->bindParam(1, $_POST['id'], PDO::PARAM_INT);
-        $stmt->execute();
-        return true;
+        $res= $stmt->execute();
+
+        if($res){
+        return array("message"=>"the category {$_POST['id']} was successfully deleted", "success"=>true);
+        }
+
     }
 
    private function findChildCategory()
@@ -289,8 +293,12 @@ class Protected_Models_Admin extends Core_DataBase
         $sql = "DELETE FROM `manufacturer` WHERE `id`=?";
         $stmt= $this->conn->prepare($sql);
         $stmt->bindParam(1, $_POST['id'], PDO::PARAM_INT);
-        $stmt->execute();
-        return true;
+        $res = $stmt->execute();
+
+        if($res){
+            return array("success"=>"the Manufacturer# {$_POST['id']} was successfully deleted");
+        }
+
     }
 
 
