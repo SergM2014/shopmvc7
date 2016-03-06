@@ -27,7 +27,7 @@
     </section>
 
     <section class="main-content right">
-
+<input type="hidden" name="_token" value="<?php Lib_TokenService::_token('delete_product') ?>">
 
         <div class="content-header-width"><a href="/admin/product/create" class="menu_button">+ Add Item</a></div>
 

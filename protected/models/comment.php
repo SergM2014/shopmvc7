@@ -238,7 +238,6 @@ class Protected_Models_Comment extends Core_DataBase
 
     public function destroyComment()
     {
-        Lib_TokenService::check('general_purpose_comment');
        /* $sql="DELETE FROM `comments` WHERE `id`=?";
         $stmt= $this->conn->prepare($sql);
         $stmt->bindParam(1, $_POST['id'], PDO::PARAM_INT);

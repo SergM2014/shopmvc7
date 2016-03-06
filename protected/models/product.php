@@ -278,11 +278,15 @@ class Protected_Models_Product extends Core_DataBase
 
     public function destroyItem()
     {
-        $sql = "DELETE FROM `products` WHERE `id`=?";
-        $stmt= $this->conn->prepare($sql);
-        $stmt->bindParam(1, $_POST['id'], PDO::PARAM_INT);
-        $stmt->execute();
-        return true;
+//        $sql = "DELETE FROM `products` WHERE `id`=?";
+//        $stmt= $this->conn->prepare($sql);
+//        $stmt->bindParam(1, $_POST['id'], PDO::PARAM_INT);
+//        $stmt->execute();
+       // if($res){
+            $response=["message"=>"The product# {$_POST['id']} deleted!", "success"=> true ];
+            return $response;
+       // }
+
     }
 
 

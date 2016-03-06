@@ -88,7 +88,7 @@ class Admin_Controllers_Category extends Core_BaseController
     public function destroy()
         {
 
-
+            Lib_TokenService::check('delete_category');
             $model= new Protected_Models_Admin;
             $error = $model->checkCategoryDeleteErrors();
             if($error !=''){
@@ -97,9 +97,9 @@ class Admin_Controllers_Category extends Core_BaseController
                 exit();
             }
 
-            $model->destroyItem();
+            $model->destroyCategory();
 
-             echo json_encode(array("success"=>"the Item {$_POST['id']} was successfully deleted"));
+             echo json_encode(array("message"=>"the category {$_POST['id']} was successfully deleted", "success"=>true));
              exit();
 
             

@@ -35,6 +35,7 @@ class Lib_TokenService
 
         $_SESSION['_token']['update_product'] = md5('update_product' . $random);
         $_SESSION['_token']['add_product'] = md5('add_product' . $random);
+        $_SESSION['_token']['delete_product'] = md5('delete_product' . $random);
 
         $_SESSION['_token']['create_new_category'] = md5('create_new_category' . $random);
         $_SESSION['_token']['update_category'] = md5('update_category' . $random);
@@ -51,6 +52,10 @@ class Lib_TokenService
         $_SESSION['_token']['update_slider'] = md5('update_slider' . $random);
         $_SESSION['_token']['delete_slider'] = md5('delete_slider' . $random);
 
+        $_SESSION['_token']['create_new_carousel'] = md5('create_new_carousel' . $random);
+        $_SESSION['_token']['update_carousel'] = md5('update_carousel' . $random);
+        $_SESSION['_token']['delete_carousel'] = md5('delete_carousel' . $random);
+
     }
 
     public static function check($action)
@@ -58,7 +63,9 @@ class Lib_TokenService
 
         if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token'][$action]) {
 
-            if(isset($_POST['ajax'])) { return true;}
+            if(isset($_POST['ajax'])) {
+                echo json_encode(["message"=>"Something went wrong!", "error"=> true ]); exit();
+            }
 
             header('Location:'.$_SERVER['HTTP_REFERER']); exit();
         } else {

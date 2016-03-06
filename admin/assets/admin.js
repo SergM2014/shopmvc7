@@ -9,18 +9,6 @@ function find_closest_table_tr(el){
     return elem;
 }
 
-function find_closest_heighest_id(el, id){
-    var elem = el;
-
-    while( elem.id != id){
-
-        if(elem.tagName.toLowerCase() == 'html') return false;
-        elem = elem.parentNode;
-        if(!elem) return false;
-    }
-    return elem;
-}
-
 function find_closest_heighest_class(el, cl){
     var elem = el;
 //console.log(elem);
@@ -32,14 +20,7 @@ function find_closest_heighest_class(el, cl){
     return elem;
 }
 
-function output_message(message){
 
-    var message_box= document.getElementById('message_box');
-    message_box.className="";
-    message_box.querySelector('span').innerHTML= message;
-
-
-}
 
 var popup_menu= document.getElementById('popup_menu');
 
@@ -91,12 +72,51 @@ var popup_menu_object = {
 
 };
 
+var click_on_delete = {
+    fire:function(tag){
+        var confirmed = confirm("Do you really want delete the "+tag+'?');
+        // var confirmed = true;
+        //start delet item
+        if(confirmed) {
+            var id = document.getElementById('delete_item').getAttribute('data-'+tag+'_delete_id');
+            var item_to_del = document.getElementsByClassName('main-content')[0].querySelector('[data-'+tag+'_id="'+id+'"]');
+            var _token = document.getElementsByName("_token")[0].value;
+            //console.log(item_to_del);
+
+            xhr= new XMLHttpRequest();
+            xhr.open('POST', '/admin/'+tag+'/destroy', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        popup_menu.className="invisible";
+                        var response = JSON.parse(xhr.responseText);
+                        // console.log(response);
+
+                        if(response.error) {
+                            document.getElementById('message_box').className = "";
+                            document.getElementById('message_box').querySelector('span').innerText = response.message;
+                        }
+
+                        if(response.success){
+                            document.getElementById('message_box').className = "";
+                            document.getElementById('message_box').querySelector('span').innerText = response.message;
+                            item_to_del.parentNode.removeChild(item_to_del);
+                        }
+                    }
+                }
+            };
+            xhr.send('id='+id+'&ajax=1&_token='+_token);
+
+
+        }
+    }
+};
+
 
 document.body.onclick = function(e){
 
     if(e.target.id== 'message_close') document.getElementById('message_box').className="invisible";
-
-//dealing with popup menu
 
 
     if( popup_menu && popup_menu.className=='' && e.target.id != 'delete_item'){
@@ -137,31 +157,7 @@ document.body.onclick = function(e){
 
     if(e.target.className == 'delete_product'){
 
-         var confirmed = confirm("Do you really want delete the item?");
-       // var confirmed = true;
-        //start delet item
-        if(confirmed) {
-
-            var id = document.getElementById('delete_item').getAttribute('data-product_delete_id');
-//console.log(id);
-            var item_to_del = document.getElementsByClassName('articles_good')[0].querySelector('tr[data-product_id="'+id+'"]');
-
-//console.log(item_to_del);
-
-            xhr= new XMLHttpRequest();
-            xhr.open('POST', '/admin/product/destroy', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        popup_menu.className="invisible";
-                        item_to_del.parentNode.removeChild(item_to_del);
-                        output_message('The item with id '+id+' is fully deleted!');
-                    }
-                }
-            };
-            xhr.send('id='+id);
-        }//end of the deletion of an item
+        click_on_delete.fire('product');
     }
 
 
@@ -192,43 +188,8 @@ document.body.onclick = function(e){
 //клиеаем удалить категорию
 if(e.target.className == 'delete_category'){
 
-         var confirmed = confirm("Do you really want delete the category?");
-       // var confirmed = true;
-        //start delet item
-        if(confirmed) {
+    click_on_delete.fire('category');
 
-            var id = document.getElementById('delete_item').getAttribute('data-category_delete_id');
-//console.log(id);
-            var item_to_del = document.getElementsByClassName('admin_categories')[0].querySelector('span[data-category_id="'+id+'"]');
-//console.log(item_to_del); return
-            var _token = document.getElementById("delete_category_token").value;
-            //console.log(_token);
-
-
-            xhr= new XMLHttpRequest();
-            xhr.open('POST', '/admin/category/destroy', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        popup_menu.className="invisible";
-                        var response = JSON.parse(xhr.responseText);
-
-                        if(response.error) {
-                           document.getElementById('message_box').className = "";
-                           document.getElementById('message_box').querySelector('span').innerText = response.error;
-                             }
-
-                         if(response.success){
-                           document.getElementById('message_box').className = "";
-                           document.getElementById('message_box').querySelector('span').innerText = response.success; 
-                            item_to_del.parentNode.removeChild(item_to_del);
-                         }
-                    }
-                }
-            };
-            xhr.send('id='+id+'&ajax=1'+'&_token='+_token);
-        }
     }//конец удаления категорий
 
 
@@ -244,83 +205,16 @@ if(e.target.className == 'delete_category'){
 
     if(e.target.className == 'delete_manufacturer'){
 
-        var confirmed = confirm("Do you really want delete the manufacturer?");
-        // var confirmed = true;
-        //start delet item
-        if(confirmed) {
+        click_on_delete.fire('manufacturer');
 
-            var id = document.getElementById('delete_item').getAttribute('data-manufacturer_delete_id');
-            var item_to_del = document.getElementsByClassName('admin_manufacturers')[0].querySelector('span[data-manufacturer_id="'+id+'"]');
-            var _token = document.getElementById("delete_manufacturer_token").value;
-
-
-
-            xhr= new XMLHttpRequest();
-            xhr.open('POST', '/admin/manufacturer/destroy', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        popup_menu.className="invisible";
-                        var response = JSON.parse(xhr.responseText);
-
-                        if(response.error) {
-                            document.getElementById('message_box').className = "";
-                            document.getElementById('message_box').querySelector('span').innerText = response.error;
-                        }
-
-                        if(response.success){
-                            document.getElementById('message_box').className = "";
-                            document.getElementById('message_box').querySelector('span').innerText = response.success;
-                            item_to_del.parentNode.removeChild(item_to_del);
-                        }
-                    }
-                }
-            };
-            xhr.send('id='+id+'&ajax=1'+'&_token='+_token);
-        }
-    }//конец удаления категорий
+    }
 
 
 
     if(e.target.className == 'delete_comment'){
 
-        var confirmed = confirm("Do you really want delete the comment?");
-        // var confirmed = true;
-        //start delet item
-        if(confirmed) {
+        click_on_delete.fire('comment');
 
-            var id = document.getElementById('delete_item').getAttribute('data-comment_delete_id');
-            var item_to_del = document.getElementsByClassName('comments_area')[0].querySelector('tr[data-comment_id="'+id+'"]');
-            var _token = document.getElementsByName("_token")[0].value;
-
-
-
-            xhr= new XMLHttpRequest();
-            xhr.open('POST', '/admin/comment/destroy', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        popup_menu.className="invisible";
-                        var response = JSON.parse(xhr.responseText);
-                       // console.log(response);
-
-                        if(response.error) {
-                            document.getElementById('message_box').className = "";
-                            document.getElementById('message_box').querySelector('span').innerText = response.error;
-                        }
-
-                        if(response.success){
-                            document.getElementById('message_box').className = "";
-                            document.getElementById('message_box').querySelector('span').innerText = response.message;
-                            item_to_del.parentNode.removeChild(item_to_del);
-                        }
-                    }
-                }
-            };
-            xhr.send('id='+id+'&ajax=1&_token='+_token);
-        }
     }//конец удаления категорий
 
 //нажимаем на unpublish comment
@@ -410,42 +304,20 @@ if(e.target.className == 'delete_category'){
 
     if(e.target.className == 'delete_slider'){
 
-        var confirmed = confirm("Do you really want delete the slider?");
-        // var confirmed = true;
-        //start delet item
-        if(confirmed) {
-            var id = document.getElementById('delete_item').getAttribute('data-slider_delete_id');
-            var item_to_del = document.getElementsByClassName('main-content')[0].querySelector('article[data-slider_id="'+id+'"]');
-            var _token = document.getElementsByName("_token")[0].value;
-            //console.log(item_to_del);
+        click_on_delete.fire('slider');
 
-            xhr= new XMLHttpRequest();
-            xhr.open('POST', '/admin/slider/destroy', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        popup_menu.className="invisible";
-                        var response = JSON.parse(xhr.responseText);
-                        // console.log(response);
-
-                        if(response.error) {
-                            document.getElementById('message_box').className = "";
-                            document.getElementById('message_box').querySelector('span').innerText = response.error;
-                        }
-
-                        if(response.success){
-                            document.getElementById('message_box').className = "";
-                            document.getElementById('message_box').querySelector('span').innerText = response.message;
-                            item_to_del.parentNode.removeChild(item_to_del);
-                        }
-                    }
-                }
-            };
-            xhr.send('id='+id+'&ajax=1&_token='+_token);
+    }
 
 
-        }
+    var carousel= find_closest_heighest_class(e.target, 'carousel');
+    if(carousel){
+        popup_menu_object.show('carousel', carousel, e);
+    }
+
+    if(e.target.className == 'delete_carousel'){
+
+        click_on_delete.fire('carousel');
+
     }
 
 

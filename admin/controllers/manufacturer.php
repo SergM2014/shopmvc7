@@ -85,11 +85,11 @@ class Admin_Controllers_Manufacturer extends Core_BaseController{
     public function destroy()
     {
 
-
+        Lib_TokenService::check('delete_manufacturer');
         $model= new Protected_Models_Admin;
         $error = $model->checkManufacturerDeleteErrors();
         if($error !=''){
-            $response = array("error" => $error);
+            $response = array("message" => $error, "error"=> true);
             echo json_encode($response);
             exit();
         }

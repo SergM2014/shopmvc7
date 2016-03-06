@@ -75,7 +75,9 @@ class Admin_Controllers_Slider extends Core_BaseController{
     }
 
 
-    public function destroy(){
+    public function destroy()
+    {
+        Lib_TokenService::check('delete_slider');
         $model = new Protected_Models_Slider();
         $response = $model->destroySlider();
         echo json_encode($response);

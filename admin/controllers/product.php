@@ -100,9 +100,11 @@ class Admin_Controllers_Product  extends Core_BaseController
 
     public function destroy()
         {
+            Lib_TokenService::check('delete_product');
             $model= new Protected_Models_Product;
-            $model->destroyItem();
-            return true;
+            $response = $model->destroyItem();
+            echo json_encode($response);
+            exit();
         }
 
 

@@ -46,7 +46,9 @@ class Admin_Controllers_Comment extends Core_BaseController{
     }
 
 
-    public function destroy(){
+    public function destroy()
+    {
+        Lib_TokenService::check('general_purpose_comment');
         $model = new Protected_Models_Comment();
         $response = $model->destroyComment();
         echo json_encode($response);
@@ -54,14 +56,16 @@ class Admin_Controllers_Comment extends Core_BaseController{
     }
 
 
-    public function unpublish(){
+    public function unpublish()
+    {
         $model = new Protected_Models_Comment();
         $response = $model->unpublishComment();
         echo json_encode($response);
         exit();
     }
 
-    public function publish(){
+    public function publish()
+    {
         $model = new Protected_Models_Comment();
         $response = $model->publishComment();
         echo json_encode($response);

@@ -73,5 +73,24 @@ class Admin_Controllers_Image extends Core_BaseController
         exit();
     }
 
+    public function uploadCarousel()
+    {
+
+        $model = new Protected_Models_Image();
+        $response = $model->uploadCarousel();
+
+        echo json_encode($response);
+        exit();
+    }
+
+    public function deletecarousel()
+    {
+        $model = new Protected_Models_Image();
+        $response = $model->deleteCarousel();
+
+        echo json_encode($response);
+        exit();
+    }
+
 }
 ?>

@@ -478,7 +478,7 @@ h2{text-align:center;}
 
 
 
-.slider img{
+.slider img, .carousel img{
     width:100%;
     border:2px solid #0acc47;
     border-radius:20px;
@@ -492,15 +492,39 @@ h2{text-align:center;}
     min-width:100px;
 }
 
-.slider_image_area{
+.slider_image_area, .carousel_image_area{
     max-width:800px;
     margin:0 auto;
 }
 
-.slider_input{
+.slider_input, .carousel_input{
     max-width:800px;
     margin: 30px auto;
 }
+
+.slider:hover{
+    cursor:pointer;
+}
+
+.carousel{
+    position:relative;
+    max-width:200px;
+    height:270px;
+    float:left;
+    margin-left:20px;
+    margin-bottom:10px;
+    background-color: rgba(106, 106, 106, 0.27);
+}
+
+.carousel:hover{
+    cursor:pointer;
+}
+
+.carousel p{
+    background-color: rgba(47, 204, 45, 0.53);
+}
+
+
 
 
 

@@ -147,7 +147,7 @@ class Protected_Models_Admin extends Core_DataBase
 
     }
 
-    public function destroyItem()
+    public function destroyCategory()
     {
         $sql = "DELETE FROM `categories` WHERE `id`=?";
         $stmt= $this->conn->prepare($sql);

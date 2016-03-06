@@ -286,4 +286,111 @@ class Protected_Models_Image extends Core_DataBase
         return $response;
     }
 
-}
+
+
+
+    private function thumbCarouselImage($file, $thumb_path)
+    {
+       // die(var_dump($thumb_path));
+
+        $file['name'] = strtolower($file['name']);
+        //$arr = explode('.', $file['name']);
+
+        //$file['name'] = $_POST['id'].'.'.$arr[1];
+
+        //$w = 130;
+        $h = 100;
+
+        // Качество изображения по умолчанию
+        $quality = 75;
+
+        // Cоздаём исходное изображение на основе исходного файла
+        if ($file['type'] == 'image/jpeg')
+            $source = imagecreatefromjpeg($file['tmp_name']);
+        elseif ($file['type'] == 'image/png')
+            $source = imagecreatefrompng($file['tmp_name']);
+        elseif ($file['type'] == 'image/gif')
+            $source = imagecreatefromgif($file['tmp_name']);
+        else
+            return false;
+
+        // Определяем ширину и высоту изображения
+        $w_src = imagesx($source);
+        $h_src = imagesy($source);
+
+       /* if($h_src> $w_src) {
+            // Вычисление пропорций
+            $ratio = $h_src / $h;
+        } else{
+            $ratio = $w_src/$w;
+        }*/
+
+        $ratio = $h_src/$h;
+
+        $w_dest = round($w_src / $ratio);
+        //$h_dest = round($h_src / $ratio);
+        $h_dest= $h;
+
+        // Создаём пустую картинку
+        $dest = imagecreatetruecolor($w_dest, $h_dest);
+
+        // Копируем старое изображение в новое с изменением параметров
+        imagecopyresampled($dest, $source, 0, 0, 0, 0, $w_dest, $h_dest, $w_src, $h_src);
+
+        // Вывод картинки и очистка памяти
+        imagejpeg($dest, $thumb_path. $file['name'], $quality);
+        imagedestroy($dest);
+        imagedestroy($source);
+        chmod ($thumb_path . $file['name'] , 0777);
+
+        return $file['name'];
+    }
+
+
+    public function uploadCarousel(){
+
+        $path = PATH_SITE.UPLOAD_FILE.'carousel/';
+// Массив допустимых значений типа файла
+        $types = array('image/gif', 'image/png', 'image/jpeg');
+// Максимальный размер файла 2mb
+        $size = 2048000;
+
+// Обработка запроса
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Проверяем тип файла
+            if (!in_array(strtolower($_FILES['FileInput']['type']), $types)) return $response['message']='Запрещённый тип файла.';
+            // Проверяем размер файла
+            if ($_FILES['FileInput']['size'] > $size)  return $response['message']='Слишком большой размер файла.'.$_FILES['FileInput']['size'];
+
+             $name = $this->thumbCarouselImage($_FILES['FileInput'], $path);
+           // $name = strtolower($_FILES['FileInput']['name']);
+
+           // if(!@copy($tmp_path.$name, $path.$name)) {
+           // move_uploaded_file($_FILES['FileInput']['tmp_name'], $path.$name);
+            unset($_FILES['FileInput']);
+            if(!file_exists($path.$name)){
+                $response['message']='Что-то пошло не так.';
+            } else {
+                $response['message']='Загрузка прошла удачно.';
+                chmod ($path.$name , 0777);
+                $_SESSION['carousel'] = $name;
+                $response['name']= $name;
+            }
+        }
+
+        return $response;
+
+    }
+
+
+    public function deleteCarousel()
+    {
+
+        // unlink(PATH_SITE.'/uploads/slider/'.$_SESSION['slider']);
+        $response = ['message' => 'Изображение  карусели удаленно.', 'success' => true];
+        unset ($_SESSION['carousel']);
+
+        return $response;
+    }
+
+    }

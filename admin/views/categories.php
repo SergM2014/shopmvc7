@@ -8,7 +8,7 @@
 
     <div class="main-content">
     <form>
-    	<input type="hidden" name="_token" id="delete_category_token" value="<?php Lib_TokenService::_token('delete_category') ?>" >
+    	<input type="hidden" name="_token"  value="<?php Lib_TokenService::_token('delete_category') ?>" >
     </form>  
         <h2>Categories</h2>
 

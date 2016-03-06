@@ -4,7 +4,7 @@ class Protected_Models_Slider extends Core_DataBase{
 
     public function getSliders()
     {
-        $result= $this->conn->query("SELECT * from `slider`");
+        $result= $this->conn->query("SELECT * from `slider` ORDER BY `id` DESC");
         $sliders = $result->fetchAll(PDO::FETCH_ASSOC);
         return $sliders;
     }
@@ -79,7 +79,7 @@ class Protected_Models_Slider extends Core_DataBase{
 
     public function destroySlider()
     {
-        Lib_TokenService::check('delete_slider');
+
         $sql="DELETE FROM `slider` WHERE `id`=?";
         $stmt= $this->conn->prepare($sql);
         $stmt->bindParam(1, $_POST['id'], PDO::PARAM_INT);
