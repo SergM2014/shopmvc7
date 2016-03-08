@@ -10,14 +10,15 @@ class Protected_Models_Image extends Core_DataBase
         $types = array('image/gif', 'image/png', 'image/jpeg');
 
 // Максимальный размер файла 2mb
-        $size = 2048000;
+       $size = 2048000;
+       
 
 // Обработка запроса
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Проверяем тип файла
-            if (!in_array($_FILES['FileInput']['type'], $types))
+            if (!in_array(strtolower($_FILES['FileInput']['type']), $types))
                 
-            return $response =['message'=>'Запрещённый тип файла', 'failure'=>true];
+            return $response =['message'=>'Запрещённый тип файла', 'error'=>true];
 
             // Проверяем размер файла
             if ($_FILES['FileInput']['size'] > $size)
@@ -27,7 +28,7 @@ class Protected_Models_Image extends Core_DataBase
 
             // Загрузка файла и вывод сообщения
             if(!@copy($tmp_path.$name, $path.$name)) {
-                $response =['message'=>'<p>Что-то пошло не так.</p>', 'failure'=>true];
+                $response =['message'=>'Что-то пошло не так.', 'error'=>true];
             }
             else {
 
@@ -125,38 +126,43 @@ class Protected_Models_Image extends Core_DataBase
 
         $thumb_path = PATH_SITE.UPLOAD_FILE.'product_images/thumbs/';
 // Массив допустимых значений типа файла
-        $types = array('image/gif', 'image/png', 'image/jpeg');
+        $types = array('image/gif', 'image/png', 'image/jpeg', 'image/jpg');
 
 // Максимальный размер файла 2mb
-        $size = 2048000;
+       // $size = 2048000;
+        //schon gewesen
+        $size =20480000;
 
 // Обработка запроса
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Проверяем тип файла
             if (!in_array(strtolower($_FILES['FileInput']['type']), $types))
-                die('Запрещённый тип файла.');
+               return ["message"=>"Запрещённый тип файла", "error"=>true, "file_type"=>strtolower($_FILES['FileInput']['type'])];
 
             // Проверяем размер файла
             if ($_FILES['FileInput']['size'] > $size)
-                die('Слишком большой размер файла.'.$_FILES['FileInput']['size']);
+                return ["message"=>'Слишком большой размер файла.'.$_FILES['FileInput']['size'], "error"=>true];
 
             $name = $this->thumbImage($_FILES['FileInput'], $thumb_path);
 
 
            move_uploaded_file($_FILES['FileInput']['tmp_name'], $path.$name);
+
+           unset($_FILES['FileInput']);
+           
             if(!file_exists($path.$name)){
-               $response['message']='Что-то пошло не так.';
+               $response=["message"=>"Что-то пошло не так.", "error"=>true];
            } else {
-                $response['message']='Загрузка прошла удачно.';
+                $response=["message"=>"Загрузка прошла удачно.", "success"=>true];
                chmod ($path.$name , 0777);
                // $_SESSION['product_image'][$id]= $name;
                 $_SESSION['product_image'][$id] = $name;
-                $response['name']= $name;
+                $response["name"]= $name;
            }
-
+           return $response;
         }
 
-        return $response;
+        return ["message"=>"something went wrong","error"=>true];
 
     }
 

@@ -73,36 +73,21 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
         image_area.querySelector('.progress').classList.add('invisible');
 
         image_area.querySelector('.output').classList.remove('invisible');
-        image_area.querySelector('.success_tick').classList.remove('invisible');
+        if(response.success) image_area.querySelector('.success_tick').classList.remove('invisible');
 
         image_area.querySelector('.submit_btn').classList.add('invisible');
 
         image_area.querySelector('.reset_btn').removeAttribute('disabled');
         image_area.querySelector('h4').classList.add('invisible');
         image_area.querySelector('.thumb').classList.add('uploaded');
-        delete  image_area;
 
-        var node = document.createElement('div');
-        var time = Math.floor((new Date()).getTime() / 1000);
-        var randomNum = Math.round((Math.random() * (1000 - 1) + 1));
-        var id= time+'_'+randomNum;
-
-        node.id= id;
-        node.className='image_area';
-        var add_image = document.getElementsByClassName('edit_images')[0].appendChild(node);
-        //console.log(node2);
-        xhr2 = new XMLHttpRequest();
-        xhr2.open('POST', '/admin/image/addsection', true);
-        xhr2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr2.onreadystatechange = function () {
-            if (xhr2.readyState == 4) {
-                if (xhr2.status == 200) {
-                    add_image.innerHTML = xhr2.responseText;
-                }
-            }
-        };
-        xhr2.send();
-
+        if(response.success) create_section();
+        if(response.error){
+            image_area.querySelector('.thumb').setAttribute('src','/img/nophoto.jpg');
+            image_area.querySelector('.reset_btn').classList.add('invisible');
+            image_area.querySelector('.FileInput').classList.remove('invisible');
+        }
+        
 
     }// the end of image load
 
@@ -118,6 +103,33 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
         image_area.querySelector('.output').innerHTML = 'Upload aborted';
     }
 
+    function create_section(){
+
+        delete  image_area;
+
+        var node = document.createElement('div');
+        var time = Math.floor((new Date()).getTime() / 1000);
+        var randomNum = Math.round((Math.random() * (1000 - 1) + 1));
+        var id= time+'_'+randomNum;
+
+        node.id= id;
+        node.className='image_area';
+        var add_image = document.getElementsByClassName('edit_images')[0].appendChild(node);
+       
+        xhr2 = new XMLHttpRequest();
+        xhr2.open('POST', '/admin/image/addsection', true);
+        xhr2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr2.onreadystatechange = function () {
+            if (xhr2.readyState == 4) {
+                if (xhr2.status == 200) {
+                    add_image.innerHTML = xhr2.responseText;
+                }
+            }
+        };
+        xhr2.send();
+
+    }
+
 
 
     var submit_btn = find_closest_heighest_class(e.target, 'submit_btn');
@@ -127,9 +139,7 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
         image_area= find_closest_heighest_class(e.target, 'image_area');
         var id= image_area.id;
 
-        if(document.getElementById('update_product_token'))  var _token= document.getElementById('update_product_token').value;
-        if(document.getElementById('create_product_token')) var _token=document.getElementById('create_product_token').value;
-
+        var _token =document.getElementById('load_image').value;
 
 
         image_area.querySelector('.progress').classList.remove('invisible');
@@ -139,6 +149,7 @@ document.getElementsByClassName('edit_images')[0].onclick = function (e) {
 
         formdata.append("FileInput", file);
         formdata.append("id", id);
+        formdata.append("ajax", "1");
         formdata.append("_token", _token);
 
         var ajax = new XMLHttpRequest();

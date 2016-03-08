@@ -29,6 +29,8 @@ class Lib_TokenService
         $_SESSION['_token']['update_small_busket'] = md5('update_small_busket' . $random);//+
         $_SESSION['_token']['update_busket'] = md5('update_busket' . $random);//+
 
+        $_SESSION['_token']['upload_image'] = md5('upload_image' . $random);//+
+
         $_SESSION['_token']['comment_form'] = md5('comment_form' . $random);//+
         $_SESSION['_token']['comments_order'] = md5('comments_order' . $random);
         $_SESSION['_token']['enter_admin'] = md5('enter_admin' . $random);

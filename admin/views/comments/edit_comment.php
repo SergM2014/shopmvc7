@@ -8,31 +8,37 @@
 
 
 
-
     <section class="edit_avatar_block">
-        <h2>Edit Avatar</h2>
+        <form enctype="multipart/form-data" method="post" class="MyUploadForm clearfix" >
 
-        <form id="my_upload_form"  enctype="multipart/form-data" method="post" class="clearfix" >
+            <div class="image_form">
 
-            <div id="avatar_form">
-                <img alt="" id="image_preview" class="thumb" src="<?php if(isset($comment['avatar'])) {echo '/uploads/avatars/'.$comment['avatar'];} else {echo URL.'img/noavatar.jpg';} ?>"  />
-                <input name="FileInput" id="file_input" type="file" <?php if(isset($comment['avatar'])) echo "class='invisible' " ?>/>
-            </div>
+                <?php if(isset($comment['avatar'])) : ?>
 
-            <div id="output" class="output invisible" ></div>
-            <input type="button"  id="submit_btn" class=" invisible" value="Загрузить"  />
+                    <img class="thumb uploaded" src="/uploads/avatars/<?php echo $comment['avatar']; ?> " alt="Просмотреть картинку" > <?php else: ?>
+                    <img class="thumb" src="/img/nophoto.jpg" > <?php endif; ?>
 
+                <input name="FileInput" id="file_input" class="FileInput <?php if(isset($comment['avatar'])) echo 'invisible' ?>" type="file"  >
+
+                <img src="/img/tick.jpg" class="success_tick invisible" >
+                <div class="output invisible" ></div>
+
+
+                <img src="<?php echo '/img/upload.png' ?>"  alt="Загрузить изображение" class="submit_btn invisible">
+                <img src="<?php echo '/img/close.png' ?>" alt="Удалить изображение" class="note reset_btn <?php if(!isset($comment['avatar'])) echo 'invisible'; ?>">
+
+
+
+
+                <div  class="progress invisible">
+                    <div class="progress_bar"   style="width: 0">
+                        0%
+                    </div>
+                </div>
+            </div><!--image form -->
         </form>
-
-        <button  id="image_reset_btn"  class=" <?php if(is_null($comment['avatar'])) echo 'invisible'; ?>" > Удалить</button>
-
-
-        <div id="progress" class="invisible">
-            <div id="progress_bar"  role="progressbar"  style="width: 0">
-                0%
-            </div>
-        </div>
     </section>
+
 
 
 

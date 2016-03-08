@@ -6,6 +6,8 @@
 
 </div>
 
+<input type="hidden" name="_token" id="load_image" value="<?php Lib_TokenService::_token('upload_image') ?>" >
+
 <?php include PATH_SITE.'/admin/views/partials/images.php'; ?>
 
 

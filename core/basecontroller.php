@@ -18,11 +18,12 @@
 
      public function redirect($controller_action)
          {
-             $location = explode('/',$_SERVER['REQUEST_URI']);
+             $trimmed_uri= trim($_SERVER['REQUEST_URI'], '/');
+             $location = explode('/', $trimmed_uri);
              $location[count($location)-1]= $controller_action;
              $location=implode('/', $location);
 
-             header('Location: '.$location);
+             header('Location: /'.$location);
          }
 
 

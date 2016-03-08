@@ -116,13 +116,13 @@ class Protected_Models_Admin extends Core_DataBase
         $category_name= htmlspecialchars($_POST['create_new_category']);
         $parent_id = (isset($_POST['category_id']))? $_POST['category_id']: 0;
         $latin_category_name = Lib_LangService::translite_in_latin($category_name);
-        $rus_category_name = Lib_LangService::translite_in_rus($category_name);
+
 
         $sql = "INSERT INTO `categories` (`title`,  `parent_id`, `translit_title`) VALUES (?, ?, ? )";
         $stmt = $this->conn->prepare($sql);
         $stmt -> bindParam(1, $latin_category_name, PDO::PARAM_STR);
         $stmt -> bindParam(2, $parent_id, PDO::PARAM_INT);
-        $stmt -> bindParam(3, $rus_category_name, PDO::PARAM_STR);
+        $stmt -> bindParam(3, $category_name, PDO::PARAM_STR);
         $stmt->execute();
 
         return true;
@@ -133,12 +133,10 @@ class Protected_Models_Admin extends Core_DataBase
     {
         $category_name= htmlspecialchars($_POST['update_category']);
         $latin_category_name = Lib_LangService::translite_in_latin($category_name);
-        $rus_category_name = Lib_LangService::translite_in_rus($category_name);
-
 
         $sql = "UPDATE `categories` SET `translit_title` =?, `title`= ?  WHERE `id`=?";
         $stmt = $this -> conn ->prepare($sql);
-        $stmt -> bindParam(1, $rus_category_name, PDO::PARAM_STR);
+        $stmt -> bindParam(1, $category_name, PDO::PARAM_STR);
         $stmt -> bindParam(2, $latin_category_name, PDO::PARAM_STR);
 
         $stmt -> bindParam(3, $_POST['product_id'], PDO::PARAM_INT);
@@ -224,11 +222,13 @@ class Protected_Models_Admin extends Core_DataBase
 
         $manufacturer_name = htmlspecialchars($_POST['add_manufacturer_name']);
         $manufacturer_url = htmlspecialchars(($_POST['add_manufacturer_url']));
+        $translited_titel = Lib_LangService::translite_in_latin($manufacturer_name);
 
-        $sql = "INSERT INTO `manufacturer` (`title`,  `url`) VALUES (?, ?)";
+        $sql = "INSERT INTO `manufacturer` (`title`, `translited_title`,  `url`) VALUES (?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
         $stmt -> bindParam(1, $manufacturer_name, PDO::PARAM_STR);
-        $stmt -> bindParam(2, $manufacturer_url, PDO::PARAM_INT);
+        $stmt -> bindParam(2, $translited_titel, PDO::PARAM_STR);
+        $stmt -> bindParam(3, $manufacturer_url, PDO::PARAM_INT);
         $stmt->execute();
 
         return true;
@@ -252,14 +252,17 @@ class Protected_Models_Admin extends Core_DataBase
         $manufacturer_name = htmlspecialchars($_POST['add_manufacturer_name']);
         $manufacturer_url = htmlspecialchars(($_POST['add_manufacturer_url']));
         $manufacturer_id = (int)$_POST['manufacturer_id'];
+        $translited_title = Lib_LangService::translite_in_latin($manufacturer_name);
 
 
-        $sql = "UPDATE `manufacturer` SET `title` =?, `url`= ?  WHERE `id`=?";
+        $sql = "UPDATE `manufacturer` SET `title` =?, `translited_title`=?, `url`= ?  WHERE `id`=?";
         $stmt = $this -> conn ->prepare($sql);
         $stmt -> bindParam(1, $manufacturer_name, PDO::PARAM_STR);
-        $stmt -> bindParam(2, $manufacturer_url, PDO::PARAM_STR);
+        $stmt -> bindParam(2, $translited_title, PDO::PARAM_STR);
+        $stmt -> bindParam(3, $manufacturer_url, PDO::PARAM_STR);
 
-        $stmt -> bindParam(3, $manufacturer_id, PDO::PARAM_INT);
+        $stmt -> bindParam(4, $manufacturer_id, PDO::PARAM_INT);
+
         $stmt -> execute();
 
         return true;

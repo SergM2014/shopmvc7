@@ -326,7 +326,8 @@ h2{text-align:center;}
     position: absolute;
    /* width:140px;*/
     min-width:100px;
-    height:70px;
+
+    /*height:70px;*/
     background-color: #9f2023;
     padding:5px;
     padding-right:0;

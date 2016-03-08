@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Фев 26 2016 г., 19:50
+-- Время создания: Мар 06 2016 г., 20:22
 -- Версия сервера: 5.5.47-0ubuntu0.14.04.1
 -- Версия PHP: 5.5.9-1ubuntu4.14
 
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `carousel` (
   `image` varchar(50) NOT NULL,
   `url` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
 -- Дамп данных таблицы `carousel`
@@ -63,16 +63,12 @@ INSERT INTO `carousel` (`id`, `image`, `url`) VALUES
 (4, 'carrier.gif', '/'),
 (5, 'ch.gif', '/'),
 (6, 'daikin.gif', '/'),
-(7, 'footer.gif', '/'),
+(7, 'p1010001.jpg', '/updated carousel2'),
 (8, 'fujitsu.gif', '/'),
 (9, 'general_climat.gif', '/'),
 (10, 'gree.gif', '/'),
 (11, 'header.gif', '/'),
-(12, 'mitsubishi.gif', '/'),
-(13, 'panasonic.gif', '/'),
-(14, 'telo.gif', '/'),
-(15, 'toshiba.gif', '/'),
-(16, 'site1.gif', '/');
+(12, 'mitsubishi.gif', '/');
 
 -- --------------------------------------------------------
 
@@ -86,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `parent_id` int(11) unsigned NOT NULL,
   `translit_title` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
 -- Дамп данных таблицы `categories`
@@ -94,14 +90,12 @@ CREATE TABLE IF NOT EXISTS `categories` (
 
 INSERT INTO `categories` (`id`, `title`, `parent_id`, `translit_title`) VALUES
 (1, 'category-1', 0, 'Категория 1'),
-(2, 'Category-2', 0, 'Категория 2'),
-(3, 'category-3', 0, 'категория 3'),
 (5, 'category-1.1', 1, 'категория 1.1'),
 (6, 'category-1.2', 1, 'категория 1.2'),
 (7, 'Category1.1.1', 5, 'Категория1.1.1'),
 (8, 'Category1.1.2', 5, 'Категория1.1.2'),
-(9, 'zxcv', 0, 'зxсв'),
-(10, 'yyyyyyyyyy', 9, 'уууууууууу');
+(9, 'bum bum', 0, 'бум бум'),
+(12, 'fyiivaprqwerty', 0, 'фывапрqwerty');
 
 -- --------------------------------------------------------
 
@@ -131,10 +125,10 @@ INSERT INTO `comments` (`id`, `product_id`, `avatar`, `name`, `email`, `comment`
 (1, 1, NULL, 'Voelkischer beobachter', 'weisse@ukr.net', 'Редчайшая фигня для коня и путина', '2015-12-18 14:43:06', '0', '1'),
 (2, 1, NULL, 'хуйло обыкновеноу', 'weisse@ukr.net', 'согласен с колеггою', '2015-12-18 14:43:06', '0', '1'),
 (3, 1, NULL, 'кремлевский троль', 'weisse@ukr.net', 'а мне нравится', '2015-12-18 14:45:13', '0', '1'),
-(4, 1, NULL, 'ворошиловский стрелок', 'weisse@ukr.net', 'бум бум це я шляпа выд ', '2015-12-18 14:53:31', '0', '1'),
-(10, 1, 'p1010001.jpg', 'test', 'weisse@ukr.net', 'asasasasasasas', '2015-12-24 11:08:56', '0', '1'),
+(4, 1, NULL, 'ворошиловский стрелок', 'weisse@ukr.net', 'бум бум це я шляпа выд ', '2015-12-18 14:53:31', '0', '0'),
+(10, 1, NULL, 'test', 'weisse@ukr.net', 'asasasasasasas', '2015-12-24 11:08:56', '1', '0'),
 (11, 1, 'p1010002.jpg', 'test2', 'weisse@ukr.net', 'Є, звичайно, й інші закони... Стверджують, що "наркотик вже не вставляє", і необхідно щось надпотужне, щоб напівбожевільний від реальної кризи глядач раптом "вштирився" і "закайфував". Мовляв, українська ейфорія вже розсіялася, а Сирія — далека і не настільки приваблива як "мрія про возз''єднання з Кримом та Україною". І можна не сумніватися, що наркотичну речовину, здатну затьмарити ефект попереднього, вже знайшли. Це — глобальна війна,\n— пише Саша Сотник.', '2015-12-24 11:19:09', '0', '1'),
-(12, 1, NULL, 'qwerty', 'weisse@ukr.net', 'bub bum bum bum', '2016-02-23 09:28:23', '0', '1');
+(12, 1, NULL, 'no_more qwerty', 'weisse@ukr.net', 'updates thouthendd times 2223', '2016-02-23 09:28:23', '1', '0');
 
 -- --------------------------------------------------------
 
@@ -144,21 +138,23 @@ INSERT INTO `comments` (`id`, `product_id`, `avatar`, `name`, `email`, `comment`
 
 CREATE TABLE IF NOT EXISTS `manufacturer` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) NOT NULL,
+  `translited_title` varchar(50) NOT NULL,
   `url` varchar(50) NOT NULL,
+  `title` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Дамп данных таблицы `manufacturer`
 --
 
-INSERT INTO `manufacturer` (`id`, `title`, `url`) VALUES
-(1, 'siemens', '/'),
-(2, 'sumsung', '/'),
-(3, 'henkel', '/'),
-(4, 'bauchemie', '/'),
-(10, 'hhhhhh', 'hhhhhhhh');
+INSERT INTO `manufacturer` (`id`, `translited_title`, `url`, `title`) VALUES
+(1, 'siemens', '/', 'сименс'),
+(2, 'sumsung', '/', 'зумсунг'),
+(3, 'henkel', '/', 'хенкель'),
+(4, 'bauchemie', '/', 'баухеми'),
+(6, 'up', 'jjjjjjjjjjj', 'up'),
+(7, 'new_up', '/new', 'new_up');
 
 -- --------------------------------------------------------
 

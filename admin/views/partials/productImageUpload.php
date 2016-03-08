@@ -3,11 +3,13 @@
 
     <form enctype="multipart/form-data" method="post" class=" MyUploadForm clearfix" >
 
+    
+
         <div class="image_form">
 
             <?php if(isset($image)) : ?>
 
-                  <img class="thumb uploaded" src="/uploads/product_images/thumbs/<?php echo $image; ?> " alt="Просмотреть картинку" > <?php else: ?>
+            <img class="thumb uploaded" src="/uploads/product_images/thumbs/<?php echo $image; ?> " alt="Просмотреть картинку" > <?php else: ?>
             <img class="thumb" src="/img/nophoto.jpg" > <?php endif; ?>
 
             <input name="FileInput" id="FileInput>" class="FileInput <?php if(isset($image)) echo 'invisible' ?>" type="file"  >

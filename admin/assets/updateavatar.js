@@ -1,4 +1,6 @@
-
+var image_preview = document.getElementsByClassName('thumb')[0], output= document.getElementsByClassName('output')[0],
+    reset_btn= document.getElementsByClassName('reset_btn')[0], submit_btn = document.getElementsByClassName('submit_btn')[0],
+    progress_bar= document.getElementsByClassName('progress_bar')[0], progress=document.getElementsByClassName('progress')[0];
 //File API
 
     var file_input = document.getElementById('file_input');
@@ -10,14 +12,14 @@
             if (input.files[0].type.match('image.*')) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    document.getElementById('image_preview').setAttribute('src', e.target.result);
+                    image_preview.setAttribute('src', e.target.result);
                 };
                 reader.readAsDataURL(input.files[0]);
 
                 this.classList.add('invisible');
-                document.getElementById('output').classList.add('invisible');
-                document.getElementById('image_reset_btn').classList.remove('invisible');
-                document.getElementById('submit_btn').classList.remove('invisible');
+                output.classList.add('invisible');
+                reset_btn.classList.remove('invisible');
+                submit_btn.classList.remove('invisible');
 
             }// else console.log('is not image mime type');
         }// else console.log('not isset files data or files API not supordet');
@@ -31,26 +33,26 @@
 
         var percent = Math.round((event.loaded / event.total) * 100);
 
-        document.getElementById('progress_bar').style.width = percent + "%";
-        document.getElementById('progress_bar').innerHTML = percent + "%";
+        progress_bar.style.width = percent + "%";
+        progress_bar.innerHTML = percent + "%";
     }
 
     function completeHandler(event) {//тут ивент переобразуется в XMLHttpRequestProgressEvent {}
 
         var response = JSON.parse(event.target.responseText);
 
-        document.getElementById('output').innerHTML= response.message;
+        output.innerHTML= response.message;
 
-        document.getElementById('progress_bar').style.width = "0%";
-        document.getElementById('progress_bar').innerHTML = "0%";
+        progress_bar.style.width = "0%";
+        progress_bar.innerHTML = "0%";
 
-        document.getElementById('progress').classList.add('invisible');
+        progress.classList.add('invisible');
 
-        document.getElementById('output').classList.remove('invisible');
+        output.classList.remove('invisible');
 
-        document.getElementById('submit_btn').classList.add('invisible');
+        submit_btn.classList.add('invisible');
 
-        document.getElementById('image_reset_btn').removeAttribute('disabled');
+        reset_btn.removeAttribute('disabled');
 
 
 
@@ -60,22 +62,22 @@
 
     function errorHandler(event) {
 
-        document.getelementById('output').innerHTML = 'Upload failed';
+        output.innerHTML = 'Upload failed';
     }
 
 
     function abortHandler(event) {
 
-        document.getelementById('output').innerHTML = 'Upload aborted';
+       output.innerHTML = 'Upload aborted';
     }
 
 
-     document.getElementById('submit_btn').addEventListener('click',  function(){
-         document.getElementById('submit_btn').classList.add('invisible');
+     submit_btn.addEventListener('click',  function(){
+         submit_btn.classList.add('invisible');
 
-         document.getElementById('progress').classList.remove('invisible');
+         progress.classList.remove('invisible');
 
-         var file= document.getElementById('file_input').files[0];
+         var file= file_input.files[0];
 
          var id = document.getElementsByName('id')[0].value;
          var _token = document.getElementsByName(['_token'])[0].value;
@@ -97,15 +99,15 @@
          ajax.open("POST", "/admin/image/updateAvatar");
          ajax.send(formdata);
 
-         document.getElementById('image_reset_btn').setAttribute('disabled', 'disabled');
+         reset_btn.setAttribute('disabled', 'disabled');
      });
 
 
 
-    document.getElementById('image_reset_btn').addEventListener('click', function(){
+    reset_btn.addEventListener('click', function(){
 
-        document.getElementById('image_preview').setAttribute('src', '/img/nophoto.jpg');
-        var file_input = document.getElementById('file_input');
+       image_preview.setAttribute('src', '/img/nophoto.jpg');
+
         var id = document.getElementsByName('id')[0].value;
         var _token = document.getElementsByName(['_token'])[0].value;
 
@@ -119,14 +121,14 @@
                 if (xhr2.status == 200) {
                     //document.getElementById('output').innerHTML = xhr2.responseText;
                     var response = JSON.parse(xhr2.responseText);
-                    document.getElementById('output').innerText = response.message;
+                    output.innerText = response.message;
                 }
             }
         };
         xhr2.send('id='+id+'&_token='+_token+'&ajax='+1);
 
-        document.getElementById('submit_btn').classList.add('invisible');
-        document.getElementById('image_reset_btn').classList.add('invisible');
+        submit_btn.classList.add('invisible');
+        reset_btn.classList.add('invisible');
 
 
     });

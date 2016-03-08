@@ -129,6 +129,23 @@ document.body.onclick = function(e){
     if(table && e.target.id != 'delete_item') {
         if(table.hasAttribute('data-product_id')) {
             popup_menu_object.show('product', table, e);
+
+             //add link show product here
+
+
+             var item_id =popup_menu_object.item_id('data-product_id', table);
+             if(!document.getElementById('show_product')){
+                    
+                    var show_product =document.createElement('p');
+                    show_product.id="show_product";
+                    show_product.innerHTML='<a href="/admin/product/show?id='+item_id+'">view product</a>';
+                    popup_menu.insertBefore(show_product, popup_menu.firstChild);
+                    
+                } else {
+                    document.getElementById('show_product').innerHTML='<a href="/admin/product/show?id='+item_id+'">view product</a>';
+                }
+
+
              }
         if(table.hasAttribute('data-comment_id')) {
             popup_menu_object.show('comment', table, e);
@@ -151,7 +168,7 @@ document.body.onclick = function(e){
             }
         }
 
-
+       
 
 //console.log(e.target.className);
 
