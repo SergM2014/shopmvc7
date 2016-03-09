@@ -16,7 +16,7 @@ class Admin_Controllers_Image extends Core_BaseController
 
     public function delete()
     {
-        if(!isset($_POST['_token']) OR $_POST['_token']!= $_SESSION['_token']['update_product']) exit();
+        Lib_TokenService::check('upload_image');
         $model = new Protected_Models_Image();
         $message = $model->deleteImage();
 
@@ -32,9 +32,10 @@ class Admin_Controllers_Image extends Core_BaseController
 
 
     //update avatar section
-     public function updateAvatar()
+
+    public function uploadCommentImage()
      {
-        Lib_TokenService::check('update_comment');
+        Lib_TokenService::check('upload_image');
         $model = new Protected_Models_Image();
         $response = $model->uploadAvatar( true );
 
@@ -42,17 +43,19 @@ class Admin_Controllers_Image extends Core_BaseController
         exit();
      }
 
-     public function deleteAvatar()
+     public function deleteCommentImage()
+
      {
-         Lib_TokenService::check('update_comment');
+         Lib_TokenService::check('upload_image');
          $model = new Protected_Models_Image();
          $response = $model->deleteAdminAvatar();
          echo json_encode($response);
          exit();
      }
 
-    public function uploadSlider()
+    public function uploadSliderImage()
     {
+        Lib_TokenService::check('upload_image');
         $model = new Protected_Models_Image();
         $response = $model->uploadSlider();
 
@@ -60,8 +63,9 @@ class Admin_Controllers_Image extends Core_BaseController
         exit();
     }
 
-    public function deleteSlider()
+    public function deleteSliderImage()
     {
+        Lib_TokenService::check('upload_image');
         $model = new Protected_Models_Image();
         $response = $model->deleteSlider();
 
@@ -69,9 +73,9 @@ class Admin_Controllers_Image extends Core_BaseController
         exit();
     }
 
-    public function uploadCarousel()
+    public function uploadCarouselImage()
     {
-
+        Lib_TokenService::check('upload_image');
         $model = new Protected_Models_Image();
         $response = $model->uploadCarousel();
 
@@ -79,8 +83,9 @@ class Admin_Controllers_Image extends Core_BaseController
         exit();
     }
 
-    public function deletecarousel()
+    public function deleteCarouselImage()
     {
+        Lib_TokenService::check('upload_image');
         $model = new Protected_Models_Image();
         $response = $model->deleteCarousel();
 

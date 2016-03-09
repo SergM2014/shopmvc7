@@ -58,6 +58,7 @@ class Admin_Controllers_Comment extends Core_BaseController{
 
     public function unpublish()
     {
+        Lib_TokenService::check('general_purpose_comment');
         $model = new Protected_Models_Comment();
         $response = $model->unpublishComment();
         echo json_encode($response);
@@ -66,6 +67,7 @@ class Admin_Controllers_Comment extends Core_BaseController{
 
     public function publish()
     {
+        Lib_TokenService::check('general_purpose_comment');
         $model = new Protected_Models_Comment();
         $response = $model->publishComment();
         echo json_encode($response);

@@ -256,7 +256,7 @@ if(e.target.className == 'delete_category'){
 
                     if(response.error) {
                         document.getElementById('message_box').className = "";
-                        document.getElementById('message_box').querySelector('span').innerText = response.error;
+                        document.getElementById('message_box').querySelector('span').innerText = response.message;
                     }
 
                     if(response.success){

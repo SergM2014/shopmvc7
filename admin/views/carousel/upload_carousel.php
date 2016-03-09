@@ -5,11 +5,13 @@
 
     <form enctype="multipart/form-data" method="post" class=" MyUploadForm clearfix" >
 
+        <input type="hidden" name="image_token" value="<?php Lib_TokenService::_token('upload_image') ?>" data-handle="carousel" >
+
         <div class="image_form <?php if(isset($error['carousel_image'])) echo "error";  ?>" >
 
             <img id="image_preview" class="thumb" src="<?php if(isset($_SESSION['carousel'])) {
                 echo '/uploads/carousel/'.$_SESSION['carousel'];
-            }  else{
+            }  else {
                 echo "/img/nophoto.jpg";
             } ?>" >
 
@@ -35,5 +37,5 @@
 
     <?php if(isset($error['carousel_image'])) : ?> <small class="red"><?php echo $error['carousel_image'] ?></small>  <?php endif; ?>
 
-    <script src="/admin/assets/uploadcarousel.js"></script>
+    <script src="/admin/assets/updateavatar.js"></script>
 </section>

@@ -1,9 +1,11 @@
-<h2>Add Slider</h2>
+
 
 <section class="slider_image_area clearfix">
     <h4> Add image</h4>
 
     <form enctype="multipart/form-data" method="post" class=" MyUploadForm clearfix" >
+
+        <input type="hidden" name="image_token" value="<?php Lib_TokenService::_token('upload_image') ?>" data-handle="slider" >
 
         <div class="image_form <?php if(isset($error['slider_image'])) echo "error";  ?>" >
 
@@ -35,5 +37,5 @@
 
     <?php if(isset($error['slider_image'])) : ?> <small class="red"><?php echo $error['slider_image'] ?></small>  <?php endif; ?>
 
-    <script src="/admin/assets/uploadslider.js"></script>
+    <script src="/admin/assets/updateavatar.js"></script>
 </section>

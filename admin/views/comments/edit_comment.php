@@ -13,6 +13,8 @@
 
             <div class="image_form">
 
+                <input type="hidden" name="image_token" value="<?php Lib_TokenService::_token('upload_image') ?>" data-handle="comment" >
+
                 <?php if(isset($comment['avatar'])) : ?>
 
                     <img class="thumb uploaded" src="/uploads/avatars/<?php echo $comment['avatar']; ?> " alt="Просмотреть картинку" > <?php else: ?>

@@ -7,6 +7,7 @@
 <div class="content clearfix">
 
     <div class="main-content">
+        <h2>Add Slider</h2>
         <?php include 'upload_slider.php'; ?>
 
         <section class="slider_input">

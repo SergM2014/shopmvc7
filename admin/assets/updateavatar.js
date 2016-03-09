@@ -3,6 +3,12 @@ var image_preview = document.getElementsByClassName('thumb')[0], output= documen
     progress_bar= document.getElementsByClassName('progress_bar')[0], progress=document.getElementsByClassName('progress')[0];
 //File API
 
+function getHandle(){
+    var handle= document.getElementsByName('image_token')[0].getAttribute('data-handle');
+    var capital_handle = handle[0].toUpperCase() + handle.slice(1);
+    return capital_handle;
+}
+
     var file_input = document.getElementById('file_input');
 
     file_input.onchange = function(){
@@ -79,10 +85,9 @@ var image_preview = document.getElementsByClassName('thumb')[0], output= documen
 
          var file= file_input.files[0];
 
-         var id = document.getElementsByName('id')[0].value;
-         var _token = document.getElementsByName(['_token'])[0].value;
-        /* console.log(_token);
-         return;*/
+         var id = (document.getElementsByName('id')[0])? document.getElementsByName('id')[0].value: 'no';
+         var _token = document.getElementsByName(['image_token'])[0].value;
+         var handle = getHandle();
 
          var formdata = new FormData();
 
@@ -96,7 +101,9 @@ var image_preview = document.getElementsByClassName('thumb')[0], output= documen
          ajax.addEventListener("load", completeHandler, false);
          ajax.addEventListener("error", errorHandler, false);
          ajax.addEventListener("abort", abortHandler, false);
-         ajax.open("POST", "/admin/image/updateAvatar");
+
+         ajax.open("POST", "/admin/image/upload"+handle+"Image", true);
+
          ajax.send(formdata);
 
          reset_btn.setAttribute('disabled', 'disabled');
@@ -108,18 +115,21 @@ var image_preview = document.getElementsByClassName('thumb')[0], output= documen
 
        image_preview.setAttribute('src', '/img/nophoto.jpg');
 
-        var id = document.getElementsByName('id')[0].value;
-        var _token = document.getElementsByName(['_token'])[0].value;
+        var id = (document.getElementsByName('id')[0])? document.getElementsByName('id')[0].value: 'no';
+        var _token = document.getElementsByName(['image_token'])[0].value;
+        var handle = getHandle();
 
         if(file_input.classList.contains('invisible')) file_input.classList.remove('invisible');
 
         xhr2 = new XMLHttpRequest();
-        xhr2.open('POST', '/admin/image/deleteAvatar', true);
+
+        xhr2.open('POST', '/admin/image/delete'+handle+'Image', true);
+
         xhr2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr2.onreadystatechange = function () {
             if (xhr2.readyState == 4) {
                 if (xhr2.status == 200) {
-                    //document.getElementById('output').innerHTML = xhr2.responseText;
+
                     var response = JSON.parse(xhr2.responseText);
                     output.innerText = response.message;
                 }

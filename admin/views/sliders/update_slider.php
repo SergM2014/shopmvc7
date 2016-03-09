@@ -1,12 +1,13 @@
 <nav class="breadcrumbs">
 
-    <a href="<?php echo URL; ?>admin">Головна</a> / <a href="<?php echo URL; ?>admin/slider">Slider</a> / <span>Add slider</span>
+    <a href="<?php echo URL; ?>admin">Головна</a> / <a href="<?php echo URL; ?>admin/slider">Slider</a> / <span>Update slider</span>
 
 </nav>
 
 <div class="content clearfix">
 
     <div class="main-content">
+        <h2>Update Slider</h2>
         <?php include 'upload_slider.php'; ?>
 
         <section class="slider_input">
