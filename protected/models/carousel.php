@@ -20,7 +20,7 @@ class Protected_Models_Carousel extends Core_DataBase{
        }
 
         if(!isset($_SESSION['carousel'])){
-            $error['carousel_image']='No image for slider';
+            $error['carousel_image']='No image for carousel';
         }
 
         return $error;

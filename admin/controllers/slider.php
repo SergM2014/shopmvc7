@@ -30,7 +30,7 @@ class Admin_Controllers_Slider extends Core_BaseController{
             $page = $model->getSliderPageInfo();
             extract($page);
 
-            return ['view' => 'sliders/create.php', 'slider_url'=> $slider_url, 'error' => $error];
+            return ['view' => 'sliders/create.php', 'slider_url'=> $slider_url, 'error' => $error, 'uploads'=>'/uploads/slider/', 'image'=>(isset($_SESSION['slider']))? $_SESSION['slider']: null ];
         } else {
             $result= $model->saveNewSlider();
 
@@ -48,7 +48,7 @@ class Admin_Controllers_Slider extends Core_BaseController{
 
         $model= new Protected_Models_Slider();
         $slider=$model->getOneSlider();
-        return ['view'=>'sliders/update_slider.php', 'slider_url'=>$slider['url'], 'slider_id'=>$slider['id']];
+        return ['view'=>'sliders/update_slider.php', 'slider_url'=>$slider['url'], 'slider_id'=>$slider['id'], 'uploads'=>'/uploads/slider/', 'image'=>(isset($_SESSION['slider']))? $_SESSION['slider']: null];
     }
 
     public function update()
@@ -61,7 +61,7 @@ class Admin_Controllers_Slider extends Core_BaseController{
             $page = $model->getSliderPageInfo();
             extract($page);
 
-            return ['view' => 'sliders/update_slider.php', 'slider_url'=> $slider_url, 'error' => $error, 'slider_id'=>$_POST['id']];
+            return ['view' => 'sliders/update_slider.php', 'slider_url'=> $slider_url, 'error' => $error, 'slider_id'=>$_POST['id'], 'uploads'=>'/uploads/slider/', 'image'=>(isset($_SESSION['slider']))? $_SESSION['slider']: null];
         } else {
             $result= $model->saveUpdatedSlider();
 

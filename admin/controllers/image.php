@@ -2,7 +2,8 @@
 
 class Admin_Controllers_Image extends Core_BaseController
 {
-    public function upload()
+   // public function upload()
+    public function uploadProductImage()
     {
         Lib_TokenService::check('upload_image');
         $model = new Protected_Models_Image();
@@ -14,19 +15,19 @@ class Admin_Controllers_Image extends Core_BaseController
 
 
 
-    public function delete()
+    public function deleteProductImage()
     {
         Lib_TokenService::check('upload_image');
         $model = new Protected_Models_Image();
-        $message = $model->deleteImage();
+        $response = $model->deleteImage();
 
-        echo $message;
+        echo json_encode($response);
         exit();
     }
 
      public function addSection()
      {
-         return ['view'=>'partials/productImageUpload.php', 'ajax'=>1];
+         return ['view'=>'partials/image_upload.php', 'ajax'=>1];
      }
 
 

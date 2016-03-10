@@ -21,7 +21,7 @@ class Admin_Controllers_Comment extends Core_BaseController{
     {
         $model = new Protected_Models_Comment();
         $comment= $model ->selectOneComment();
-        return ['view'=> 'comments/edit_comment.php', 'comment'=>$comment];
+        return ['view'=> 'comments/edit_comment.php', 'comment'=>$comment, 'image'=>$comment['avatar'], 'uploads'=>'/uploads/avatars/'];
     }
 
     public function update()
@@ -35,7 +35,7 @@ class Admin_Controllers_Comment extends Core_BaseController{
             $page = $model->getCommentPageInfo();
             extract($page);
 
-            return ['view' => 'comments/edit_comment.php', 'comment'=>$comment, 'error'=>$error];
+            return ['view' => 'comments/edit_comment.php', 'comment'=>$comment, 'error'=>$error, 'image'=>$_SESSION['admin_avatar_change'][$_POST['id']], 'uploads'=>'/uploads/avatars/'];
         } else {
             $result= $model->saveUpdatedComment();
             if ($result) {

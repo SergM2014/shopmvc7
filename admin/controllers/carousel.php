@@ -30,7 +30,7 @@ class Admin_Controllers_Carousel extends Core_BaseController{
             $page = $model->getCarouselPageInfo();
             extract($page);
 
-            return ['view' => 'carousel/create.php', 'slider_url'=> $carousel_url, 'error' => $error];
+            return ['view' => 'carousel/create.php', 'slider_url'=> $carousel_url, 'error' => $error, 'uploads'=>'/uploads/carousel/', 'image'=>(isset($_SESSION['carousel']))? $_SESSION['carousel']: null];
         } else {
             $result= $model->saveNewCarousel();
 
@@ -48,7 +48,7 @@ class Admin_Controllers_Carousel extends Core_BaseController{
 
         $model= new Protected_Models_Carousel();
         $carousel=$model->getOneCarousel();
-        return ['view'=>'carousel/update_carousel.php', 'carousel_url'=>$carousel['url'], 'carousel_id'=>$carousel['id']];
+        return ['view'=>'carousel/update_carousel.php', 'carousel_url'=>$carousel['url'], 'carousel_id'=>$carousel['id'], 'uploads'=>'/uploads/carousel/', 'image'=>(isset($_SESSION['carousel']))? $_SESSION['carousel']: null];
     }
 
     public function update()
@@ -61,7 +61,7 @@ class Admin_Controllers_Carousel extends Core_BaseController{
             $page = $model->getcarouselPageInfo();
             extract($page);
 
-            return ['view' => 'carousel/update_carousel.php', 'carousel_url'=> $carousel_url, 'error' => $error, 'carousel_id'=>$_POST['id']];
+            return ['view' => 'carousel/update_carousel.php', 'carousel_url'=> $carousel_url, 'error' => $error, 'carousel_id'=>$_POST['id'], 'uploads'=>'/uploads/carousel/', 'image'=>(isset($_SESSION['carousel']))? $_SESSION['carousel']: null];
         } else {
             $result= $model->saveUpdatedCarousel();
 

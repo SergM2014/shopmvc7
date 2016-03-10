@@ -8,7 +8,21 @@
 
     <div class="main-content">
         <h2>Add Slider</h2>
-        <?php include 'upload_slider.php'; ?>
+        <section  class="image_area edit_images clearfix <?php if(isset($error['slider_image'])) echo "error"; ?>">
+            <input type="hidden" name="image_token"  value="<?php Lib_TokenService::_token('upload_image') ?>" data-handle="slider" >
+        <?php include PATH_SITE.'/admin/views/partials/image_upload.php'; ?>
+
+
+            <?php if(isset($error['slider_image'])) { ?>
+                <small class="red image_error"><?php echo $error['slider_image']; ?></small>
+            <?php  } ?>
+
+            <script src="/admin/assets/uploadimage.js"></script>
+
+        </section>
+
+
+
 
         <section class="slider_input">
             <form action="/admin/slider/store" method="POST">

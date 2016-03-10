@@ -8,37 +8,14 @@
 
 
 
-    <section class="edit_avatar_block">
-        <form enctype="multipart/form-data" method="post" class="MyUploadForm clearfix" >
+    <section id="<?php echo (int)$_GET['id']; ?>" class="edit_images image_area">
 
-            <div class="image_form">
+        <input type="hidden" name="image_token"  value="<?php Lib_TokenService::_token('upload_image') ?>" data-handle="comment" >
 
-                <input type="hidden" name="image_token" value="<?php Lib_TokenService::_token('upload_image') ?>" data-handle="comment" >
-
-                <?php if(isset($comment['avatar'])) : ?>
-
-                    <img class="thumb uploaded" src="/uploads/avatars/<?php echo $comment['avatar']; ?> " alt="Просмотреть картинку" > <?php else: ?>
-                    <img class="thumb" src="/img/nophoto.jpg" > <?php endif; ?>
-
-                <input name="FileInput" id="file_input" class="FileInput <?php if(isset($comment['avatar'])) echo 'invisible' ?>" type="file"  >
-
-                <img src="/img/tick.jpg" class="success_tick invisible" >
-                <div class="output invisible" ></div>
+        <?php include PATH_SITE.'/admin/views/partials/image_upload.php'; ?>
 
 
-                <img src="<?php echo '/img/upload.png' ?>"  alt="Загрузить изображение" class="submit_btn invisible">
-                <img src="<?php echo '/img/close.png' ?>" alt="Удалить изображение" class="note reset_btn <?php if(!isset($comment['avatar'])) echo 'invisible'; ?>">
-
-
-
-
-                <div  class="progress invisible">
-                    <div class="progress_bar"   style="width: 0">
-                        0%
-                    </div>
-                </div>
-            </div><!--image form -->
-        </form>
+        <script src="/admin/assets/uploadimage.js"></script>
     </section>
 
 
@@ -89,4 +66,4 @@
 
 
 </div>
-<script src="/admin/assets/updateavatar.js"></script>
+

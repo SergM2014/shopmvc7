@@ -5,7 +5,7 @@ class Lib_TokenService
     public static function _token($action )
     {
 
-        if (DEBUG_MODE) { $period = 8; } else { $period = 86400; }//aбо доба або 8 сек
+        if (DEBUG_MODE) { $period = 300; } else { $period = 86400; }//aбо доба або 5min
 
         if (!isset($_SESSION['_token']['time']) OR ($_SESSION['_token']['time'] + $period < time()) ) {
 

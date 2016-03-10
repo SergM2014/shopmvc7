@@ -11,7 +11,6 @@ class Protected_Models_Image extends Core_DataBase
 
 // Максимальный размер файла 2mb
        $size = 2048000;
-       
 
 // Обработка запроса
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -111,7 +110,7 @@ class Protected_Models_Image extends Core_DataBase
 
     public function deleteAvatar(){
 
-        @unlink(PATH_SITE.'/uploads/avatars/'.$_SESSION['avatar']);
+       // @unlink(PATH_SITE.'/uploads/avatars/'.$_SESSION['avatar']);
         $message='Изображение удаленно.';
         unset ($_SESSION['avatar']);
 
@@ -130,7 +129,7 @@ class Protected_Models_Image extends Core_DataBase
 
 // Максимальный размер файла 2mb
        // $size = 2048000;
-        //schon gewesen
+        //schon gewesen20mb
         $size =20480000;
 
 // Обработка запроса
@@ -153,7 +152,7 @@ class Protected_Models_Image extends Core_DataBase
             if(!file_exists($path.$name)){
                $response=["message"=>"Что-то пошло не так.", "error"=>true];
            } else {
-                $response=["message"=>"Загрузка прошла удачно.", "success"=>true];
+                $response=["message"=>"Загрузка прошла удачно.", "success"=>true, "add_section"=> true ];
                chmod ($path.$name , 0777);
                // $_SESSION['product_image'][$id]= $name;
                 $_SESSION['product_image'][$id] = $name;
@@ -223,18 +222,18 @@ class Protected_Models_Image extends Core_DataBase
 
     public function deleteImage(){
 
-        $_SESSION['delete_image_product'][$_POST['id']]= $_SESSION['product_image'][$_POST['id']];
-        $message='Изображение удаленно.';
+       // $_SESSION['delete_image_product'][$_POST['id']]= $_SESSION['product_image'][$_POST['id']];
+        $response=["message"=>"Изображение удаленно.", "success"=>true ];
         unset ($_SESSION['product_image'][$_POST['id']]);
 
-        return $message;
+        return $response;
     }
 
     public function deleteAdminAvatar(){
 
        // unlink(PATH_SITE.'/uploads/avatars/'.$_SESSION['admin_avatar_change'][$_POST['id']]);
         $response=['message'=>'Изображение удаленно.', 'success'=>true ];
-        unset ($_SESSION['admin_avatar_change'][$_POST['id']]);
+        unset($_SESSION['admin_avatar_change'][$_POST['id']]);
 
         return $response;
     }
@@ -254,10 +253,10 @@ class Protected_Models_Image extends Core_DataBase
 // Обработка запроса
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Проверяем тип файла
-            if (!in_array(strtolower($_FILES['FileInput']['type']), $types)) return $response['message']='Запрещённый тип файла.';
+            if (!in_array(strtolower($_FILES['FileInput']['type']), $types)) return $response=["message"=>"Запрещённый тип файла.", "error"=>true ];
 
             // Проверяем размер файла
-            if ($_FILES['FileInput']['size'] > $size)  return $response['message']='Слишком большой размер файла.'.$_FILES['FileInput']['size'];
+            if ($_FILES['FileInput']['size'] > $size)  return $response=["message"=>"Слишком большой размер файла.".$_FILES['FileInput']['size'], "error"=>true ];
 
 
 
@@ -266,9 +265,9 @@ class Protected_Models_Image extends Core_DataBase
 
             move_uploaded_file($_FILES['FileInput']['tmp_name'], $path.$name);
             if(!file_exists($path.$name)){
-                $response['message']='Что-то пошло не так.';
+                $response=["message"=>"Что-то пошло не так.", "error"=>true ];;
             } else {
-                $response['message']='Загрузка прошла удачно.';
+                $response=["message"=>"Загрузка прошла удачно.", "success"=>true];
                 chmod ($path.$name , 0777);
 
                 $_SESSION['slider'] = $name;
@@ -364,9 +363,9 @@ class Protected_Models_Image extends Core_DataBase
 // Обработка запроса
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Проверяем тип файла
-            if (!in_array(strtolower($_FILES['FileInput']['type']), $types)) return $response['message']='Запрещённый тип файла.';
+            if (!in_array(strtolower($_FILES['FileInput']['type']), $types)) return $response=["message"=>"Запрещённый тип файла.", "error"=>true];
             // Проверяем размер файла
-            if ($_FILES['FileInput']['size'] > $size)  return $response['message']='Слишком большой размер файла.'.$_FILES['FileInput']['size'];
+            if ($_FILES['FileInput']['size'] > $size)  return $response=["message"=>"Слишком большой размер файла.".$_FILES['FileInput']['size'], "error"=>true];
 
              $name = $this->thumbCarouselImage($_FILES['FileInput'], $path);
            // $name = strtolower($_FILES['FileInput']['name']);
@@ -375,9 +374,9 @@ class Protected_Models_Image extends Core_DataBase
            // move_uploaded_file($_FILES['FileInput']['tmp_name'], $path.$name);
             unset($_FILES['FileInput']);
             if(!file_exists($path.$name)){
-                $response['message']='Что-то пошло не так.';
+                $response=["message"=>"Что-то пошло не так.","error"=>true];
             } else {
-                $response['message']='Загрузка прошла удачно.';
+                $response=["message"=>"Загрузка прошла удачно.", "success"=>true];
                 chmod ($path.$name , 0777);
                 $_SESSION['carousel'] = $name;
                 $response['name']= $name;

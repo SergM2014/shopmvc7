@@ -11,7 +11,7 @@ class Admin_Controllers_Product  extends Core_BaseController
         $manufacturers = $model->getManufacturerForList();
         $images= $model->getProductImages();
 
-        return ['view'=>'products/update_product.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'images'=>$images];
+        return ['view'=>'products/update_product.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'images'=>$images, 'uploads'=>'/uploads/product_images/thumbs/'];
     }
 
 
@@ -26,7 +26,8 @@ class Admin_Controllers_Product  extends Core_BaseController
             if(!empty($error)){
                 $page =$model->getPageInfo();
                 extract($page);
-                return ['view'=>'products/update_product.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'error'=> $error ];
+                return ['view'=>'products/update_product.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'error'=> $error, 'images'=>$images
+                    , 'uploads'=>'/uploads/product_images/thumbs/' ];
             } else {
                 $result= $model->saveUpdatedProduct();
 
@@ -59,7 +60,7 @@ class Admin_Controllers_Product  extends Core_BaseController
                 $page =$model->getPageInfo();
                 extract($page);
 
-                return ['view'=>'products/create_product.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'error'=> $error ];
+                return ['view'=>'products/create_product.php', 'product'=>$product, 'categories_tree'=>$categories_tree, 'manufacturers'=>$manufacturers, 'error'=> $error, 'uploads'=>'/uploads/product_images/thumbs/' ];
             } else {
                 $result= $model->saveAddedProduct();
 

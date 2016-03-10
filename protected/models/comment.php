@@ -220,6 +220,7 @@ class Protected_Models_Comment extends Core_DataBase
 
     public function saveUpdatedComment()
     {
+//die(var_dump($_SESSION['admin_avatar_change'][$_POST['id']]));
          $inputs = $this->getCommentInputs();
          $sql= "UPDATE `comments` SET `avatar`=? ,`name`=?, `email`=?, `comment`=?, `changed`='1', `published`=?  WHERE `id`=?";
          $stmt = $this->conn->prepare($sql);
@@ -238,10 +239,10 @@ class Protected_Models_Comment extends Core_DataBase
 
     public function destroyComment()
     {
-       /* $sql="DELETE FROM `comments` WHERE `id`=?";
+        $sql="DELETE FROM `comments` WHERE `id`=?";
         $stmt= $this->conn->prepare($sql);
         $stmt->bindParam(1, $_POST['id'], PDO::PARAM_INT);
-        $stmt->execute();*/
+        $stmt->execute();
         $response=["message"=>"The comment# {$_POST['id']} deleted!", "success"=> true ];
         return $response;
     }

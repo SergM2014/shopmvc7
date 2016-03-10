@@ -92,7 +92,7 @@ class Protected_Models_Product extends Core_DataBase
 
 
 
-    protected function buildSelectTree($cats,$parent_id, $current_category, $manage_category)
+    protected function buildSelectTree($cats,$parent_id, $current_category, $manage_category=false)
     {
         //die(var_dump($current_category));
         if(is_array($cats) and isset($cats[$parent_id])){
@@ -179,8 +179,9 @@ class Protected_Models_Product extends Core_DataBase
         $categories_tree =$this->buildSelectTree($categories, 0, $_POST['category']);
 
         $manufacturers = $this->getManufacturerForList();
+        $images =(isset($_SESSION['product_image']))? $_SESSION['product_image']: null;
 
-       return compact('product', 'categories_tree', 'manufacturers');
+       return compact('product', 'categories_tree', 'manufacturers', 'images');
 
     }
 
@@ -195,7 +196,11 @@ class Protected_Models_Product extends Core_DataBase
         $category_id = ($_POST['category_id']!='')? (int)$_POST['category_id']: null;
         $manufacturer_id = ($_POST['manufacturer_id']!='')? (int)$_POST['manufacturer_id']: null;
 
-        $sql= "UPDATE `products` SET `author`= ?, `title`= ?, `description`=?, `body`= ?, `price`= ?, `cat_id`=?, `manf_id`= ?  WHERE `id`= ?";
+        if(isset($_SESSION['product_image']) AND $_SESSION['product_image'] != false) {
+            $serialized = serialize($_SESSION['product_image']);} else $serialized = null;
+
+
+        $sql= "UPDATE `products` SET `author`= ?, `title`= ?, `description`=?, `body`= ?, `price`= ?, `cat_id`=?, `manf_id`= ?,`images`=?  WHERE `id`= ?";
         $result = $this->conn->prepare($sql);
         $result->bindParam(1,$updated['author'], PDO::PARAM_STR);
         $result->bindParam(2, $updated['title'], PDO::PARAM_STR);
@@ -204,32 +209,12 @@ class Protected_Models_Product extends Core_DataBase
         $result->bindParam(5, $updated['price'], PDO::PARAM_STR);
         $result->bindParam(6, $category_id);
         $result->bindParam(7, $manufacturer_id);
-        $result->bindParam(8, $_POST['product_id'], PDO::PARAM_INT);
+        $result->bindParam(8, $serialized, PDO::PARAM_STR);
+        $result->bindParam(9, $_POST['product_id'], PDO::PARAM_INT);
 
         $result->execute();
 
-        // here persist the images
-        if(isset($_SESSION['product_image']) AND $_SESSION['product_image'] != false) {
-
-            $serialized = serialize($_SESSION['product_image']);
-            $sql="UPDATE `products` SET `images`=? WHERE `id`=?";
-            $result = $this->conn->prepare($sql);
-            $result->bindParam(1,$serialized, PDO::PARAM_STR);
-            $result->bindParam(2, $_POST['product_id'], PDO::PARAM_INT);
-
-            $result->execute();
-
-            if(isset($_SESSION['delete_image_product'])){
-                foreach($_SESSION['delete_image_product'] as $image ){
-                    @unlink(PATH_SITE.'/uploads/product_images/'.$image);
-                    @unlink(PATH_SITE.'/uploads/product_images/thumbs/'.$image);
-                }
-                unset($_SESSION['delete_image_product']);
-            }
-            unset($_SESSION['product_image']);
-        }
-        // избегаем повторного сохранения в базу при обновленнии страницы
-        unset($_SESSION['_token']['update_product']);
+        if(isset($_SESSION['product_image'])) unset($_SESSION['product_image']);
         return true;
     }
 

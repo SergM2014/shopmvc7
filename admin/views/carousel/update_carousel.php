@@ -11,8 +11,18 @@
 
     <div class="main-content">
         <h4> Update image</h4>
-        <?php include 'upload_carousel.php'; ?>
+        <section id="<?php echo (int)$_GET['id']; ?>" class="image_area edit_images clearfix <?php if(isset($error['carousel_image'])) echo "error"; ?>">
+            <input type="hidden" name="image_token"  value="<?php Lib_TokenService::_token('upload_image') ?>" data-handle="carousel" >
+            <?php include PATH_SITE.'/admin/views/partials/image_upload.php'; ?>
 
+
+            <?php if(isset($error['slider_image'])) { ?>
+                <small class="red image_error"><?php echo $error['slider_image']; ?></small>
+            <?php  } ?>
+
+            <script src="/admin/assets/uploadimage.js"></script>
+
+        </section>
         <section class="carousel_input">
             <form action="/admin/carousel/update" method="POST">
 
