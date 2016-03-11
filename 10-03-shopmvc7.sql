@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Мар 06 2016 г., 20:22
+-- Время создания: Мар 10 2016 г., 15:03
 -- Версия сервера: 5.5.47-0ubuntu0.14.04.1
 -- Версия PHP: 5.5.9-1ubuntu4.14
 
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `carousel` (
   `image` varchar(50) NOT NULL,
   `url` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
 --
 -- Дамп данных таблицы `carousel`
@@ -67,8 +67,10 @@ INSERT INTO `carousel` (`id`, `image`, `url`) VALUES
 (8, 'fujitsu.gif', '/'),
 (9, 'general_climat.gif', '/'),
 (10, 'gree.gif', '/'),
-(11, 'header.gif', '/'),
-(12, 'mitsubishi.gif', '/');
+(11, 'p1010092.jpg', '/dogi'),
+(12, 'mitsubishi.gif', '/'),
+(13, 'p1010079.jpg', 'gfgup'),
+(14, 'img_20140815_131414.jpg', 'llup');
 
 -- --------------------------------------------------------
 
@@ -128,7 +130,7 @@ INSERT INTO `comments` (`id`, `product_id`, `avatar`, `name`, `email`, `comment`
 (4, 1, NULL, 'ворошиловский стрелок', 'weisse@ukr.net', 'бум бум це я шляпа выд ', '2015-12-18 14:53:31', '0', '0'),
 (10, 1, NULL, 'test', 'weisse@ukr.net', 'asasasasasasas', '2015-12-24 11:08:56', '1', '0'),
 (11, 1, 'p1010002.jpg', 'test2', 'weisse@ukr.net', 'Є, звичайно, й інші закони... Стверджують, що "наркотик вже не вставляє", і необхідно щось надпотужне, щоб напівбожевільний від реальної кризи глядач раптом "вштирився" і "закайфував". Мовляв, українська ейфорія вже розсіялася, а Сирія — далека і не настільки приваблива як "мрія про возз''єднання з Кримом та Україною". І можна не сумніватися, що наркотичну речовину, здатну затьмарити ефект попереднього, вже знайшли. Це — глобальна війна,\n— пише Саша Сотник.', '2015-12-24 11:19:09', '0', '1'),
-(12, 1, NULL, 'no_more qwerty', 'weisse@ukr.net', 'updates thouthendd times 2223', '2016-02-23 09:28:23', '1', '0');
+(12, 1, NULL, 'no_more qwerty ', 'weisse@ukr.net', 'updates thouthendd times 2223 updated2', '2016-02-23 09:28:23', '1', '1');
 
 -- --------------------------------------------------------
 
@@ -203,14 +205,14 @@ CREATE TABLE IF NOT EXISTS `products` (
   PRIMARY KEY (`id`),
   KEY `cat_id` (`cat_id`),
   KEY `manf_id` (`manf_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=38 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
 
 --
 -- Дамп данных таблицы `products`
 --
 
 INSERT INTO `products` (`id`, `author`, `title`, `description`, `body`, `price`, `cat_id`, `manf_id`, `images`) VALUES
-(1, 'Пушкин', 'Руслан и Людмила', 'бум бум', 'опять бум бум', 100.20, NULL, NULL, 'a:4:{s:15:"1455375151_6903";s:19:"1455375151_6903.jpg";s:14:"1455375156_770";s:18:"1455375156_770.jpg";s:14:"1455375166_226";s:18:"1455375166_226.jpg";s:14:"1455375171_955";s:18:"1455375171_955.jpg";}'),
+(1, 'Пушкин', 'Руслан и людмила', 'бум бум', 'опять бум бум', 100.20, NULL, NULL, 'a:1:{s:15:"1457540455_3669";s:19:"1457540455_3669.jpg";}'),
 (2, 'Лермонтов', 'Фигня на ровном месте', 'А больше лермонтов написат не миг', 'розширене описание', 99.00, 1, 1, NULL),
 (3, 'онегин', 'bезценный твор updated', 'описание', 'развернутое описание', 55.00, 1, 1, NULL),
 (4, 'Гете', 'Фауст', 'описание', 'разверутое описание', 30.00, 1, 1, NULL),
@@ -246,7 +248,10 @@ INSERT INTO `products` (`id`, `author`, `title`, `description`, `body`, `price`,
 (34, 'llllllllll', 'llll', 'lllllll', 'lllllllllll', 9999999999.99, 6, NULL, NULL),
 (35, 'hhhhhhhh', 'ggggggg', 'hhhhhh', 'hhhhhh', 77.00, NULL, NULL, NULL),
 (36, 'uuuuuuuu', 'uuuuuuu', 'uuuuuuuuuuu', 'uuuuuuuuu', 77777777.00, NULL, NULL, NULL),
-(37, 'xxxxxxxxxx', 'X_updated', 'xxxxxxxxxx', 'xxxxxxxxxxx', 2222222222.00, NULL, NULL, NULL);
+(37, 'xxxxxxxxxx', 'X_updated', 'xxxxxxxxxx', 'xxxxxxxxxxx', 2222222222.00, NULL, NULL, NULL),
+(38, 'me', 'training 09 03', 'again me', 'qqqq', 55.00, NULL, NULL, 'a:1:{s:15:"1457532477_4435";s:19:"1457532477_4435.jpg";}'),
+(39, 'qq', 'qq', 'qq', 'q', 33.00, NULL, NULL, 'a:1:{s:15:"1457532493_1783";s:19:"1457532493_1783.jpg";}'),
+(40, 'qq', 'qqq', 'qq', 'qq', 22.00, NULL, NULL, 'a:1:{s:15:"1457540497_1108";s:19:"1457540497_1108.jpg";}');
 
 -- --------------------------------------------------------
 
@@ -259,18 +264,15 @@ CREATE TABLE IF NOT EXISTS `slider` (
   `image` varchar(50) NOT NULL,
   `url` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Дамп данных таблицы `slider`
 --
 
 INSERT INTO `slider` (`id`, `image`, `url`) VALUES
-(1, 'P1010013.jpg', '/'),
-(2, 'P1010014.jpg', '/'),
-(3, 'P1010026.jpg', '/'),
-(4, 'P1010034.jpg', '/'),
-(5, 'P1010046.jpg', '/');
+(6, 'p1010038.jpg', '/qqq'),
+(7, 'p1010042.jpg', 'ttt');
 
 -- --------------------------------------------------------
 
