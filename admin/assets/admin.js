@@ -338,6 +338,46 @@ if(e.target.className == 'delete_category'){
     }
 
 
-};
+};//end of body
+
+
+
+
+document.getElementById('update_about_us').addEventListener('click', function(e){
+
+    e.preventDefault();
+    var about_us= CKEDITOR.instances.editor1.getData();
+
+    var _token = document.getElementsByName("_token")[0].value;
+
+    xhr= new XMLHttpRequest();
+    xhr.open('POST', '/admin/aboutus/update', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                popup_menu.className = "invisible";
+                var response = JSON.parse(xhr.responseText);
+                // console.log(response);
+
+                if (response.error) {
+                    document.getElementById('message_box').className = "";
+                    document.getElementById('message_box').querySelector('span').innerText = response.message;
+                }
+
+                if (response.success) {
+                    document.getElementById('message_box').className = "";
+                    document.getElementById('message_box').querySelector('span').innerText = response.message;
+                    //document.getElementById('update_about_us').classList.add('invisible');
+
+                }
+            }
+          }
+        };
+    xhr.send('about_us='+about_us+'&_token='+_token+'&ajax='+true);
+
+});
+
+
 
 

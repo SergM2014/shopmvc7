@@ -58,6 +58,8 @@ class Lib_TokenService
         $_SESSION['_token']['update_carousel'] = md5('update_carousel' . $random);
         $_SESSION['_token']['delete_carousel'] = md5('delete_carousel' . $random);
 
+        $_SESSION['_token']['about_us'] = md5('about_us' . $random);
+
     }
 
     public static function check($action)

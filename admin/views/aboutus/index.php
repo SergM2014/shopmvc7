@@ -9,11 +9,21 @@
 
     <div class="main-content">
 
-        <form action="/admin/aboutus/update"
-        <textarea name="editor1" id="editor1" rows="10" cols="80">
-           <?php echo $aboutus; ?>
-        </textarea>
+        <form action="/admin/aboutus/update">
 
+            <input type="hidden" name="_token" value="<?php Lib_TokenService::_token('about_us'); ?>" >
+
+            <p class="red">Дозволены любые безвредные теги!</p>
+            <textarea name="editor1" id="editor1" class="editor1" rows="10" cols="80">
+               <?php echo $aboutus; ?>
+            </textarea>
+
+            <br>
+
+
+            <button id="update_about_us">Update About Us</button>
+
+        </form>
 
 
     </div>
