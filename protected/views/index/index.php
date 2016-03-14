@@ -19,7 +19,6 @@
     <!-- realization of slider-->
     <link rel="stylesheet" href="/lib/jqueryfreeslider/style.css">
 
-
     <?php $num=1; if(!empty($sliders)): ?>
         <div id="slider">
             <?php foreach($sliders as $image): ?>

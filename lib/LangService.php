@@ -155,7 +155,9 @@ class Lib_LangService{
             return strtr(date(func_get_arg(0)), $translate);
         }
     }
-
+/*rus_date("j F Y H:i ", $result['create_date']);
+ +получим   
+ +20 Декабря 2012 20:13*/
 
 
 }

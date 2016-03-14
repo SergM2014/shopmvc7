@@ -59,6 +59,7 @@ class Lib_TokenService
         $_SESSION['_token']['delete_carousel'] = md5('delete_carousel' . $random);
 
         $_SESSION['_token']['about_us'] = md5('about_us' . $random);
+        $_SESSION['_token']['contacts'] = md5('contacts' . $random);
 
     }
 

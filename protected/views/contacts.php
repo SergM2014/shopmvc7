@@ -12,12 +12,15 @@
         <?php else: ?>
 
         <div class="map <?php if (isset($_POST['_token'])) echo 'invisible'; ?>">
+
+        <div id="contact_info"><?php echo $contacts; ?></div>
+
             <button id="writeUs">Напиши нам письмецо</button>
             <div id="map"><iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d164524.0836798843!2d31.088186765820314!3d49.88587031330192!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1suk!2sua!4v1447865358584" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe></div>
         </div>
 
         <div class="writeUsBlock <?php if (!isset($_POST['_token'])) echo 'invisible'; ?>">
-            <form method="post">
+            <form method="post" action="/contacts/send">
                 <p>Поля обозначеные <span class="red">*</span> есть обязательными</p>
                 <br>
 
@@ -42,7 +45,7 @@
                 <label for="keystring">Введите капчу<span class="red">*</span></label>   <small class="red"><?php if(isset($error['keystring'])) echo $error['keystring']; ?></small>
                 <p><input type="text" name="keystring" id="keystring" <?php if(isset($error['keystring'])) echo 'class="error"'; ?> maxlength="10" required ></p>
 
-                <p><input type="hidden" name="_token" value="<?php Lib_TokenService::_token('contact_form'); ?>"></p>
+                <p><input type="hidden" name="_token" value="<?php Lib_TokenService::_token('contacts'); ?>"></p>
                 <br>
                 <p><input type="submit" value="Отправить"></p>
             </form>

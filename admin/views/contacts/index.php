@@ -1,7 +1,6 @@
-
 <nav class="breadcrumbs">
 
-    <a href="<?php echo URL; ?>admin">Головна</a> / <span>About us</span>
+    <a href="<?php echo URL; ?>admin">Головна</a> / <span>Contact us</span>
 
 </nav>
 
@@ -9,21 +8,21 @@
 
     <div class="main-content">
 
-        <form action="/admin/aboutus/update">
+        <form action="/admin/contactus/update">
 
-            <input type="hidden" name="_token" value="<?php Lib_TokenService::_token('about_us'); ?>" >
+            <input type="hidden" name="_token" value="<?php Lib_TokenService::_token('contacts'); ?>" >
 
-            <p id="saving_time" class="green"><p>
+            <p id="saving_info" class="green"><p>
 
             <p class="red">Дозволены любые безвредные теги!</p>
             <textarea name="editor1" id="editor1" class="editor1" rows="10" cols="80">
-               <?php echo $aboutus; ?>
+               <?php echo $contacts; ?>
             </textarea>
 
             <br>
 
 
-            <button id="update_about_us">Update About Us</button>
+            <button id="update_contact_us">Update Contact Us</button>
 
         </form>
 

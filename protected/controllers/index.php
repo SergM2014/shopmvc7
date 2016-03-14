@@ -18,7 +18,7 @@
         $carousel = $model->getCarousel();
 
 
-      return ['view'=>'index.php', 'menu'=>$menu, 'sliders'=>$sliders, 'carousel'=>$carousel];
+      return ['view'=>'index/index.php', 'menu'=>$menu, 'sliders'=>$sliders, 'carousel'=>$carousel];
     }
 
 

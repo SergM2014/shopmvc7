@@ -30,6 +30,7 @@ class Protected_Models_About extends Core_DataBase{
         } else{
             $response=array( "message" => "Something is wrong!", "error" => true);
         }
+        $response['time'] =Lib_LangService::rus_date("j F Y H:i:s ", time());
 
 
         return $response;

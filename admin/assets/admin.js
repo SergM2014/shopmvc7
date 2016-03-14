@@ -341,43 +341,86 @@ if(e.target.className == 'delete_category'){
 };//end of body
 
 
+    if(document.getElementById('update_about_us')){
+
+        document.getElementById('update_about_us').addEventListener('click', function(e){
+
+            e.preventDefault();
+            var about_us= CKEDITOR.instances.editor1.getData();
+
+            var _token = document.getElementsByName("_token")[0].value;
+
+            xhr= new XMLHttpRequest();
+            xhr.open('POST', '/admin/aboutus/update', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        popup_menu.className = "invisible";
+                        var response = JSON.parse(xhr.responseText);
+                        // console.log(response);
+
+                        if (response.error) {
+                            document.getElementById('message_box').className = "";
+                            document.getElementById('message_box').querySelector('span').innerText = response.message;
+                        }
+
+                        if (response.success) {
+                            document.getElementById('message_box').className = "";
+                            document.getElementById('message_box').querySelector('span').innerText = response.message;
+                            //document.getElementById('update_about_us').classList.add('invisible');
+
+                            document.getElementById('saving_time').innerText='Статья сохранена '+response['time'];
+
+                        }
+                    }
+                  }
+                };
+            xhr.send('about_us='+about_us+'&_token='+_token+'&ajax='+true);
+
+        });
+    }
 
 
-document.getElementById('update_about_us').addEventListener('click', function(e){
+    if(document.getElementById('update_contact_us')){
 
-    e.preventDefault();
-    var about_us= CKEDITOR.instances.editor1.getData();
+        document.getElementById('update_contact_us').addEventListener('click', function(e){
 
-    var _token = document.getElementsByName("_token")[0].value;
+            e.preventDefault();
+            var about_us= CKEDITOR.instances.editor1.getData();
 
-    xhr= new XMLHttpRequest();
-    xhr.open('POST', '/admin/aboutus/update', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200) {
-                popup_menu.className = "invisible";
-                var response = JSON.parse(xhr.responseText);
-                // console.log(response);
+            var _token = document.getElementsByName("_token")[0].value;
 
-                if (response.error) {
-                    document.getElementById('message_box').className = "";
-                    document.getElementById('message_box').querySelector('span').innerText = response.message;
-                }
+            xhr= new XMLHttpRequest();
+            xhr.open('POST', '/admin/contact/update', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        popup_menu.className = "invisible";
+                        var response = JSON.parse(xhr.responseText);
+                        // console.log(response);
 
-                if (response.success) {
-                    document.getElementById('message_box').className = "";
-                    document.getElementById('message_box').querySelector('span').innerText = response.message;
-                    //document.getElementById('update_about_us').classList.add('invisible');
+                        if (response.error) {
+                            document.getElementById('message_box').className = "";
+                            document.getElementById('message_box').querySelector('span').innerText = response.message;
+                        }
 
-                }
-            }
-          }
-        };
-    xhr.send('about_us='+about_us+'&_token='+_token+'&ajax='+true);
+                        if (response.success) {
+                            document.getElementById('message_box').className = "";
+                            document.getElementById('message_box').querySelector('span').innerText = response.message;
+                            //document.getElementById('update_about_us').classList.add('invisible');
 
-});
+                            document.getElementById('saving_info').innerText='Інформацію збережено '+response['time'];
 
+                        }
+                    }
+                  }
+                };
+            xhr.send('about_us='+about_us+'&_token='+_token+'&ajax='+true);
+
+        });
+    }
 
 
 

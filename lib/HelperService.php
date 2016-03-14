@@ -56,5 +56,17 @@ class Lib_HelperService {
     }
 
 
+    public static function tomail( $message, $from, $name, $phone){
+         $time_now = Lib_LangService::rus_date("j F Y H:i ", time());
+         $to= ADMINEMAIL;
+         $title = $time_now. "\n Повидомлення з сайту Имя ".$name." Телефон ".$phone;
+        // $message= $message;
+         $from = $from;
+//Возвращает TRUE, если письмо было принято для передачи, иначе FALSE.
+        $mail= mail($to, $title, $message, 'From '.$from);
+       
+     }
+
+
 
 }
