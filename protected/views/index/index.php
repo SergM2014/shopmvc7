@@ -26,7 +26,7 @@
 
                     <div class="bottom">
                         <a href="/<?php echo $image['url']; ?>">
-                            Надпись яка йде внызу
+                            <?php echo $image['title']; ?>
                         </a>
                     </div>
 

@@ -4,7 +4,7 @@
   {	  
     public function getSlider()
         {
-         $sql ="SELECT `image`, `url` FROM `slider`";
+         $sql ="SELECT `image`, `url`, `title` FROM `slider`";
          $result = $this->conn->query($sql);
          $result = $result->fetchAll(PDO::FETCH_ASSOC);
          return $result;

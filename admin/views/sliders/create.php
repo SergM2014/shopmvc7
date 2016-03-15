@@ -27,8 +27,17 @@
         <section class="slider_input">
             <form action="/admin/slider/store" method="POST">
                 <input type="hidden" name="_token" value="<?php Lib_TokenService::_token('create_new_slider') ?>"
-                <p> <input type="text" name="slider_url" value="<?php if(isset($slider_url)) echo $slider_url; ?>" <?php if(isset($error['slider_url'])) echo 'class="error"'; ?> placeholder="enter slider url">
+
+                <p>
+                    <small>enter url</small><br>
+                    <input type="text" name="slider_url" value="<?php if(isset($slider_url)) echo $slider_url; ?>" <?php if(isset($error['slider_url'])) echo 'class="error"'; ?> placeholder="enter slider url">
                     <?php if(isset($error['slider_url'])): ?><small class="red"><?php echo $error['slider_url']; ?></small> <?php endif; ?></p>
+                <br>
+
+                <p>
+                    <small>enter title</small><br>
+                    <input type="text" name="slider_title" value="<?php if(isset($slider_title)) echo $slider_title; ?>" <?php if(isset($error['slider_title'])) echo 'class="error"'; ?> placeholder="enter slider title">
+                    <?php if(isset($error['slider_title'])): ?><small class="red"><?php echo $error['slider_title']; ?></small> <?php endif; ?></p>
                 <br>
                 <p><input type="submit" value="create slider"></p>
             </form>

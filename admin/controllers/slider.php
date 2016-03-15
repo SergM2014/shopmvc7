@@ -30,7 +30,7 @@ class Admin_Controllers_Slider extends Core_BaseController{
             $page = $model->getSliderPageInfo();
             extract($page);
 
-            return ['view' => 'sliders/create.php', 'slider_url'=> $slider_url, 'error' => $error, 'uploads'=>'/uploads/slider/', 'image'=>(isset($_SESSION['slider']))? $_SESSION['slider']: null ];
+            return ['view' => 'sliders/create.php', 'slider_url'=> $slider_url, 'slider_title'=>$slider_title, 'error' => $error, 'uploads'=>'/uploads/slider/', 'image'=>$image ];
         } else {
             $result= $model->saveNewSlider();
 

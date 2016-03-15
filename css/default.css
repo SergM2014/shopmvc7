@@ -649,6 +649,11 @@ article.good{
     margin-bottom:25px;
 }
 
+/*.bottom{
+    z-index: 1001;
+    background-color: #0acc6b;
+}*/
+
 
 @media screen and (max-width:1170px){
 

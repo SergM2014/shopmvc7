@@ -12,7 +12,7 @@
             <article class="slider" data-slider_id="<?php echo $slider['id']; ?>">
 
                 <img  src="<?php echo URL.'uploads/slider/'.$slider['image']; ?>">
-                <div class="slider-url"><?php echo $slider['url']; ?></div>
+                <div class="slider-url">url-> <?php echo $slider['url']; ?> title-> <?php echo $slider['title']; ?></div>
             </article>
 
 
