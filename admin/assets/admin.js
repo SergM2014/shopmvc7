@@ -73,45 +73,88 @@ var popup_menu_object = {
 };
 
 var click_on_delete = {
-    fire:function(tag){
-        var confirmed = confirm("Do you really want delete the "+tag+'?');
-        // var confirmed = true;
-        //start delet item
-        if(confirmed) {
-            var id = document.getElementById('delete_item').getAttribute('data-'+tag+'_delete_id');
-            var item_to_del = document.getElementsByClassName('main-content')[0].querySelector('[data-'+tag+'_id="'+id+'"]');
-            var _token = document.getElementsByName("_token")[0].value;
-            //console.log(item_to_del);
 
-            xhr= new XMLHttpRequest();
-            xhr.open('POST', '/admin/'+tag+'/destroy', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        popup_menu.className="invisible";
-                        var response = JSON.parse(xhr.responseText);
-                        // console.log(response);
+    show_confirm_window:function(text){
+        // console.log('das ist window');
+        var black_div = document.createElement('div');
+        black_div.className = "confirm";
+        var message_div = document.createElement('div');
+        message_div.className="message_div";
+        message_div.innerText= text;
 
-                        if(response.error) {
-                            document.getElementById('message_box').className = "";
-                            document.getElementById('message_box').querySelector('span').innerText = response.message;
-                        }
+        var button_area = document.createElement('div');
+        button_area.className="button_area";
+        button_area.innerHTML='<button id="no">No</button><button id="yes">Yes</button>';
 
-                        if(response.success){
-                            document.getElementById('message_box').className = "";
-                            document.getElementById('message_box').querySelector('span').innerText = response.message;
-                            item_to_del.parentNode.removeChild(item_to_del);
+        message_div.appendChild(button_area);
+
+
+        var window_width = window.innerWidth;
+
+        var window_height = window.innerHeight;
+
+        var left = Math.round((window_width/2)-150);
+        var top = Math.round((window_height/4));
+        message_div.style.left = left+'px';
+        message_div.style.top = top+'px';
+
+
+        black_div.appendChild(message_div);
+
+        document.body.insertBefore(black_div, document.body.firstChild);
+
+    },
+
+
+    fire:function(tag) {
+
+        this.show_confirm_window("Do you really want delete the " + tag + '?');
+
+
+            document.querySelector('#no').addEventListener('click', function(){
+                var black_div = document.getElementsByClassName('confirm')[0];
+                document.body.removeChild(black_div);
+
+            });
+
+            document.querySelector('#yes').addEventListener('click', function(){
+                var black_div = document.getElementsByClassName('confirm')[0];
+                document.body.removeChild(black_div);
+
+                var id = document.getElementById('delete_item').getAttribute('data-'+tag+'_delete_id');
+                var item_to_del = document.getElementsByClassName('main-content')[0].querySelector('[data-'+tag+'_id="'+id+'"]');
+                var _token = document.getElementsByName("_token")[0].value;
+
+                xhr= new XMLHttpRequest();
+                xhr.open('POST', '/admin/'+tag+'/destroy', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status == 200) {
+                            popup_menu.className="invisible";
+                            var response = JSON.parse(xhr.responseText);
+                            // console.log(response);
+
+                            if(response.error) {
+                                document.getElementById('message_box').className = "";
+                                document.getElementById('message_box').querySelector('span').innerText = response.message;
+                            }
+
+                            if(response.success){
+                                document.getElementById('message_box').className = "";
+                                document.getElementById('message_box').querySelector('span').innerText = response.message;
+                                item_to_del.parentNode.removeChild(item_to_del);
+                            }
                         }
                     }
-                }
-            };
-            xhr.send('id='+id+'&ajax=1&_token='+_token);
+                };
+                xhr.send('id='+id+'&ajax=1&_token='+_token);
 
+            });
 
         }
+
     }
-};
 
 
 document.body.onclick = function(e){
@@ -223,7 +266,7 @@ if(e.target.className == 'delete_category'){
     if(e.target.className == 'delete_manufacturer'){
 
         click_on_delete.fire('manufacturer');
-
+        click_on_delete.confirm('manufacturer');
     }
 
 
@@ -231,6 +274,7 @@ if(e.target.className == 'delete_category'){
     if(e.target.className == 'delete_comment'){
 
         click_on_delete.fire('comment');
+
 
     }//конец удаления категорий
 
@@ -335,6 +379,7 @@ if(e.target.className == 'delete_category'){
 
         click_on_delete.fire('carousel');
 
+
     }
 
 
@@ -423,4 +468,34 @@ if(e.target.className == 'delete_category'){
     }
 
 
+function show_confirm_window(text){
+   // console.log('das ist window');
+    var black_div = document.createElement('div');
+    black_div.className = "confirm";
+    var message_div = document.createElement('div');
+    message_div.className="message_div";
+    message_div.innerText= text;
+
+    var button_area = document.createElement('div');
+    button_area.className="button_area";
+    button_area.innerHTML='<button id="no">No</button><button id="yes">Yes</button>';
+
+    message_div.appendChild(button_area);
+
+
+    var window_width = window.innerWidth;
+
+    var window_height = window.innerHeight;
+
+    var left = Math.round((window_width/2)-150);
+    var top = Math.round((window_height/4));
+    message_div.style.left = left+'px';
+    message_div.style.top = top+'px';
+
+
+    black_div.appendChild(message_div);
+
+    document.body.insertBefore(black_div, document.body.firstChild);
+
+}
 
