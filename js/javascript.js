@@ -180,7 +180,7 @@ if(leftmenu) {
 
             for(var i=0; i<numbers.length; i++){
 
-               if(numbers[i].id == 'updateBusket_token') continue;
+               if(numbers[i].id == 'update_busket_token') continue;
 
                 var id = numbers[i].id;
                 var val = numbers[i].value;
@@ -188,44 +188,40 @@ if(leftmenu) {
                 o[id+'_price']= numbers[i].getAttribute('data-price');
             }
 
-            var _token= document.getElementById('updateBusket_token').value;
-           // console.log(_token);
-            if(_token){
-
-                xhr = new XMLHttpRequest();
-                xhr.open('POST', '/bigbusket/recount', true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.send('items=' + JSON.stringify(o)+'&_token='+_token);
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4) {
-                        if (xhr.status == 200) {
-                            //вставляемо в велику корзину
-                            document.getElementsByClassName('modalwindow')[0].innerHTML = xhr.responseText;
-                        }
-                    }
-                };
-
-            }
+            var _token= document.getElementById('update_busket_token').value;
 
 
-           // var _token= document.getElementById('updateSmallBusket_token').innerHTML;
-            var _token= document.getElementById('busket_content').querySelector('#updateSmallBusket_token').innerHTML;
-            //console.log(_token);
-            if(_token) {
+            xhr = new XMLHttpRequest();
+            xhr.open('POST', '/bigbusket/recount', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send('items=' + JSON.stringify(o)+'&_token='+_token);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        //вставляемо в велику корзину
+                        document.getElementsByClassName('modalwindow')[0].innerHTML = xhr.responseText;
 
-                xhr2 = new XMLHttpRequest();
-                xhr2.open('POST', '/bigbusket/updatesmallbusket', true);
-                xhr2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr2.send('items=' + JSON.stringify(o)+'&_token='+_token);
-                xhr2.onreadystatechange = function () {
-                    if (xhr2.readyState == 4) {
-                        if (xhr2.status == 200) {
-                            //поновленнч малоъ корзини
-                            document.getElementById('busket_content').innerHTML = xhr2.responseText;
-                        }
+//update small busket
+                            xhr2 = new XMLHttpRequest();
+                            xhr2.open('POST', '/bigbusket/updatesmallbusket', true);
+                            xhr2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            xhr2.send('_token='+_token);
+                            xhr2.onreadystatechange = function () {
+                                if (xhr2.readyState == 4) {
+                                    if (xhr2.status == 200) {
+                                        //поновленнч малоъ корзини
+                                        response= JSON.parse(xhr2.responseText);
+                                        document.getElementById('total_number').innerText = response.number;
+                                        document.getElementById('total_sum').innerText = response.sum;
+                                    }
+                                }
+                            };
+                           //end of the second request
+
                     }
                 }
-            }
+            };
+
         }
 
 
@@ -288,52 +284,49 @@ if(leftmenu) {
         //конец формы заказа
 
 
-
+//нажтмаем форму заказа
         var send_order = find_closest_heighest_id(e.target, 'send_order');
         if(send_order){
-                e.preventDefault();
-           var inputs = document.getElementById('orderform').querySelectorAll('.input');
-            //console.log(inputs);
-            var obj={};
-            for( var i=0; i<inputs.length; i++){
-              //console.log(inputs[i]);
-                obj[inputs[i].id]= inputs[i].value;
-            }
-            //console.log(obj);
-
+            e.preventDefault();
+           
+            var form =new FormData(document.getElementById('send_order_form'));
+          
             xhr= new XMLHttpRequest();
             xhr.open('POST', '/bigbusket/order', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send('inputs='+JSON.stringify(obj));
+            xhr.send(form);
             xhr.onreadystatechange = function(){
                 if(xhr.readyState == 4){
                     if(xhr.status == 200){
                         document.getElementsByClassName('orderform')[0].innerHTML = xhr.responseText;
+
+
+                        //update small busket
+                        var _token= document.getElementById('update_busket_token').value;
+                        xhr2 = new XMLHttpRequest();
+                        xhr2.open('POST', '/bigbusket/updatesmallbusket', true);
+                        xhr2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                        xhr2.send('_token='+_token);
+                       
+                        xhr2.onreadystatechange = function () {
+                            if (xhr2.readyState == 4) {
+                                if (xhr2.status == 200) {
+                                    //поновленнч малоъ корзини
+                                   
+                                    response= JSON.parse(xhr2.responseText);
+                                   
+                                    document.getElementById('total_number').innerText = response.number;
+                                    document.getElementById('total_sum').innerText = response.sum;
+                                            }
+                                        }
+                                    };
+                        //end of the second request
+
                     }
                 }
             };
 
-
-            //var _token= document.getElementById('updateSmallBusket_token').innerHTML;
-            var _token= document.getElementById('busket_content').querySelector('#updateSmallBusket_token').innerHTML;
-            //console.log(_token);
-            if(_token) {
-                xhr2 = new XMLHttpRequest();
-                xhr2.open('POST', '/bigbusket/updatesmallbusket', true);
-                xhr2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr2.send('_token='+_token);
-                xhr2.onreadystatechange = function () {
-                    if (xhr2.readyState == 4) {
-                        if (xhr2.status == 200) {
-                            //поновленнч малоъ корзини
-                            document.getElementById('busket_content').innerHTML = xhr2.responseText;
-                        }
-                    }
-                }
-            }
-
         }
-
+        //конец отослать форму заказа
 
         var show_preview = find_closest_heighest_class(e.target, 'date_to_preview');
         if(show_preview){
@@ -457,9 +450,7 @@ document.getElementById('touch-button').addEventListener('click', function(){
 //нажатие клавиши в строке поиска
 document.getElementById('search').addEventListener('keyup', function(){
 
-    var _token= document.getElementById('searchPriorResult').value;
-//console.log(_token)
-   if(this.value != '' && _token){
+   if(this.value != '' ){
     if(!prior_result.classList.contains('founded')) { prior_result.classList.add('founded');}
 
         var val= this.value;
@@ -467,7 +458,7 @@ document.getElementById('search').addEventListener('keyup', function(){
         xhr= new XMLHttpRequest();
         xhr.open('POST', '/priorresult/search', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send('value='+val+'&_token='+_token);
+        xhr.send('value='+val);
         xhr.onreadystatechange = function(){
             if(xhr.readyState == 4){
                 if(xhr.status == 200){
@@ -488,8 +479,8 @@ document.getElementById('search').addEventListener('keyup', function(){
 //кикаем клавишу купить на странице product/index
 if(document.getElementById('add_item')) {
     document.getElementById('add_item').addEventListener('click', function () {
-        var id = this.getAttribute('item');
-        var _token = this.getAttribute('_token');
+        var id = this.getAttribute('data-item');
+        var _token = this.getAttribute('data-token');
         var the_price = document.getElementById('the_price').innerHTML;
 
 
@@ -500,7 +491,9 @@ if(document.getElementById('add_item')) {
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 if (xhr.status == 200) {
-                    document.getElementById('busket_content').innerHTML = xhr.responseText;
+                    response= JSON.parse(xhr.responseText);
+                    document.getElementById('total_number').innerText = response.number;
+                    document.getElementById('total_sum').innerText = response.sum;
                 }
             }
         }
@@ -532,8 +525,6 @@ document.getElementById('busket').addEventListener('click', function(){
                     }
                     //return false;
                 };
-
-
 
             }
         }

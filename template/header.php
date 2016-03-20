@@ -45,7 +45,6 @@
                 </ul>
 
                  <span class="right"><label id="search_label" for="search">Поиск </label><input type="text" id="search" name="search" maxlength="20" autofocus ><span>
-                <input type="hidden" id="searchPriorResult" value="<?php  Lib_TokenService::_token('search_prior_result') ?>">
 
              </nav>
 
@@ -56,8 +55,8 @@
 
             <div id="busket_content" class="left">
                 <p id="updateSmallBusket_token" class="invisible"><?php  Lib_TokenService::_token('update_small_busket'); ?></p>
-                <span>Количество: <b><?php echo (isset($_SESSION['totalamount']))? $_SESSION['totalamount']: '0'; ?></b> шт.</span>
-                <span>Сума: <b><?php echo (isset($_SESSION['totalsum']))? $_SESSION['totalsum']: '0'; ?></b> грн.</span>
+                <span>Количество: <b id="total_number"><?php echo (isset($_SESSION['totalamount']))? $_SESSION['totalamount']: '0'; ?></b> шт.</span>
+                <span>Сума: <b id="total_sum"><?php echo (isset($_SESSION['totalsum']))? $_SESSION['totalsum']: '0'; ?></b> грн.</span>
             </div>
         </div>
 

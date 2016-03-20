@@ -6,7 +6,7 @@
 
 <div id="orderform">
     <h2 class="red">Форма для заполнения</h2>
-    <form method="post" action="/bigbusket/order">
+    <form method="post" action="/bigbusket/order" id="send_order_form">
         <p>Поля обозначеные <span class="red">*</span> есть обязательными</p>
         <br>
 
@@ -31,7 +31,8 @@
         <label for="keystring">Введите капчу<span class="red">*</span></label>
         <p><input type="text" name="keystring" id="keystring" class="input <?php if(isset($error['keystring'])) echo "error"; ?>" required ></p>
 
-        <input type="hidden" name="_token" id="_token" class="input" value="<?php Lib_TokenService::_token('order_form'); ?>">
+        <input type="hidden" name="_token" id="order_form_token" class="input" value="<?php Lib_TokenService::_token('order_form'); ?>">
+       
         <br>
         <p><input type="submit" id="send_order" value="Отправить"></p>
     </form>

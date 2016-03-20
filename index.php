@@ -2,7 +2,7 @@
 	require_once $_SERVER['DOCUMENT_ROOT']."/config.php";
 	
 	$router=new Core_CustomApplication();
-	
+
 	$controller=$router->getController();
 
 	$data_and_view = $router->runController($controller);

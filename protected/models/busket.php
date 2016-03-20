@@ -2,17 +2,15 @@
 
 class Protected_Models_Busket extends Core_DataBase
 {
-    public function getBigBusket(){
-
+    public function getBigBusket()
+    {
         $goods =[];
 
-     
         if(!isset($_SESSION['busket'])) return false;
 
         $sql="SELECT `p`.`id`, `p`.`author`, `p`.`title`,  `p`.`price` FROM `products` `p` LEFT JOIN `categories` `c` ON
                 `p`.`cat_id` = `c`.`id` LEFT JOIN `manufacturer` `m` ON `p`.`manf_id` = `m`.`id`
                   WHERE `p`.`id` = ? ";
-
 
         foreach($_SESSION['busket'] as $key=>$value){
 
@@ -30,10 +28,8 @@ class Protected_Models_Busket extends Core_DataBase
     }
 
     //нажатие на клавишу купить  на странице товара
-    public function addIntoBusket(){
-
-        if($_SESSION['_token']['add_into_busket']!= $_POST['_token']) return false;
-
+    public function addIntoBusket()
+    {
         $price= filter_var($_POST['price'], FILTER_VALIDATE_FLOAT);
 
         if(!$price) return false;
@@ -47,10 +43,12 @@ class Protected_Models_Busket extends Core_DataBase
 
         $_SESSION['busket'][$id]= (isset($_SESSION['busket'][$id]))? $_SESSION['busket'][$id]+1: 1;
 
-        AppUser::setBusketCookies();
+        Lib_CookieService::setBusketCookies();
 
-        return false;
+        return ["number"=>$_SESSION['totalamount'], "sum"=>$_SESSION['totalsum'] ];
     }
+
+
 
     public function updateBusket(){
 
@@ -70,8 +68,8 @@ class Protected_Models_Busket extends Core_DataBase
             }
         }
 
-        AppUser::setBusketCookies();
-//die(var_dump($_COOKIE));
+       Lib_CookieService::setBusketCookies();
+
     }
 
 
@@ -113,16 +111,16 @@ class Protected_Models_Busket extends Core_DataBase
 
 
     public function decodePost(){
-        if(isset($_POST['inputs'])) {
-            $inputs = json_decode($_POST['inputs']);
-            $inputs = (array)$inputs;
+        if(isset($_POST)) {
+           
+            $inputs = (array)$_POST;
             return $inputs;
         }
         return false;
     }
 
     public function saveOrder($inputs){
-        $cleaned = AppUser::cleanInput($inputs);
+        $cleaned = Lib_HelperService::cleanInput($inputs);
 
         $busket= $_SESSION['busket'];
         $items = $this->getProductName($busket);

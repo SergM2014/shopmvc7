@@ -24,7 +24,7 @@ class Lib_TokenService
         $random = uniqid(rand(), true);
 
         $_SESSION['_token']['add_into_busket'] = md5('add_into_busket' . $random);//+
-        $_SESSION['_token']['search_prior_result'] = md5('search_prior_result' . $random);//+
+
         $_SESSION['_token']['order_form'] = md5('order_form' . $random);//+
         $_SESSION['_token']['update_small_busket'] = md5('update_small_busket' . $random);//+
         $_SESSION['_token']['update_busket'] = md5('update_busket' . $random);//+

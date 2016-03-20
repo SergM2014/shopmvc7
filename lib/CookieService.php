@@ -1,15 +1,15 @@
 <?php
 
-class AppUser {
+class Lib_CookieService {
 
 
     public static function setBusketCookies(){
 
         $expire_time = time()+1209600;
-        $value = json_encode($_SESSION['busket']);
+        $value = @json_encode($_SESSION['busket']);
         setcookie('busket', $value, $expire_time, '/');
-        setcookie('totalsum', (int)$_SESSION['totalsum'], $expire_time, '/');
-        setcookie('totalamount', (int)$_SESSION['totalamount'], $expire_time, '/');
+        setcookie('totalsum', @(int)$_SESSION['totalsum'], $expire_time, '/');
+        setcookie('totalamount', @(int)$_SESSION['totalamount'], $expire_time, '/');
 
     }
 

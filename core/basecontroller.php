@@ -7,7 +7,7 @@
      public function __construct($controller)
      {
          session_start();
-         AppUser::initBusket();
+         Lib_CookieService::initBusket();
 
          if (isset($controller['admin']) && $controller['admin'] == 'admin' && !isset($_SESSION['admin']) && $controller[0] != "index") {
              $this->notAuthorized = true;

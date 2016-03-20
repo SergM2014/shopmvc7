@@ -21,12 +21,14 @@
 		$path=str_replace("_", "/", strtolower($class_name));//разбивает имя класса получая из него путь
 
 		if (file_exists(PATH_SITE."/".$path.".php")) {
+
 			require_once (PATH_SITE."/".$path.".php");//подключает php файл по полученному пути
 
 		}
 		else
-		{
-		 header('Location: /404');
+		{ echo PATH_SITE."/".$path.".php";
+            debug_print_backtrace();
+		 //header('Location: /404');
             exit;
 
 		}

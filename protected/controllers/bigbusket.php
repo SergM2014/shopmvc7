@@ -11,17 +11,22 @@ class Protected_Controllers_BigBusket  extends Core_BaseController
     }
 
     public function addIntoBusket(){
-        $model= new Protected_Models_Busket();
-        $model->addIntoBusket();
 
-        return ['view'=>'smallbusket.php','ajax'=> true ];
+        Lib_TokenService::check('add_into_busket');
+
+        $model= new Protected_Models_Busket();
+        $response = $model->addIntoBusket();
+
+        echo json_encode($response);
+        exit();
     }
 
 
 
     function recount(){
 
-        if (isset($_POST['_token']) && $_POST['_token'] == $_SESSION['_token']['update_busket']) {
+
+        Lib_TokenService::check('update_busket');
 
             $model = new Protected_Models_Busket();
             $model->updateBusket();
@@ -29,21 +34,19 @@ class Protected_Controllers_BigBusket  extends Core_BaseController
             $items = $model->getBigBusket();
 
             return ['view' => 'bigbusket.php', 'ajax' => true, 'items' => $items];
-        }
-        else
-            return false;
+
     }
 
 
 
     public function updateSmallBusket()
     {
+        Lib_TokenService::check('update_busket');
+        $number= (isset($_SESSION['totalamount']))? (int)$_SESSION['totalamount']: 0;
+        $sum= (isset($_SESSION['totalsum']))? (int)$_SESSION['totalsum']:0;
+        echo json_encode(["number"=>$number, "sum"=>$sum ]);
+        exit();
 
-       if (isset($_POST['_token']) && $_POST['_token'] == $_SESSION['_token']['update_small_busket']) {
-
-            return ['view' => 'smallbusket.php', 'ajax' => true];
-        } else {
-            return false;}
     }
 
 
@@ -52,33 +55,35 @@ class Protected_Controllers_BigBusket  extends Core_BaseController
         return ['view'=> 'orderform.php', 'ajax'=>1];
     }
 
+//making the order
+    public function order()
+    {
+      Lib_TokenService::check('order_form');
+      $model = new Protected_Models_Busket();
+      $inputs = $model->decodePost();
 
-    public function order(){
 
-        $model = new Protected_Models_Busket();
-        $inputs = $model->decodePost();
+        $error = $model->makeOrder();
 
-        if( isset($inputs['_token']) && $inputs['_token'] == $_SESSION['_token']['order_form'])
-        {
-            $error = $model->makeOrder();
+        if( !empty($error)){
+                $post = Lib_HelperService::cleanInput($inputs);
+                return ['view'=>'orderform.php', 'error'=>$error, 'post'=>$post, 'ajax'=>1];
+            } else {
 
-            if( !empty($error)){
-                    $post = AppUser::cleanInput($inputs);
-                    return ['view'=>'orderform.php', 'error'=>$error, 'post'=>$post, 'ajax'=>1];
-                } else {
+                //тут зберигаемо заказ в базу
+               $order = $model->saveOrder($inputs);
 
-                    //тут зберигаемо заказ в базу
-                   $order = $model->saveOrder($inputs);
+              
+                unset($_SESSION['totalamount']);
+                unset($_SESSION['totalsum']);
+                unset($_SESSION['busket']);
+                //here  desrtoy cookies
 
-                    if(!$order) return ['view'=> 'orderform.php', 'ajax'=>1];
-                    unset($_SESSION['totalamount']);
-                    unset($_SESSION['totalsum']);
-                    unset($_SESSION['busket']);
-                    //how to desrtoy cookies
-                    AppUser::deleteBusketCookies();
-                    return ['view'=>'orderform.php', 'success'=> true, 'ajax'=>1];
-                  }
-                }
+
+                Lib_CookieService::deleteBusketCookies();
+                return ['view'=>'orderform.php', 'success'=> true, 'ajax'=>1];
+              }
+
 
        return ['view'=> 'orderform.php', 'ajax'=>1];
     }

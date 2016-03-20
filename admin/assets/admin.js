@@ -75,7 +75,7 @@ var popup_menu_object = {
 var click_on_delete = {
 
     show_confirm_window:function(text){
-        // console.log('das ist window');
+
         var black_div = document.createElement('div');
         black_div.className = "confirm";
         var message_div = document.createElement('div');
@@ -154,7 +154,7 @@ var click_on_delete = {
 
         }
 
-    }
+    };
 
 
 document.body.onclick = function(e){
@@ -266,7 +266,7 @@ if(e.target.className == 'delete_category'){
     if(e.target.className == 'delete_manufacturer'){
 
         click_on_delete.fire('manufacturer');
-        click_on_delete.confirm('manufacturer');
+
     }
 
 
@@ -467,35 +467,4 @@ if(e.target.className == 'delete_category'){
         });
     }
 
-
-function show_confirm_window(text){
-   // console.log('das ist window');
-    var black_div = document.createElement('div');
-    black_div.className = "confirm";
-    var message_div = document.createElement('div');
-    message_div.className="message_div";
-    message_div.innerText= text;
-
-    var button_area = document.createElement('div');
-    button_area.className="button_area";
-    button_area.innerHTML='<button id="no">No</button><button id="yes">Yes</button>';
-
-    message_div.appendChild(button_area);
-
-
-    var window_width = window.innerWidth;
-
-    var window_height = window.innerHeight;
-
-    var left = Math.round((window_width/2)-150);
-    var top = Math.round((window_height/4));
-    message_div.style.left = left+'px';
-    message_div.style.top = top+'px';
-
-
-    black_div.appendChild(message_div);
-
-    document.body.insertBefore(black_div, document.body.firstChild);
-
-}
 
