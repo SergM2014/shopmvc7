@@ -567,6 +567,10 @@ article.good{
     border-radius: 4px;
 }
 
+ #avatar_area{
+     position:relative;
+     width:100%;
+ }
 
 
 #load_avatar{
@@ -631,6 +635,9 @@ article.good{
 }
 
 .progress{
+    position:absolute;;
+    left:120px;
+    bottom:30px;
     width:300px;
 }
 

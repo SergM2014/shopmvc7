@@ -21,7 +21,8 @@ function progressHandler(event){
 
 function completeHandler(event){//тут ивент переобразуется в XMLHttpRequestProgressEvent {}
 
-    output.innerHTML= event.target.responseText;
+    var response = JSON.parse(event.target.responseText);
+    output.innerText= response.message;
 
     progress.style.width= "0%";
     progress.innerHTML= "0%";
@@ -45,8 +46,9 @@ function abortHandler(event){
 }
 
 if(submit_btn){
-    submit_btn.onclick = function(){
+    submit_btn.onclick = function(e){
 
+        e.preventDefault();
         progress.classList.remove('invisible');
 
         var file=document.getElementById("FileInput").files[0];
@@ -115,14 +117,15 @@ if(reset_btn) {
         xhr2.onreadystatechange = function () {
             if (xhr2.readyState == 4) {
                 if (xhr2.status == 200) {
-                    output.innerHTML = xhr2.responseText;
+                    var response = JSON.parse(xhr2.responseText);
+                    output.innerText = response.message;
                 }
             }
         };
          xhr2.send('_token='+_token);
 
         submit_btn.classList.add('invisible');
-        this.classList.add('invisible');
+       reset_btn.classList.add('invisible');
 
     };
 }

@@ -108,13 +108,12 @@ class Protected_Models_Image extends Core_DataBase
     }
 
 
-    public function deleteAvatar(){
-
-       // @unlink(PATH_SITE.'/uploads/avatars/'.$_SESSION['avatar']);
-        $message='Изображение удаленно.';
+    public function deleteAvatar()
+    {
+        $response= ['message'=>'Изображение удаленно.', "success"=>true];
         unset ($_SESSION['avatar']);
 
-        return $message;
+        return $response;
     }
 
 
@@ -296,14 +295,8 @@ class Protected_Models_Image extends Core_DataBase
 
     private function thumbCarouselImage($file, $thumb_path)
     {
-       // die(var_dump($thumb_path));
-
         $file['name'] = strtolower($file['name']);
-        //$arr = explode('.', $file['name']);
 
-        //$file['name'] = $_POST['id'].'.'.$arr[1];
-
-        //$w = 130;
         $h = 100;
 
         // Качество изображения по умолчанию
@@ -323,12 +316,7 @@ class Protected_Models_Image extends Core_DataBase
         $w_src = imagesx($source);
         $h_src = imagesy($source);
 
-       /* if($h_src> $w_src) {
-            // Вычисление пропорций
-            $ratio = $h_src / $h;
-        } else{
-            $ratio = $w_src/$w;
-        }*/
+
 
         $ratio = $h_src/$h;
 

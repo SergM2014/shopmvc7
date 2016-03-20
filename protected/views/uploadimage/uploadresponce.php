@@ -1,1 +1,0 @@
-<p class="green"> <?php echo $message; ?></p>
