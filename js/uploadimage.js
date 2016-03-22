@@ -22,10 +22,11 @@ function progressHandler(event){
 function completeHandler(event){//тут ивент переобразуется в XMLHttpRequestProgressEvent {}
 
     var response = JSON.parse(event.target.responseText);
-    output.innerText= response.message;
+    output.innerHTML= response.message;
 
     progress.style.width= "0%";
     progress.innerHTML= "0%";
+
 
     output.classList.remove('invisible');
     submit_btn.classList.add('invisible');
@@ -50,6 +51,7 @@ if(submit_btn){
 
         e.preventDefault();
         progress.classList.remove('invisible');
+
 
         var file=document.getElementById("FileInput").files[0];
 
@@ -118,7 +120,7 @@ if(reset_btn) {
             if (xhr2.readyState == 4) {
                 if (xhr2.status == 200) {
                     var response = JSON.parse(xhr2.responseText);
-                    output.innerText = response.message;
+                    output.innerHTML = response.message;
                 }
             }
         };

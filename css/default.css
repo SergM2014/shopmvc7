@@ -178,6 +178,18 @@ html, body{
      cursor:pointer;
  }
 
+ .success{
+     color:#009900;
+ }
+
+ .red{
+     color:#cc151e;
+ }
+
+ #MyUploadForm{
+     margin-bottom: 40px;
+ }
+
 
 
 
@@ -589,9 +601,9 @@ article.good{
     padding:10px;
 }
 
-#output {
+/*#output {
     margin:10px 0;
-}
+}*/
 .green{
     color: #0acc6b;
 }
@@ -634,7 +646,7 @@ article.good{
     font-size:80%;
 }
 
-.progress{
+.progress, #output{
     position:absolute;;
     left:120px;
     bottom:30px;
@@ -644,6 +656,7 @@ article.good{
 #progress-bar{
     background-color: #234bcc;
     border-radius: 2px;
+    width:0;
 }
 
 #comments_order{
@@ -656,10 +669,7 @@ article.good{
     margin-bottom:25px;
 }
 
-/*.bottom{
-    z-index: 1001;
-    background-color: #0acc6b;
-}*/
+
 
 
 @media screen and (max-width:1170px){

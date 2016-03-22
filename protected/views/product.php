@@ -45,7 +45,7 @@
                 <p><b>Сортироват по: </b></p>
                 <label><input name="comments_order" type="radio" value="new_first" checked> Сначала новые </label>
                 <label><input name="comments_order" type="radio" value="old_first"> Сначала старые </label>
-                <input type="hidden" id ="comments_order_token" name="comments_order_token" value="<?php Lib_TokenService::_token('comments_order'); ?>" >
+
             </form>
             <div id="ordered_comments"
              <?php include 'orderedComments.php'; ?>
@@ -58,5 +58,7 @@
 
         include ('commentBlock.php')  ?>
 
+    <script src="../ckeditor/ckeditor.js"></script>
+    <script> CKEDITOR.replace(document.getElementById('message')); </script>
     </section>
 

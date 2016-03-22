@@ -17,17 +17,18 @@ class Protected_Models_Image extends Core_DataBase
             // Проверяем тип файла
             if (!in_array(strtolower($_FILES['FileInput']['type']), $types))
                 
-            return $response =['message'=>'Запрещённый тип файла', 'error'=>true];
+            return $response =["message"=>"<span class='error'>Запрещённый тип файла.</span>", "error"=>true];
 
             // Проверяем размер файла
             if ($_FILES['FileInput']['size'] > $size)
-                die('Слишком большой размер файла.'.$_FILES['FileInput']['size']);
+
+            return $response =["message"=>"<span class='error'>Слишком большой размер файла.".$_FILES['FileInput']['size']."</span>", "error" => true];
 
             $name = $this->resizeAvatar($_FILES['FileInput'], $tmp_path);
 
             // Загрузка файла и вывод сообщения
             if(!@copy($tmp_path.$name, $path.$name)) {
-                $response =['message'=>'Что-то пошло не так.', 'error'=>true];
+                return $response =["message"=>"<span class='error'>Что-то пошло не так.</span>", "error" => true];
             }
             else {
 
@@ -38,7 +39,7 @@ class Protected_Models_Image extends Core_DataBase
                 }
 
 
-                $response=['message'=>'Загрузка прошла удачно.', 'success'=>true];
+                $response=["message"=>"<span class='success'>Загрузка прошла удачно.</span>", "success"=>true];
                 chmod ($path.$name , 0777);
             }
             // Удаляем временный файл
@@ -110,8 +111,8 @@ class Protected_Models_Image extends Core_DataBase
 
     public function deleteAvatar()
     {
-        $response= ['message'=>'Изображение удаленно.', "success"=>true];
         unset ($_SESSION['avatar']);
+        $response= ["message"=>"<span class='red'>Изображение удаленно.</span>", "success"=>true];
 
         return $response;
     }
@@ -153,7 +154,7 @@ class Protected_Models_Image extends Core_DataBase
            } else {
                 $response=["message"=>"Загрузка прошла удачно.", "success"=>true, "add_section"=> true ];
                chmod ($path.$name , 0777);
-               // $_SESSION['product_image'][$id]= $name;
+
                 $_SESSION['product_image'][$id] = $name;
                 $response["name"]= $name;
            }

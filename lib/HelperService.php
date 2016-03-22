@@ -1,7 +1,7 @@
 <?php
 
 class Lib_HelperService {
-    //makeinput clean
+    //makeinput clean as the escappe is the key of massiv
     public static function cleanInput($arr, $esc=null){
 
         foreach($arr as $key=>$value){

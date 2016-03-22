@@ -3,53 +3,46 @@
 class Protected_Models_Comment extends Core_DataBase
 
 {
-
-    public function checkComment(){
-
-        $inputs= $this->decodePost();
-
-            $error = array();
-
-            if (strlen($inputs['name']) < 3) {
-                $error['name'] = 'Имя должно состоять больше чем из 3 букв';
-            }
-
-            if(!filter_var($inputs['email'], FILTER_VALIDATE_EMAIL)){$error['email']='Неверный email';}
-            if(empty($inputs['email'])){$error['email']='Пустое поле';}
-
-            if(empty($inputs['message'])){
-                $error['message']= 'Пустое поле';
-            }
-
-            if ($_SESSION['captcha_keystring'] != $inputs['keystring']) {
-                $error['keystring'] = 'неверная капча';
-            }
-            if (empty($inputs['keystring'])) {
-                $error['keystring'] = 'Пустое поле';
-            }
-
-            unset($_SESSION['captcha_keystring']);
-
-
-            return $error;
-
+    public function cleanInput($massiv, $elem_to_strip)
+    {
+        $inputs= Lib_HelperService::cleanInput($_POST, $elem_to_strip);
+        $inputs[$elem_to_strip] = strip_tags($massiv[$elem_to_strip], '<p><a><ul><li><b><strong><i><em>');
+        return $inputs;
     }
 
+    public function checkComment()
+    {
+        $inputs = $this->cleanInput($_POST, 'message');
+        $error = array();
 
-    public function decodePost(){
-        if(isset($_POST['inputs'])) {
-            $inputs = json_decode($_POST['inputs']);
-            $inputs = (array)$inputs;
-            return $inputs;
+        if (strlen($inputs['name']) < 3 OR empty($inputs['name'])) {
+            $error['name'] = 'Имя должно состоять больше чем из 3 букв';
         }
-        return false;
+
+        if(!filter_var($inputs['email'], FILTER_VALIDATE_EMAIL)){$error['email']='Неверный email';}
+        if(empty($inputs['email'])){$error['email']='Пустое поле';}
+
+        if(empty($inputs['message'])){
+            $error['message']= 'Пустое поле';
+        }
+
+        if ($_SESSION['captcha_keystring'] != $inputs['keystring']) {
+            $error['keystring'] = 'неверная капча';
+        }
+        if (empty($inputs['keystring'])) {
+            $error['keystring'] = 'Пустое поле';
+        }
+
+        unset($_SESSION['captcha_keystring']);
+        return $error;
+
     }
 
 
     public function saveComment(){
-        $inputs = $this->decodePost();
-        $cleaned = AppUser::cleanInput($inputs);
-        if(isset($_SESSION['avatar'])) $avatar= $_SESSION['avatar'];
+
+        $cleaned = $this->cleanInput($_POST, 'message');
+        $avatar= (isset($_SESSION['avatar'])) ? $_SESSION['avatar']: null;
 
 
         $sql="INSERT INTO `comments`(`avatar`, `product_id`, `name`, `email`,  `comment`) VALUES (?, ?, ?, ?, ? )";
@@ -62,8 +55,10 @@ class Protected_Models_Comment extends Core_DataBase
         $stmt->bindParam(5, $cleaned['message'], PDO::PARAM_STR);
 
         $stmt->execute();
+        if(isset($_SESSION['avatar'])) unset($_SESSION['avatar']);
         return true;
     }
+
 
     public function getComments()
     {
@@ -71,7 +66,7 @@ class Protected_Models_Comment extends Core_DataBase
         $page = ($p-1)*NUMBERONPAGEADMIN;
         $page = ($page<0)? 0 :$page;
 
-       // $order = (isset($_GET['order']))? $_GET['order']: 'ORDER BY `c`.`created_at` DESC';
+
         if(!isset($_GET['order'])) $_GET['order']="created_last";
 
         switch($_GET['order']){

@@ -13,41 +13,32 @@ class Protected_Controllers_Product  extends Core_BaseController
       return ['view'=>'product.php', 'product'=>$product, 'comments'=>$comments ];
     }
 
-    public function comment(){
-        //check token
-        if(isset($_POST['_token']) && $_POST['_token']== $_SESSION['_token']['comment_form']) {
+    public function comment()
+    {
+        Lib_TokenService::check('comment_form');
 
-
-            $model = new Protected_Models_Comment();
-            $error = $model->checkComment();
-            if (!empty($error)) {
-                $post = $model->decodePost();
-                return ['view' => 'commentBlock.php', 'error' => $error, 'post' => $post, 'ajax' => true];
-            }
-
-            $success = $model->saveComment($_POST);
-            if ($success) {
-                if (isset($_SESSION['avatar'])) {
-                    unset($_SESSION['avatar']);
-                }
-                return ['view' => 'savedComment.php', 'ajax' => true];
-            }
-        } else {
-            return ['view'=>'commentBlock.php', 'ajax'=>true ];
+        $model = new Protected_Models_Comment();
+        $error = $model->checkComment();
+        if (!empty($error)) {
+            $post = $model->cleanInput($_POST, 'message');
+            return ['view' => 'commentBlock.php', 'error' => $error, 'post' => $post, 'ajax' => true];
         }
+
+        $model->saveComment($_POST);
+
+
+       return ['view' => 'savedComment.php', 'ajax' => true];
+
+
 
     }
 
-    public function orderComment(){
-        if(isset($_POST['_token']) && $_POST['_token']== $_SESSION['_token']['comments_order']) {
-
+    public function orderComment()
+    {
             $model= new Protected_Models_Product();
             $comments= $model->getComments($_POST['order']);
 
             return ['view'=>'orderedComments.php', 'comments'=>$comments, 'ajax'=> true ];
-
-        }
-        exit();
     }
 
 }
