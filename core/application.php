@@ -8,8 +8,9 @@ abstract class Core_Application  //класс маршрутизатор, под
 		$url = $_SERVER['REQUEST_URI'];
 		$url= trim($url, '/');
 
-		if(strripos($url, '?')== true){$url = explode('?', $url); $url= $url[0];}
-		if(strripos($url, '/')== true){$url = explode('/', $url);}
+		if(stripos($url, '?')!== false){ $url = explode('?', $url);   $url= $url[0];}
+
+		if(strripos($url, '/')!== false){$url = explode('/', $url);}
 
 		if($url=='admin'){$controller['admin']='admin'; $url='';}//+
 		if(isset($url[0]) && $url[0] =='admin') { $admin = array_shift($url);}

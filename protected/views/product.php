@@ -11,10 +11,11 @@
     <div class="images_preview_area clearfix">
 
      <?php  foreach($product['images'] as $image ) : ?>
-<img src="/uploads/product_images/<?php echo $image; ?>" class="preview_image">
+        <img src="/uploads/product_images/<?php echo $image; ?>" class="preview_image">
 
-    <?php endforeach; ?>
-        </div>
+     <?php endforeach; ?>
+
+    </div>
  <?php endif; ?>
 
 

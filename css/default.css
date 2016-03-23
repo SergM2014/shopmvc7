@@ -670,6 +670,34 @@ article.good{
 }
 
 
+.back_gallery{
+    width:100%;
+    height:100%;
+    background-color: #333333;
+    position: fixed;
+    opacity: 0.8;
+    z-index:1000;
+}
+
+.gallery_box{
+    position:absolute;
+    height:90%;
+    width:auto;
+    background-color:#FFFFFF;
+    z-index: 1001;
+
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 @media screen and (max-width:1170px){

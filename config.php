@@ -26,10 +26,10 @@
 
 		}
 		else
-		{ echo PATH_SITE."/".$path.".php";
-            debug_print_backtrace();
-		 //header('Location: /404');
-            exit;
+		{ //echo PATH_SITE."/".$path.".php";
+           // debug_print_backtrace();
+		 header('Location: /404');
+         //   exit;
 
 		}
 	}

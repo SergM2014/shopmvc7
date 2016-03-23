@@ -63,7 +63,7 @@ class Protected_Models_Catalog extends Core_DataBase
             $number =(!isset($number))? ($this->page-1)*$this->amount+1: $number+1;
             $result[$key]['number']= $number;
 
-            if(!empty($value['images'] and $value['images']!= false )){
+            if(!empty($value['images']) && $value['images']!= false ){
 
                 $images= unserialize($value['images']);
                 $result[$key]['images']= array_values($images);
