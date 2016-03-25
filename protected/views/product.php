@@ -14,7 +14,8 @@
         <img src="/uploads/product_images/<?php echo $image; ?>" class="preview_image">
 
      <?php endforeach; ?>
-
+        <link href="/lib/jqueryfreegallery/style.css" rel="stylesheet">
+        <script src="/lib/jqueryfreegallery/script.js"></script>
     </div>
  <?php endif; ?>
 

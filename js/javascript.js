@@ -413,51 +413,7 @@ if(leftmenu) {
         }
 
 
-        var show_full_image = find_closest_heighest_class(e.target, 'preview_image');
-        if(show_full_image) {
 
-
-
-                var back_gallery_div = document.createElement('div');
-                back_gallery_div.className = "back_gallery";
-                var gallery_box = document.createElement('div');
-                gallery_box.className="gallery_box";
-
-
-                /*var button_area = document.createElement('div');
-                button_area.className="button_area";
-                button_area.innerHTML='<button id="no">No</button><button id="yes">Yes</button>';
-
-                message_div.appendChild(button_area);
-
-
-                var window_width = window.innerWidth;
-
-                var window_height = window.innerHeight;
-
-                var left = Math.round((window_width/2)-150);
-                var top = Math.round((window_height/4));
-                message_div.style.left = left+'px';
-                message_div.style.top = top+'px';*/
-
-
-                back_gallery_div.appendChild(gallery_box);
-
-                document.body.insertBefore(back_gallery_div, document.body.firstChild);
-
-                var items = document.getElementsByClassName('images_preview_area')[0].querySelectorAll('.preview_image');
-
-           // gallery_box.appendChild(items);
-
-                var images=[];
-                   for(var i=0; i<items.length; i++){
-                       console.log(items[i]);
-                       items[i].classList.remove('preview_image');
-                      gallery_box.appendChild(items[i]);
-
-                   }
-
-        }
 
 
 
