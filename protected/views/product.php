@@ -10,10 +10,19 @@
 <?php if($product['images']) : ?>
     <div class="images_preview_area clearfix">
 
-     <?php  foreach($product['images'] as $image ) : ?>
-        <img src="/uploads/product_images/<?php echo $image; ?>" class="preview_image">
+     <?php
 
-     <?php endforeach; ?>
+     $counter=1;
+     foreach($product['images'] as $image ) : ?>
+
+         <div class="image_wrapper">
+            <img src="/uploads/product_images/thumbs/<?php echo $image; ?>" rel="<?= $counter; ?>" class="preview_image">
+         </div>
+
+     <?php
+         $counter++;
+            endforeach; ?>
+
         <link href="/lib/jqueryfreegallery/style.css" rel="stylesheet">
         <script src="/lib/jqueryfreegallery/script.js"></script>
     </div>

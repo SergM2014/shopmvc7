@@ -328,6 +328,11 @@ h2{text-align:center;}
     background-color: #999999;
 }
 
+.articles_good img{
+    width:50px;
+    height:50px;
+}
+
 #popup_menu{
     position: absolute;
    /* width:140px;*/

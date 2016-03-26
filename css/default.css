@@ -171,11 +171,18 @@ html, body{
  .preview_image{
      max-width:300px;
      max-height:300px;
-     float:left;
-     margin:20px;
+     margin:0 auto;
      border:2px solid red;
      border-radius: 20px;
      cursor:pointer;
+ }
+
+ .image_wrapper{
+     height:300px;
+     max-width:300px;
+     float:left;
+     margin-left:10px;
+     margin-top:10px;
  }
 
  .success{

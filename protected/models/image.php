@@ -174,8 +174,10 @@ class Protected_Models_Image extends Core_DataBase
 
         $file['name'] = $_POST['id'].'.'.$arr[1];
 
-        $w = 130;
-        $h = 130;
+        /*$w = 130;
+        $h = 130;*/
+        $w=300;
+        $h=300;
 
         // Качество изображения по умолчанию
         $quality = 75;
