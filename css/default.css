@@ -894,3 +894,9 @@ article.good{
     }
 
 }
+
+@media screen and (min-width: 750px) {
+ #menu{
+     display:block !important;
+ }
+}

@@ -21,13 +21,18 @@
 }
 
 .gallery_img{
-    max-height:100%;
+    height:100%;
     overflow:hidden;
+   opacity: 0;
+    background-color:#333333;
+    display:flex;
 }
+
 
 .gallery_img img{
     max-height:100%;
     max-width:100%;
+    margin:auto;
 }
 
 .current{
@@ -35,6 +40,7 @@
     left:0;
     top:0;
     transition:2s;
+    opacity:1;
 }
 
 .close_gallery{
