@@ -4,21 +4,19 @@ class Protected_Models_Admin extends Core_DataBase
 {
     function getAdmin($data)
     {
-        if(isset($_POST['_token']) && $_POST['_token']== $_SESSION['_token']['enter_admin']){
+        if (!isset($data['login']) OR !isset($data['password'])) return false;
+        $sql = "SELECT login, password FROM users";
+        $stmt = $this->conn->query($sql);
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            if ($row['login'] == $data['login'] && $row['password'] == md5($data['password'])) {
+                $_SESSION['admin'] = true;
+                $_SESSION['login'] = $row['login'];
 
-            if (!isset($data['login']) OR !isset($data['password'])) return false;
-            $sql = "SELECT login, password FROM users";
-            $stmt = $this->conn->query($sql);
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                if ($row['login'] == $data['login'] && $row['password'] == md5($data['password'])) {
-                    $_SESSION['admin'] = true;
-                    $_SESSION['login'] = $row['login'];
-
-                    return true;
-                }
+                return true;
             }
-            return false;
-        }  else return false;
+        }
+        return false;
+
     }
 
 

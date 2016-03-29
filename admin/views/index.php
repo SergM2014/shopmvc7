@@ -2,7 +2,7 @@
     if(isset($restriction)) echo $restriction;
     if(!isset($_SESSION['admin'])):
     ?>
-
+        <a href="/">Back oto site</a>
         <div class="login_form">
             <h3>Вход в административную зону</h3>
                 <div id="login">
@@ -14,6 +14,8 @@
                             <input   name="login" id="login" type="text" value="" maxlength="25"> </p>
                             <p><label for="password">Пароль </label><br>
                             <input   name="password" id="password" type="password" maxlength="20" > </p>
+                            <p><input type="checkbox" id="remember_me" name="remember_me" >
+                                <label for="remember_me">Remember me</label></p>
 
                             <p><input  type="submit" value="Войти в админзону"></p>
 

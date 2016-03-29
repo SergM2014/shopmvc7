@@ -4,7 +4,7 @@
   {
       public function index()
 	  {  
-
+          Lib_CookieService::destroyAdminCookies();
           unset($_SESSION['admin']);
           unset($_SESSION['login']);
           return ['view'=> 'index.php'];

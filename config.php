@@ -15,6 +15,16 @@
 	define('ADMINEMAIL', 'weisse@ukr.net');
 	
 	date_default_timezone_set('Europe/Kiev');
+
+
+
+
+    $directory = new DirectoryIterator(PATH_SITE.'/lib/');
+    foreach ($directory as $file) {
+        if($file->getExtension() == 'php') include_once PATH_SITE.'/lib/'.$file;
+    }
+
+
 	
 	function __autoload ($class_name) //автоматическая загрузка кслассов
 	{
@@ -26,11 +36,14 @@
 
 		}
 		else
-		{ //echo PATH_SITE."/".$path.".php";
-           // debug_print_backtrace();
-		 header('Location: /404');
-         //   exit;
-
+		{
+            if(DEBUG_MODE){
+                echo PATH_SITE."/".$path.".php";
+                debug_print_backtrace();
+                exit;
+            } else{
+                header('Location: /404');
+            }
 		}
 	}
 	if (DEBUG_MODE){
@@ -39,7 +52,9 @@
 					ini_set('error_reporting', E_ALL);
 	}
 
-    include_once PATH_SITE.'/auto_Lib_Includer.php';
+
+
+
 
 
 

@@ -6,6 +6,7 @@
 	  {
 
           Lib_TokenService::checkAdmin();
+          Lib_CookieService::getAdminCookies();
 
             if(!isset($_SESSION['admin'])) {
 
@@ -14,9 +15,16 @@
                 $model = new Protected_Models_Admin;
                 $checkedIP = $model->checkIP();
                 if ($checkedIP) {
-                    $model->getAdmin($data);
-                    //remove unnesasery images
-                    $model->scavengeImages();
+
+//var_dump($data);
+
+                   $success= $model->getAdmin($data);
+                    if($success){
+                        Lib_CookieService::setAdminCookies($data);
+                        $model->scavengeImages();
+                    }
+
+
                 } else {
                     return ['view' => 'index.php', 'restriction' => 'You seem to be very suspicios person try again in a minute'];
                 }
