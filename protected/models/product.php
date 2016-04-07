@@ -4,6 +4,8 @@ class Protected_Models_Product extends Core_DataBase
 {
     use Lib_CheckProductFieldsService;
 
+    protected $cats;
+    protected $tree;
 //create back_button
     public function __construct($action= null )
     {
@@ -83,53 +85,51 @@ class Protected_Models_Product extends Core_DataBase
         $cats= array();
         while($cat= $res->fetch(PDO::FETCH_ASSOC)){
             $cat_ID[$cat['id']][] =$cat;
-            $cats[$cat['parent_id']][$cat['id']]= $cat;
+            $this->cats[$cat['parent_id']][$cat['id']]= $cat;
         }
 
-       // die(var_dump($cats));
-        return $cats;
+        return $this->cats;
     }
 
 
 
     protected function buildSelectTree($cats,$parent_id, $current_category, $manage_category=false)
     {
-        //die(var_dump($current_category));
         if(is_array($cats) and isset($cats[$parent_id])){
 
             if($parent_id==0){
-                $tree = '<select id="category_id" name="category_id">';
+                $this->tree = '<select id="category_id" name="category_id">';
                 global $prefix;
                 $prefix='';
                 if($manage_category){
-                    $tree .= '<option value="0">Сделать стартовой</option>';
+                    $this->tree .= '<option value="0">Сделать стартовой</option>';
                 } else {
-                $tree .= '<option value="">Без категории</option>';}
+                $this->tree .= '<option value="">Без категории</option>';}
             }
 
                 foreach($cats[$parent_id] as $cat){
 
-                    if($cat['id']==$current_category){ $tree .= '<option selected value="' . $cat['id'] . '">' . $cat['translit_title'] . '</option>';}
+                    if($cat['id']== $current_category){ $this->tree .= '<option selected value="' . $cat['id'] . '">' . $cat['translit_title'] . '</option>';}
 
-                   else   {  $tree .= '<option value="' . $cat['id'] . '">' . $cat['translit_title'] . '</option>';}
-                    $tree .= $this-> buildInternalTree($cats, $cat['id'], $current_category);
+                   else   {  $this->tree .= '<option value="' . $cat['id'] . '">' . $cat['translit_title'] . '</option>';}
+                    $this->tree .= $this-> buildInternalTree($cats, $cat['id'], $current_category);
                 }
             }
 
             unset($GLOBALS['prefix']);
 
-            $tree .= '</select>';
+            $this->tree .= '</select>';
 
-        return $tree;
+        return $this->tree;
     }
 
     public function getCategoriesTree($parent_id, $current_category, $manage_category= false )
     {
 
         $cats = $this->getAllCategoriesForTree();
-        $tree = $this->buildSelectTree($cats, $parent_id, $current_category, $manage_category);
+        $this->tree = $this->buildSelectTree($cats, $parent_id, $current_category, $manage_category);
 
-        return $tree;
+        return $this->tree;
     }
 
 
@@ -156,7 +156,6 @@ class Protected_Models_Product extends Core_DataBase
 
 
 
-
     public function getManufacturerForList()
     {
         $sql="SELECT `id`, `title`, `url` FROM `manufacturer`";
@@ -164,6 +163,7 @@ class Protected_Models_Product extends Core_DataBase
         $result= $res->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+
 
 
     public function getPageInfo()
@@ -184,8 +184,6 @@ class Protected_Models_Product extends Core_DataBase
        return compact('product', 'categories_tree', 'manufacturers', 'images');
 
     }
-
-
 
 
 
@@ -243,7 +241,7 @@ class Protected_Models_Product extends Core_DataBase
 
         $sql= "INSERT INTO `products` ( `author`, `title`, `description`, `body`, `price`, `cat_id`, `manf_id`, `images`)  VALUES  (?, ?, ?, ?, ?, ?, ?, ?)";
         $result = $this->conn->prepare($sql);
-        $result->bindParam(1,$added['author'], PDO::PARAM_STR);
+        $result->bindParam(1, $added['author'], PDO::PARAM_STR);
         $result->bindParam(2, $added['title'], PDO::PARAM_STR);
         $result->bindParam(3, $added['description'], PDO::PARAM_STR);
         $result->bindParam(4, $added['body'], PDO::PARAM_STR);
@@ -251,7 +249,6 @@ class Protected_Models_Product extends Core_DataBase
         $result->bindParam(6, $category_id);
         $result->bindParam(7, $manufacturer_id);
         $result->bindParam(8, $serialized, PDO::PARAM_STR);
-
 
         $result->execute();
 
@@ -263,14 +260,14 @@ class Protected_Models_Product extends Core_DataBase
 
     public function destroyItem()
     {
-//        $sql = "DELETE FROM `products` WHERE `id`=?";
-//        $stmt= $this->conn->prepare($sql);
-//        $stmt->bindParam(1, $_POST['id'], PDO::PARAM_INT);
-//        $stmt->execute();
-       // if($res){
+       $sql = "DELETE FROM `products` WHERE `id`=?";
+       $stmt= $this->conn->prepare($sql);
+       $stmt->bindParam(1, $_POST['id'], PDO::PARAM_INT);
+       $res = $stmt->execute();
+       if($res){
             $response=["message"=>"The product# {$_POST['id']} deleted!", "success"=> true ];
             return $response;
-       // }
+        }
 
     }
 
@@ -278,7 +275,6 @@ class Protected_Models_Product extends Core_DataBase
 
     public function successedHandleRedirectionView()
     {
-
         $history_back = Lib_SessionService::getSessionValue('history_back');
         header('Location: '.$history_back);
     }

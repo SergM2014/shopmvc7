@@ -87,7 +87,7 @@ class Admin_Controllers_Product  extends Core_BaseController
 
             $nop = Lib_HelperService::washfromRepetition('p');
 
-            $model2 = new Protected_Models_Index();
+            $model2 = new Protected_Models_Index;
 
             $categories = $model2->getCategories();
             $menu = $model->getAdminDropDownCatMenu($categories, 0);
@@ -115,7 +115,7 @@ class Admin_Controllers_Product  extends Core_BaseController
 
     public function show()
     {
-        $model = new Protected_Models_Product();
+        $model = new Protected_Models_Product;
         $product = $model->getProduct();
 
         return ['view'=>'products/product_view.php', 'product'=>$product ];

@@ -2,9 +2,14 @@
 
 class Protected_Models_Busket extends Core_DataBase
 {
+    protected $goods;
+    protected $price;
+    protected $errors;
+    protected $orderItems;
+    
     public function getBigBusket()
     {
-        $goods =[];
+        $this->goods =[];
 
         if(!isset($_SESSION['busket'])) return false;
 
@@ -21,23 +26,23 @@ class Protected_Models_Busket extends Core_DataBase
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             $result['number'] = $_SESSION['busket'][$key];
 
-            $goods[]= $result;
+            $this->goods[]= $result;
         }
 
-        return $goods;
+        return $this->goods;
     }
 
     //нажатие на клавишу купить  на странице товара
     public function addIntoBusket()
     {
-        $price= filter_var($_POST['price'], FILTER_VALIDATE_FLOAT);
+        $this->price= filter_var($_POST['price'], FILTER_VALIDATE_FLOAT);
 
-        if(!$price) return false;
+        if(!$this->price) return false;
 
         $id= (int)$_POST['id'];
 
 
-        $_SESSION['totalsum']= (isset($_SESSION['totalsum']))? $_SESSION['totalsum']+$price : $price;
+        $_SESSION['totalsum']= (isset($_SESSION['totalsum']))? $_SESSION['totalsum']+$this->price : $this->price;
 
         $_SESSION['totalamount']= (isset($_SESSION['totalamount']))? $_SESSION['totalamount']+1 : 1;
 
@@ -77,32 +82,32 @@ class Protected_Models_Busket extends Core_DataBase
 
        $inputs= $this->decodePost();
 
-            $error = array();
+            $this->error = array();
 
             if (strlen($inputs['name']) < 3 OR !isset($inputs['name'])) {
-                $error['name'] = 'Имя должно состоять больше чем из 3 букв';
+                $this->error['name'] = 'Имя должно состоять больше чем из 3 букв';
             }
 
             $pattern = '/^\\+?(38)?(\\-|\\s)?(\\([0-9]{3}\\)|[0-9]{3})?[0-9\\-\\s]{6,10}$/';
             if (!preg_match($pattern, $inputs['phone']) ) {
-                $error['phone'] = 'Введите правильный телефон';
+                $this->error['phone'] = 'Введите правильный телефон';
             };
             if (strlen($inputs['phone']) < 8 OR  !isset($inputs['phone'])) {
-                $error['phone'] = 'телефон должен иметь не меньще чем 8 цифр';
+                $this->error['phone'] = 'телефон должен иметь не меньще чем 8 цифр';
             }
 
             if ($_SESSION['captcha_keystring'] != $inputs['keystring'] OR !isset($inputs['keystring'])) {
-                $error['keystring'] = 'неверная капча';
+                $this->error['keystring'] = 'неверная капча';
             }
             if (empty($inputs['keystring'])) {
-                $error['keystring'] = 'Пустое поле';
+                $this->error['keystring'] = 'Пустое поле';
             }
 
 
             unset($_SESSION['captcha_keystring']);
 
 
-            return $error;
+            return $this->error;
 
 
     }
@@ -138,7 +143,7 @@ class Protected_Models_Busket extends Core_DataBase
     }
 
     private function getProductName($busket){
-        $order=[];
+        //$order=[];
 
         $counter=0;
         $sql= "SELECT `author`, `title` FROM `products` WHERE `id`=?";
@@ -152,13 +157,13 @@ class Protected_Models_Busket extends Core_DataBase
 
             if(!$res) return false;
 
-            $orderItem[$counter]['id'] = $key;
-            $orderItem[$counter]['author']=$res['author'];
-            $orderItem[$counter]['title'] = $res['title'];
-            $orderItem[$counter]['number'] = $value;
+            $this->orderItem[$counter]['id'] = $key;
+            $this->orderItem[$counter]['author']=$res['author'];
+            $this->orderItem[$counter]['title'] = $res['title'];
+            $this->orderItem[$counter]['number'] = $value;
             $counter++;
         }
-        return $orderItem;
+        return $this->orderItem;
     }
 
 }

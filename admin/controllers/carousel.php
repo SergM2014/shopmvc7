@@ -4,7 +4,7 @@ class Admin_Controllers_Carousel extends Core_BaseController{
 
     public function index()
     {
-        $model= new Protected_Models_Carousel();
+        $model= new Protected_Models_Carousel;
         $carousel_images = $model->getCarouselImage();
         $message = $model->getMessage();
         return ['view'=>'carousel/index.php', 'carousel_images'=>$carousel_images, 'message'=>$message];
@@ -46,7 +46,7 @@ class Admin_Controllers_Carousel extends Core_BaseController{
     public function edit()
     {
 
-        $model= new Protected_Models_Carousel();
+        $model= new Protected_Models_Carousel;
         $carousel=$model->getOneCarousel();
         return ['view'=>'carousel/update_carousel.php', 'carousel_url'=>$carousel['url'], 'carousel_id'=>$carousel['id'], 'uploads'=>'/uploads/carousel/', 'image'=>(isset($_SESSION['carousel']))? $_SESSION['carousel']: null];
     }
@@ -79,7 +79,7 @@ class Admin_Controllers_Carousel extends Core_BaseController{
 
          Lib_TokenService::check('delete_carousel');
 
-        $model = new Protected_Models_Carousel();
+        $model = new Protected_Models_Carousel;
         $response = $model->destroyCarousel();
 
         echo json_encode($response);

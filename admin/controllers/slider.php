@@ -4,7 +4,7 @@ class Admin_Controllers_Slider extends Core_BaseController{
 
     public function index()
     {
-        $model= new Protected_Models_Slider();
+        $model= new Protected_Models_Slider;
         $sliders = $model->getSliders();
         $message = $model->getMessage();
         return ['view'=>'sliders/index.php', 'sliders'=>$sliders, 'message'=>$message];
@@ -46,7 +46,7 @@ class Admin_Controllers_Slider extends Core_BaseController{
     public function edit()
     {
 
-        $model= new Protected_Models_Slider();
+        $model= new Protected_Models_Slider;
         $slider=$model->getOneSlider();
         return ['view'=>'sliders/update_slider.php', 'slider_url'=>$slider['url'], 'slider_id'=>$slider['id'], 'uploads'=>'/uploads/slider/', 'image'=>(isset($_SESSION['slider']))? $_SESSION['slider']: null];
     }
@@ -78,7 +78,7 @@ class Admin_Controllers_Slider extends Core_BaseController{
     public function destroy()
     {
         Lib_TokenService::check('delete_slider');
-        $model = new Protected_Models_Slider();
+        $model = new Protected_Models_Slider;
         $response = $model->destroySlider();
         echo json_encode($response);
         exit();

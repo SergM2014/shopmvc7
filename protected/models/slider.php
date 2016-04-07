@@ -2,32 +2,35 @@
 
 class Protected_Models_Slider extends Core_DataBase{
 
+    private $sliders;
+    private  $errors;
+    
     public function getSliders()
     {
         $result= $this->conn->query("SELECT * from `slider` ORDER BY `id` DESC");
-        $sliders = $result->fetchAll(PDO::FETCH_ASSOC);
-        return $sliders;
+        $this->sliders = $result->fetchAll(PDO::FETCH_ASSOC);
+        return $this->sliders;
     }
 
     public function checkSliderInputs()
     {
         $url= htmlspecialchars($_POST['slider_url']);
         $title = htmlspecialchars($_POST['slider_title']);
-        $error=[];
+        $this->errors=[];
 
        if(empty($url)){
-           $error['slider_url']='There is no url';
+           $this->errors['slider_url']='There is no url';
        }
 
         if(empty($url)){
-            $error['slider_title']='There is no title';
+            $this->errors['slider_title']='There is no title';
         }
 
         if(!isset($_SESSION['slider']) ){
-            $error['slider_image']='No image for slider';
+            $this->errors['slider_image']='No image for slider';
         }
 
-        return $error;
+        return $this->errors;
     }
 
     public function getSliderPageInfo()

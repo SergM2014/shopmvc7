@@ -14,9 +14,6 @@ class Protected_Controllers_Image extends Core_BaseController
     }
 
 
-
-
-
     public function delete()
     {
         Lib_TokenService::check('comment_form');

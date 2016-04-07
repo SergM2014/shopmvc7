@@ -73,7 +73,7 @@ class Lib_TokenService
 
             header('Location:'.$_SERVER['HTTP_REFERER']); exit();
         } else {
-            
+
             return true;
         }
     }

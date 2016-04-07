@@ -3,6 +3,11 @@
 class Protected_Models_Comment extends Core_DataBase
 
 {
+    private $errors;
+    private $comments;
+    private $comment;
+    private $pages;
+    
     public function cleanInput($massiv, $elem_to_strip)
     {
         $inputs= Lib_HelperService::cleanInput($_POST, $elem_to_strip);
@@ -13,28 +18,28 @@ class Protected_Models_Comment extends Core_DataBase
     public function checkComment()
     {
         $inputs = $this->cleanInput($_POST, 'message');
-        $error = array();
+        $this->errors = array();
 
         if (strlen($inputs['name']) < 3 OR empty($inputs['name'])) {
-            $error['name'] = 'Имя должно состоять больше чем из 3 букв';
+            $this->errors['name'] = 'Имя должно состоять больше чем из 3 букв';
         }
 
-        if(!filter_var($inputs['email'], FILTER_VALIDATE_EMAIL)){$error['email']='Неверный email';}
-        if(empty($inputs['email'])){$error['email']='Пустое поле';}
+        if(!filter_var($inputs['email'], FILTER_VALIDATE_EMAIL)){$this->errors['email']='Неверный email';}
+        if(empty($inputs['email'])){$this->errors['email']='Пустое поле';}
 
         if(empty($inputs['message'])){
-            $error['message']= 'Пустое поле';
+            $this->errors['message']= 'Пустое поле';
         }
 
         if ($_SESSION['captcha_keystring'] != $inputs['keystring']) {
-            $error['keystring'] = 'неверная капча';
+            $this->errors['keystring'] = 'неверная капча';
         }
         if (empty($inputs['keystring'])) {
-            $error['keystring'] = 'Пустое поле';
+            $this->errors['keystring'] = 'Пустое поле';
         }
 
         unset($_SESSION['captcha_keystring']);
-        return $error;
+        return $this->errors;
 
     }
 
@@ -126,15 +131,15 @@ class Protected_Models_Comment extends Core_DataBase
         $stmt -> bindParam(1,$page, PDO::PARAM_INT);
         $stmt -> execute();
 
-        $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $this->comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         //добавляем порядковый номер товарыв для вывода таблиць и розюыраемось з изображениямы
-        foreach ($comments as $key=> $value) {
+        foreach ($this->comments as $key=> $value) {
             $number = (!isset($number)) ? ($page + 1) : $number + 1;
-            $comments[$key]['number'] = $number;
+            $this->comments[$key]['number'] = $number;
         }
 
-        return $comments;
+        return $this->comments;
     }
 
 
@@ -145,9 +150,9 @@ class Protected_Models_Comment extends Core_DataBase
         $sql= "SELECT COUNT(`id`) AS number FROM `comments`";
         $res= $this->conn->query($sql);
         $res= $res->fetch(PDO::FETCH_ASSOC);
-        $pages= ceil($res['number']/NUMBERONPAGEADMIN);
+        $this->pages= ceil($res['number']/NUMBERONPAGEADMIN);
 
-        return $pages;
+        return $this->pages;
 
     }
 
@@ -162,45 +167,45 @@ class Protected_Models_Comment extends Core_DataBase
         $stmt = $this->conn ->prepare($sql);
         $stmt->bindParam(1, $id, PDO::PARAM_INT);
         $stmt -> execute();
-        $comment = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->comment = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $_SESSION['admin_avatar_change'][$id]= (!is_null($comment['avatar']))? $comment['avatar']: NULL;
+        $_SESSION['admin_avatar_change'][$id]= (!is_null($this->comment['avatar']))? $this->comment['avatar']: NULL;
 
-        return $comment;
+        return $this->comment;
     }
 
 
     protected function getCommentInputs()
     {
-        $comment =[];
-        $comment['name']= htmlspecialchars($_POST['name']);
-        $comment['email']= htmlspecialchars($_POST['email']);
-        $comment['comment']= htmlspecialchars($_POST['message']);
-        if(isset($_POST['id'])) $comment['id']= (int)$_POST['id'];
+        $this->comment =[];
+        $this->comment['name']= htmlspecialchars($_POST['name']);
+        $this->comment['email']= htmlspecialchars($_POST['email']);
+        $this->comment['comment']= htmlspecialchars($_POST['message']);
+        if(isset($_POST['id'])) $this->comment['id']= (int)$_POST['id'];
 
-        return $comment;
+        return $this->comment;
     }
 
     public function checkAdminCommentFields()
     {
         $inputs = $this->getCommentInputs();
-;
-        $error = array();
+
+        $this->errors = array();
 
         if (strlen($inputs['name']) < 3) {
-            $error['name'] = 'Имя должно состоять больше чем из 3 букв';
+            $this->errors['name'] = 'Имя должно состоять больше чем из 3 букв';
         }
 
-        if(!filter_var($inputs['email'], FILTER_VALIDATE_EMAIL)){$error['email']='Неверный email';}
-        if(empty($inputs['email'])){$error['email']='Пустое поле';}
+        if(!filter_var($inputs['email'], FILTER_VALIDATE_EMAIL)){$this->errors['email']='Неверный email';}
+        if(empty($inputs['email'])){$this->errors['email']='Пустое поле';}
 
         if(empty($inputs['comment'])){
-            $error['message']= 'Пустое поле';
+            $this->errors['message']= 'Пустое поле';
         }
 
-        return $error;
-
+        return $this->errors;
     }
+    
 
     public function getCommentPageInfo()
     {

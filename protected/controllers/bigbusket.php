@@ -10,8 +10,8 @@ class Protected_Controllers_BigBusket  extends Core_BaseController
         return ['view'=>'bigbusket.php', 'ajax'=> true , 'items'=>$items ];
     }
 
-    public function addIntoBusket(){
-
+    public function addIntoBusket()
+    {
         Lib_TokenService::check('add_into_busket');
 
         $model= new Protected_Models_Busket();
@@ -23,9 +23,8 @@ class Protected_Controllers_BigBusket  extends Core_BaseController
 
 
 
-    function recount(){
-
-
+    function recount()
+    {
         Lib_TokenService::check('update_busket');
 
             $model = new Protected_Models_Busket();
@@ -34,7 +33,6 @@ class Protected_Controllers_BigBusket  extends Core_BaseController
             $items = $model->getBigBusket();
 
             return ['view' => 'bigbusket.php', 'ajax' => true, 'items' => $items];
-
     }
 
 
@@ -50,8 +48,8 @@ class Protected_Controllers_BigBusket  extends Core_BaseController
     }
 
 
-    public function createOrderForm(){
-
+    public function createOrderForm()
+    {
         return ['view'=> 'orderform.php', 'ajax'=>1];
     }
 
@@ -62,7 +60,6 @@ class Protected_Controllers_BigBusket  extends Core_BaseController
       $model = new Protected_Models_Busket();
       $inputs = $model->decodePost();
 
-
         $error = $model->makeOrder();
 
         if( !empty($error)){
@@ -72,7 +69,6 @@ class Protected_Controllers_BigBusket  extends Core_BaseController
 
                 //тут зберигаемо заказ в базу
                $order = $model->saveOrder($inputs);
-
               
                 unset($_SESSION['totalamount']);
                 unset($_SESSION['totalsum']);

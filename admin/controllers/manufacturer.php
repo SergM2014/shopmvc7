@@ -4,7 +4,7 @@ class Admin_Controllers_Manufacturer extends Core_BaseController{
 
     public function index()
     {
-        $model = new Protected_Models_Catalog();
+        $model = new Protected_Models_Catalog;
         $manufacturers = $model-> getManufacturers();
 
         $message = $model->getMessage();
@@ -26,7 +26,7 @@ class Admin_Controllers_Manufacturer extends Core_BaseController{
         Lib_TokenService::check('create_new_manufacturer');
 
 
-        $model = new Protected_Models_Admin;
+        $model = new Protected_Models_Manufacturer;
         $error = $model->checkManufacturerInput();
 
         if (!empty($error)) {
@@ -49,7 +49,7 @@ class Admin_Controllers_Manufacturer extends Core_BaseController{
 
     public function edit(){
 
-        $model = new Protected_Models_Admin();
+        $model = new Protected_Models_Manufacturer;
         $manufacturer = $model->getOneManufacturer();
 
         return ['view' => 'manufacturers/update_manufacturer.php', 'manufacturer_name' => $manufacturer['title'], 'manufacturer_url'=>$manufacturer['url'], 'manufacturer_id'=>(int)$_GET['id']];
@@ -61,7 +61,7 @@ class Admin_Controllers_Manufacturer extends Core_BaseController{
         Lib_TokenService::check('update_manufacturer');
 
 
-        $model = new Protected_Models_Admin;
+        $model = new Protected_Models_Manufacturer;
         $error = $model->checkManufacturerInput();
 
         if (!empty($error)) {
@@ -86,7 +86,7 @@ class Admin_Controllers_Manufacturer extends Core_BaseController{
     {
 
         Lib_TokenService::check('delete_manufacturer');
-        $model= new Protected_Models_Admin;
+        $model= new Protected_Models_Manufacturer;
         $error = $model->checkManufacturerDeleteErrors();
         if($error !=''){
             $response = array("message" => $error, "error"=> true);

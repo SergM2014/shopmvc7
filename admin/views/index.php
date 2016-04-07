@@ -2,7 +2,7 @@
     if(isset($restriction)) echo $restriction;
     if(!isset($_SESSION['admin'])):
     ?>
-        <a href="/">Back oto site</a>
+        <a href="/">Back to site</a>
         <div class="login_form">
             <h3>Вход в административную зону</h3>
                 <div id="login">

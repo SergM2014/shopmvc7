@@ -2,28 +2,31 @@
 
 class Protected_Models_Carousel extends Core_DataBase{
 
+    protected $sliders;
+    protected $error;
+    
     public function getCarouselImage()
     {
         $result= $this->conn->query("SELECT `id`, `image`, `url` from `carousel` ORDER BY `id` DESC");
-        $sliders = $result->fetchAll(PDO::FETCH_ASSOC);
-        return $sliders;
+        $this->sliders = $result->fetchAll(PDO::FETCH_ASSOC);
+        return $this->sliders;
     }
 
     public function checkCarouselInputs()
     {
         $url= htmlspecialchars($_POST['carousel_url']);
 
-        $error=[];
+        $this->error=[];
 
        if(empty($url)){
-           $error['carousel_url']='There is no url';
+           $this->error['carousel_url']='There is no url';
        }
 
         if(!isset($_SESSION['carousel'])){
-            $error['carousel_image']='No image for carousel';
+            $this->error['carousel_image']='No image for carousel';
         }
 
-        return $error;
+        return $this->error;
     }
 
     public function getCarouselPageInfo()

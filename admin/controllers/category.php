@@ -6,9 +6,9 @@ class Admin_Controllers_Category extends Core_BaseController
     public function index()
     {
 
-        $model = new Protected_Models_Catalog();
+        $model = new Protected_Models_Catalog;
 
-        $model2 = new Protected_Models_Index();
+        $model2 = new Protected_Models_Index;
 
         $categories = $model2->getCategories();
         $categories_tree = $model->getAdminCategoriesTree($categories);
@@ -20,7 +20,7 @@ class Admin_Controllers_Category extends Core_BaseController
     //выищд формы дя створення новой категории
     public function create()
     {
-        $model = new Protected_Models_Product();
+        $model = new Protected_Models_Product;
         $categories_tree = $model->getCategoriesTree(0, null, true);
         return ['view' => 'categories/create_new_category.php', 'categories_tree' => $categories_tree];
     }
@@ -30,7 +30,7 @@ class Admin_Controllers_Category extends Core_BaseController
          Lib_TokenService::check('create_new_category');
 
 
-        $model = new Protected_Models_Admin;
+        $model = new Protected_Models_Category;
         $error = $model->checkCategoryName();
      
         if (!empty($error)) {
@@ -52,7 +52,7 @@ class Admin_Controllers_Category extends Core_BaseController
 
     public function edit(){
         
-        $model = new Protected_Models_Catalog();
+        $model = new Protected_Models_Catalog;
         $category = $model->getCategoryName();
 
       return ['view' => 'categories/update_category.php', 'category'=>$category, 'product_id'=>$_GET['id']];
@@ -61,8 +61,8 @@ class Admin_Controllers_Category extends Core_BaseController
 
     public function update()
     {
-         Lib_TokenService::check('update_category');
-        $model = new Protected_Models_Admin;
+        Lib_TokenService::check('update_category');
+        $model = new Protected_Models_Category;
         $error = $model->checkCategoryName();
      
         if (!empty($error)) {
@@ -85,9 +85,8 @@ class Admin_Controllers_Category extends Core_BaseController
 
     public function destroy()
         {
-
             Lib_TokenService::check('delete_category');
-            $model= new Protected_Models_Admin;
+            $model= new Protected_Models_Category;
             $error = $model->checkCategoryDeleteErrors();
             if($error !=''){
                 $response = array("error" => $error);
@@ -95,12 +94,10 @@ class Admin_Controllers_Category extends Core_BaseController
                 exit();
             }
 
-            $response=$model->destroyCategory();
+             $response=$model->destroyCategory();
 
              echo json_encode($response);
              exit();
-
-            
         }
 
 

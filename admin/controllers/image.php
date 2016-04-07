@@ -6,7 +6,7 @@ class Admin_Controllers_Image extends Core_BaseController
     public function uploadProductImage()
     {
         Lib_TokenService::check('upload_image');
-        $model = new Protected_Models_Image();
+        $model = new Protected_Models_Image;
         $response = $model->uploadImage();
 
         echo json_encode($response);
@@ -18,7 +18,7 @@ class Admin_Controllers_Image extends Core_BaseController
     public function deleteProductImage()
     {
         Lib_TokenService::check('upload_image');
-        $model = new Protected_Models_Image();
+        $model = new Protected_Models_Image;
         $response = $model->deleteImage();
 
         echo json_encode($response);
@@ -36,8 +36,9 @@ class Admin_Controllers_Image extends Core_BaseController
 
     public function uploadCommentImage()
      {
-        Lib_TokenService::check('upload_image');
-        $model = new Protected_Models_Image();
+       // Lib_TokenService::check('upload_image');
+
+        $model = new Protected_Models_Image;
         $response = $model->uploadAvatar( true );
 
         echo json_encode($response);
@@ -48,7 +49,7 @@ class Admin_Controllers_Image extends Core_BaseController
 
      {
          Lib_TokenService::check('upload_image');
-         $model = new Protected_Models_Image();
+         $model = new Protected_Models_Image;
          $response = $model->deleteAdminAvatar();
          echo json_encode($response);
          exit();
@@ -57,7 +58,7 @@ class Admin_Controllers_Image extends Core_BaseController
     public function uploadSliderImage()
     {
         Lib_TokenService::check('upload_image');
-        $model = new Protected_Models_Image();
+        $model = new Protected_Models_Image;
         $response = $model->uploadSlider();
 
         echo json_encode($response);
@@ -67,7 +68,7 @@ class Admin_Controllers_Image extends Core_BaseController
     public function deleteSliderImage()
     {
         Lib_TokenService::check('upload_image');
-        $model = new Protected_Models_Image();
+        $model = new Protected_Models_Image;
         $response = $model->deleteSlider();
 
         echo json_encode($response);
@@ -77,7 +78,7 @@ class Admin_Controllers_Image extends Core_BaseController
     public function uploadCarouselImage()
     {
         Lib_TokenService::check('upload_image');
-        $model = new Protected_Models_Image();
+        $model = new Protected_Models_Image;
         $response = $model->uploadCarousel();
 
         echo json_encode($response);
@@ -87,7 +88,7 @@ class Admin_Controllers_Image extends Core_BaseController
     public function deleteCarouselImage()
     {
         Lib_TokenService::check('upload_image');
-        $model = new Protected_Models_Image();
+        $model = new Protected_Models_Image;
         $response = $model->deleteCarousel();
 
         echo json_encode($response);

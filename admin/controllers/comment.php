@@ -4,7 +4,7 @@ class Admin_Controllers_Comment extends Core_BaseController{
 
     public function index()
     {
-        $model = new Protected_Models_Comment();
+        $model = new Protected_Models_Comment;
         $comments= $model->getComments();
         $pages = $model->countPages();
 
@@ -19,7 +19,7 @@ class Admin_Controllers_Comment extends Core_BaseController{
 
     public function edit()
     {
-        $model = new Protected_Models_Comment();
+        $model = new Protected_Models_Comment;
         $comment= $model ->selectOneComment();
         return ['view'=> 'comments/edit_comment.php', 'comment'=>$comment, 'image'=>$comment['avatar'], 'uploads'=>'/uploads/avatars/'];
     }
@@ -28,7 +28,7 @@ class Admin_Controllers_Comment extends Core_BaseController{
     {
         Lib_TokenService::check('update_comment');
 
-        $model = new Protected_Models_Comment();
+        $model = new Protected_Models_Comment;
         $error = $model->checkAdminCommentFields();
 
         if (!empty($error)) {
@@ -49,7 +49,7 @@ class Admin_Controllers_Comment extends Core_BaseController{
     public function destroy()
     {
         Lib_TokenService::check('general_purpose_comment');
-        $model = new Protected_Models_Comment();
+        $model = new Protected_Models_Comment;
         $response = $model->destroyComment();
         echo json_encode($response);
         exit();
@@ -59,7 +59,7 @@ class Admin_Controllers_Comment extends Core_BaseController{
     public function unpublish()
     {
         Lib_TokenService::check('general_purpose_comment');
-        $model = new Protected_Models_Comment();
+        $model = new Protected_Models_Comment;
         $response = $model->unpublishComment();
         echo json_encode($response);
         exit();
@@ -68,7 +68,7 @@ class Admin_Controllers_Comment extends Core_BaseController{
     public function publish()
     {
         Lib_TokenService::check('general_purpose_comment');
-        $model = new Protected_Models_Comment();
+        $model = new Protected_Models_Comment;
         $response = $model->publishComment();
         echo json_encode($response);
         exit();
