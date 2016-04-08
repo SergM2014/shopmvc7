@@ -424,6 +424,17 @@ if(leftmenu) {
 //************************************************888
 
 
+if(document.getElementById('leftmenu')){
+
+  document.getElementById('leftmenu').addEventListener('dblclick', function(e){
+      var dblclick = find_closest_heighest_class(e.target, 'left-cat');
+      if(dblclick) {
+          var title = dblclick.getAttribute('data-title');
+          window.location.href = "catalog?category="+title;
+      }
+  });
+
+}
 
 
 

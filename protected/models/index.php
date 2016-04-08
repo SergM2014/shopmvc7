@@ -24,7 +24,7 @@
              foreach($categories as $category){
                  if($category['parent_id'] ==$parent ){
 
-                     $print.='<li class="menu-item parent-'.$category['parent_id'].'"><span  data-id="'. $category['id'] .'">'.$category['title'].'</span>' ;
+                     $print.='<li class="menu-item parent-'.$category['parent_id'].'"><span  data-title="'. $category['title'] .'" class="left-cat">'.$category['translit_title'].'</span>' ;
                      foreach($categories as $sub_cat){
                          if($sub_cat['parent_id']==$category['id']){
                              $flag = TRUE; break;
